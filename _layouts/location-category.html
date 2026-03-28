@@ -21,12 +21,12 @@ layout: default
     <div class="row">
       <div class="col-md-12 text-center">
         <div class="filter-bar">
-          <a href="{{ '/' | append: page.location_slug | append: '/' | relative_url }}" class="filter-btn">
+          <a href="{{ '/locations/' | append: page.location_slug | append: '/' | relative_url }}" class="filter-btn">
             All {{ page.location_name }} Vendors
           </a>
           {% for cat in site.data.categories %}
           {% if cat.phase == 1 %}
-          <a href="{{ '/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
+          <a href="{{ '/locations/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
             class="filter-btn {% if page.category_slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>
           {% endif %}
           {% endfor %}

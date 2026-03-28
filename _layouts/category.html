@@ -27,7 +27,7 @@ layout: default
         <div class="filter-bar">
           <a href="{{ page.url | relative_url }}" class="filter-btn active">All Cities</a>
           {% for location in site.data.locations %}
-          <a href="{{ '/' | append: location.slug | append: '/' | append: page.category_slug | append: '/' | relative_url }}"
+          <a href="{{ '/locations/' | append: location.slug | append: '/' | append: page.category_slug | append: '/' | relative_url }}"
             class="filter-btn">{{ location.name }}</a>
           {% endfor %}
         </div>
