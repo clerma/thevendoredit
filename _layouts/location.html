@@ -9,7 +9,7 @@ layout: default
     <div class="row">
       <div class="col-md-12 text-center caption mt-90">
         <div class="section-subtitle">Wedding Vendors in Louisiana</div>
-        <h1>{{ page.title }}</h1>
+        <h1>{{ page.name }}</h1>
         {% if page.description %}
         <p class="header-desc">{{ page.description }}</p>
         {% endif %}
@@ -18,55 +18,57 @@ layout: default
   </div>
 </div>
 
-<!-- Browse by Category in this City -->
+<!-- Category Filter Bar -->
 <section class="section-padding bg-lightbrown">
   <div class="container">
-    <div class="row mb-30">
+    <div class="row">
       <div class="col-md-12 text-center">
-        <div class="section-subtitle">What are you looking for?</div>
-        <div class="section-title">Browse {{ page.title }} Vendors by Type</div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All Vendors</button>
+          {% assign sorted_cats = site.categories | sort: 'order' %}
+          {% for cat in sorted_cats %}
+          {% if cat.phase == 1 %}
+          <button class="filter-btn" data-filter="{{ cat.slug }}">{{ cat.name }}</button>
+          {% endif %}
+          {% endfor %}
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-center">
-      {% for cat in site.data.categories %}
-      {% if cat.phase == 1 %}
-      <div class="col-lg-3 col-md-4 col-6 mb-20">
-        <a href="{{ '/locations/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
-          class="category-browse-card text-center d-block">
-          <span class="cat-name">{{ cat.name }}</span>
-        </a>
-      </div>
-      {% endif %}
-      {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- All Vendors in this City -->
+<!-- Vendor Grid -->
 <section class="section-padding">
   <div class="container">
     <div class="row mb-30">
       <div class="col-md-12 text-center">
-        <div class="section-subtitle">Serving {{ page.title }}</div>
-        <div class="section-title">Featured Vendors</div>
+        <div class="section-subtitle">Serving {{ page.name }}</div>
+        <div class="section-title">Find Your Vendors</div>
       </div>
     </div>
     <div class="row">
-      {% assign location_vendors = site.vendors | where_exp: "v", "v.cities contains page.location_slug" %}
+      {% assign location_vendors = site.vendors | where_exp: "v", "v.cities contains page.slug" %}
       {% if location_vendors.size > 0 %}
         {% for vendor in location_vendors %}
-        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+        <div class="col-lg-4 col-md-6 mb-30 animate-box vendor-card-wrapper"
+             data-category="{{ vendor.category_slug }}"
+             data-animate-effect="fadeInUp">
           {% include vendor-card.html vendor=vendor %}
         </div>
         {% endfor %}
       {% else %}
         <div class="col-md-12 text-center py-60">
-          <p class="lead">No vendors listed yet for {{ page.title }}.</p>
+          <p class="lead">No vendors listed yet for {{ page.name }}.</p>
           <div class="butn-dark mt-20">
             <a href="{{ '/list-your-business/' | relative_url }}"><span>List Your Business</span></a>
           </div>
         </div>
       {% endif %}
+    </div>
+    <div class="row d-none" id="noResults">
+      <div class="col-md-12 text-center py-60">
+        <p class="lead">No vendors found for that type. <a href="#" class="reset-filter">Show all vendors.</a></p>
+      </div>
     </div>
   </div>
 </section>

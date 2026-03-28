@@ -42,7 +42,7 @@
           <div class="footer-column footer-contact">
             <h3 class="footer-title">Browse by City</h3>
             <ul class="footer-explore-list list-unstyled">
-              {% for location in site.data.locations %}
+              {% for location in site.locations | sort: 'order' %}
               <li>
                 <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}">
                   {{ location.name }}, {{ location.state }}

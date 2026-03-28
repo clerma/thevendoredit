@@ -20,6 +20,7 @@
     $(window).on("load", function () {
       $("#preloader-status").fadeOut();
       $("#preloader").delay(350).fadeOut("slow");
+      $(".preloader-bg").delay(700).fadeOut("slow");
       $("body").delay(350).css({ overflow: "visible" });
     });
   }
@@ -251,6 +252,46 @@
     }
   }
 
+  /* ---- Vendor grid filtering (category + location pages) --- */
+  function initVendorFilter() {
+    $(document).on("click", ".filter-btn", function () {
+      var $btn = $(this);
+      var filter = $btn.data("filter");
+
+      // Update active state within the same filter bar
+      $btn.closest(".filter-bar").find(".filter-btn").removeClass("active");
+      $btn.addClass("active");
+
+      var $wrappers = $(".vendor-card-wrapper");
+      if (!$wrappers.length) return;
+
+      if (filter === "all") {
+        $wrappers.fadeIn(300);
+      } else {
+        var visible = 0;
+        $wrappers.each(function () {
+          var cities   = ($(this).data("cities") || "").toString().split(" ");
+          var category = ($(this).data("category") || "").toString();
+          var match = cities.indexOf(filter) > -1 || category === filter;
+          if (match) { $(this).fadeIn(300); visible++; }
+          else        { $(this).fadeOut(200); }
+        });
+
+        // Show/hide "no results" message
+        if ($("#noResults").length) {
+          if (visible === 0) { $("#noResults").removeClass("d-none"); }
+          else               { $("#noResults").addClass("d-none"); }
+        }
+      }
+    });
+
+    // Reset filter link inside no-results message
+    $(document).on("click", ".reset-filter", function (e) {
+      e.preventDefault();
+      $(".filter-bar .filter-btn[data-filter='all']").trigger("click");
+    });
+  }
+
   /* ---- Init all -------------------------------------------- */
   $(document).ready(function () {
     initBgImages();
@@ -266,6 +307,7 @@
     initSmoothScroll();
     initActiveNav();
     initDropdownHover();
+    initVendorFilter();
   });
 
 })(jQuery);

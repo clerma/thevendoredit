@@ -11,6 +11,18 @@ collections_config:
     name: Real Weddings
     singular_name: Wedding
     icon: favorite
+  categories:
+    path: _categories
+    output: true
+    name: Categories
+    singular_name: Category
+    icon: category
+  locations:
+    path: _locations
+    output: true
+    name: Locations
+    singular_name: Location
+    icon: location_on
   posts:
     path: _posts
     output: true
@@ -19,10 +31,6 @@ collections_config:
     icon: article
 
 data_config:
-  categories:
-    path: _data/categories.yml
-  locations:
-    path: _data/locations.yml
   nav:
     path: _data/nav.yml
   site:
@@ -40,12 +48,12 @@ _inputs:
   category_slug:
     type: select
     options:
-      values: _data/categories.yml
+      values: collections.categories
       value_key: slug
       label_key: name
   cities:
     type: multiselect
     options:
-      values: _data/locations.yml
+      values: collections.locations
       value_key: slug
       label_key: name

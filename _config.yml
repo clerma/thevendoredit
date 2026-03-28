@@ -13,6 +13,12 @@ collections:
   weddings:
     output: true
     permalink: /weddings/:slug/
+  categories:
+    output: true
+    permalink: /:slug/
+  locations:
+    output: true
+    permalink: /locations/:slug/
 
 # Defaults
 defaults:
@@ -31,6 +37,16 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  - scope:
+      path: ""
+      type: "categories"
+    values:
+      layout: "category"
+  - scope:
+      path: ""
+      type: "locations"
+    values:
+      layout: "location"
   - scope:
       path: "_pages"
     values:

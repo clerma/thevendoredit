@@ -9,7 +9,7 @@ layout: default
     <div class="row">
       <div class="col-md-12 text-center caption mt-90">
         <div class="section-subtitle">Wedding Vendors</div>
-        <h1>{{ page.title }}</h1>
+        <h1>{{ page.name }}</h1>
         {% if page.description %}
         <p class="header-desc">{{ page.description }}</p>
         {% endif %}
@@ -18,17 +18,16 @@ layout: default
   </div>
 </div>
 
-<!-- Browse by City within this Category -->
+<!-- City Filter Bar -->
 <section class="section-padding bg-lightbrown">
   <div class="container">
-    <div class="row mb-20">
+    <div class="row">
       <div class="col-md-12 text-center">
-        <div class="section-subtitle">Filter by City</div>
         <div class="filter-bar">
-          <a href="{{ page.url | relative_url }}" class="filter-btn active">All Cities</a>
-          {% for location in site.data.locations %}
-          <a href="{{ '/locations/' | append: location.slug | append: '/' | append: page.category_slug | append: '/' | relative_url }}"
-            class="filter-btn">{{ location.name }}</a>
+          <button class="filter-btn active" data-filter="all">All Cities</button>
+          {% assign sorted_locations = site.locations | sort: 'order' %}
+          {% for location in sorted_locations %}
+          <button class="filter-btn" data-filter="{{ location.slug }}">{{ location.name }}</button>
           {% endfor %}
         </div>
       </div>
@@ -40,21 +39,28 @@ layout: default
 <section class="section-padding">
   <div class="container">
     <div class="row">
-      {% assign cat_vendors = site.vendors | where: "category_slug", page.category_slug %}
+      {% assign cat_vendors = site.vendors | where: "category_slug", page.slug %}
       {% if cat_vendors.size > 0 %}
         {% for vendor in cat_vendors %}
-        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+        <div class="col-lg-4 col-md-6 mb-30 animate-box vendor-card-wrapper"
+             data-cities="{{ vendor.cities | join: ' ' }}"
+             data-animate-effect="fadeInUp">
           {% include vendor-card.html vendor=vendor %}
         </div>
         {% endfor %}
       {% else %}
         <div class="col-md-12 text-center py-60">
-          <p class="lead">No {{ page.title | downcase }} listed yet in Acadiana.</p>
+          <p class="lead">No {{ page.name | downcase }} listed yet in Acadiana.</p>
           <div class="butn-dark mt-20">
             <a href="{{ '/list-your-business/' | relative_url }}"><span>List Your Business</span></a>
           </div>
         </div>
       {% endif %}
+    </div>
+    <div class="row d-none" id="noResults">
+      <div class="col-md-12 text-center py-60">
+        <p class="lead">No vendors found for that city. <a href="#" class="reset-filter">Show all cities.</a></p>
+      </div>
     </div>
   </div>
 </section>

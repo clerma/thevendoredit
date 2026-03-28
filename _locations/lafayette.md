@@ -1,7 +1,8 @@
 ---
-layout: location
-title: Lafayette
+name: Lafayette
+slug: lafayette
+state: Louisiana
 description: The heart of Acadiana, a city built on celebration, culture, and joie de vivre.
-location_slug: lafayette
-permalink: /locations/lafayette/
+featured: true
+order: 1
 ---

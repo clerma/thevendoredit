@@ -71,7 +71,7 @@ permalink: /list-your-business/
             <div class="col-md-6 mb-20">
               <select name="category" class="form-control" required>
                 <option value="">Select Your Category</option>
-                {% for cat in site.data.categories %}
+                {% for cat in site.categories | sort: 'order' %}
                 <option value="{{ cat.slug }}">{{ cat.name }}</option>
                 {% endfor %}
               </select>
