@@ -1,0 +1,618 @@
+/* ============================================================
+   THE EVENT EDIT — Site-Specific Styles
+   Built on top of texturerental (style.css + custom.css)
+   ============================================================ */
+
+/* ---- Button aliases (templates use butn-*, CSS has btn-*) -- */
+.butn-dark { position: relative; line-height: 1.2em; display: inline-block; }
+.butn-dark a,
+.butn-dark button {
+  font-weight: 400;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  background: #000;
+  color: #fff;
+  padding: 15px 30px;
+  margin: 0;
+  position: relative;
+  font-size: 15px;
+  letter-spacing: 3px;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+.butn-dark a:after,
+.butn-dark button:after {
+  content: '';
+  width: 0;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  z-index: 1;
+  background: #a2783a;
+  transition: all 0.3s ease;
+}
+.butn-dark a span,
+.butn-dark button span {
+  position: relative;
+  z-index: 2;
+}
+.butn-dark a:hover:after,
+.butn-dark button:hover:after {
+  width: 100%;
+  left: 0;
+  transition: width 0.3s ease;
+}
+.butn-dark a:hover span,
+.butn-dark button:hover span {
+  color: #fff;
+}
+
+.butn-light { position: relative; line-height: 1.2em; display: inline-block; }
+.butn-light a {
+  font-weight: 400;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  background: transparent;
+  color: #fff;
+  padding: 15px 30px;
+  margin: 0;
+  position: relative;
+  font-size: 15px;
+  letter-spacing: 3px;
+  border: 1px solid rgba(255,255,255,1);
+  display: inline-block;
+  text-decoration: none;
+}
+.butn-light a:after {
+  content: '';
+  width: 0;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  z-index: 1;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+.butn-light a span {
+  position: relative;
+  z-index: 2;
+}
+.butn-light a:hover:after {
+  width: 100%;
+  left: 0;
+  transition: width 0.3s ease;
+}
+.butn-light a:hover span {
+  color: #000;
+}
+
+/* ---- Background utility ---------------------------------- */
+.bg-lightbrown {
+  background-color: #f8f4ee;
+}
+
+/* ---- Logo text ------------------------------------------- */
+.logo-text {
+  font-family: 'Gilda Display', serif;
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+.logo-text em {
+  font-style: italic;
+  font-family: 'Bodoni Moda', serif;
+}
+.nav-scroll .logo-text {
+  color: #000;
+}
+.logo a,
+.logo a:hover {
+  text-decoration: none;
+}
+
+/* ---- Nav CTA button -------------------------------------- */
+.navbar-nav .btn-list {
+  background: #a2783a;
+  color: #fff !important;
+  padding: 8px 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  margin-left: 15px;
+  transition: background 0.3s ease;
+}
+.navbar-nav .btn-list:hover {
+  background: #8a6530;
+}
+
+/* ---- Section heading overrides -------------------------- */
+.section-subtitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #a2783a;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Gilda Display', serif;
+  font-size: 36px;
+  color: #000;
+  margin-bottom: 30px;
+}
+
+/* ---- Vendor Card ----------------------------------------- */
+.vendor-card {
+  background: #fff;
+  border: 1px solid #ede8e0;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.vendor-card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+.vendor-card-img {
+  height: 240px;
+  overflow: hidden;
+}
+.vendor-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.vendor-card:hover .vendor-card-img img {
+  transform: scale(1.05);
+}
+.vendor-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.vendor-card-category {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+.vendor-badge {
+  background: #a2783a;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+.vendor-card-body {
+  padding: 20px;
+}
+.vendor-card-title {
+  font-family: 'Gilda Display', serif;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.vendor-card-title a {
+  color: #000;
+  text-decoration: none;
+}
+.vendor-card-title a:hover {
+  color: #a2783a;
+}
+.vendor-card-meta {
+  font-size: 13px;
+  color: #888;
+  font-family: 'Barlow', sans-serif;
+  margin-bottom: 8px;
+}
+.vendor-city i {
+  color: #a2783a;
+  margin-right: 4px;
+}
+.vendor-tagline {
+  font-size: 14px;
+  color: #676977;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---- Wedding Card ---------------------------------------- */
+.wedding-card {
+  overflow: hidden;
+}
+.wedding-card-img {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+.wedding-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.wedding-card:hover .wedding-card-img img {
+  transform: scale(1.05);
+}
+.wedding-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.65));
+  padding: 30px 20px 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.wedding-card:hover .wedding-card-overlay {
+  opacity: 1;
+}
+.wedding-card-info h5 {
+  color: #fff;
+  font-family: 'Gilda Display', serif;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.wedding-card-info span {
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  font-family: 'Barlow', sans-serif;
+}
+.wedding-card-tags {
+  padding: 12px 15px;
+  background: #fff;
+  border: 1px solid #ede8e0;
+  border-top: none;
+}
+.style-tag {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a2783a;
+  border: 1px solid #a2783a;
+  padding: 2px 8px;
+  margin-right: 5px;
+}
+.wedding-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---- Category Card (carousel) ---------------------------- */
+.category-card {
+  display: block;
+  text-decoration: none;
+}
+.category-card-inner {
+  height: 280px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.category-card-body {
+  padding: 20px;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+.category-card-body h5 {
+  font-family: 'Gilda Display', serif;
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.category-card-body p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ---- City Card ------------------------------------------- */
+.city-card {
+  display: block;
+  text-decoration: none;
+}
+.city-card-inner {
+  border: 1px solid #ede8e0;
+  padding: 20px 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+.city-card-inner:hover {
+  border-color: #a2783a;
+  background: #a2783a;
+}
+.city-card-inner h5 {
+  font-family: 'Gilda Display', serif;
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
+}
+.city-card-inner:hover h5,
+.city-card-inner:hover span {
+  color: #fff;
+}
+.city-card-inner span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+/* ---- Filter Bar ------------------------------------------ */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px 0;
+}
+.filter-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  color: #000;
+  border: 1px solid #ded9d0;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: #a2783a;
+  color: #fff;
+  border-color: #a2783a;
+}
+
+/* ---- Blog Card ------------------------------------------- */
+.blog-card {
+  background: #fff;
+  border: 1px solid #ede8e0;
+  overflow: hidden;
+}
+.blog-card-img {
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+.blog-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.blog-card:hover .blog-card-img img {
+  transform: scale(1.05);
+}
+.blog-card .date {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #a2783a;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  min-width: 50px;
+}
+.blog-card .date span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.blog-card .date i {
+  display: block;
+  font-family: 'Gilda Display', serif;
+  font-style: normal;
+  font-size: 22px;
+  line-height: 1;
+}
+.blog-card .date a {
+  color: #fff;
+  text-decoration: none;
+}
+.blog-card .con {
+  padding: 20px;
+}
+.blog-card .con .category a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a2783a;
+  text-decoration: none;
+}
+.blog-card .con h5 {
+  font-family: 'Gilda Display', serif;
+  font-size: 18px;
+  margin: 8px 0;
+}
+.blog-card .con h5 a {
+  color: #000;
+  text-decoration: none;
+}
+.blog-card .con h5 a:hover {
+  color: #a2783a;
+}
+.blog-card .con p {
+  font-size: 14px;
+  color: #676977;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---- CTA Section ----------------------------------------- */
+.cta-section .section-subtitle span,
+.cta-section .section-title span {
+  color: #fff;
+}
+.cta-section .section-subtitle {
+  color: rgba(255,255,255,0.7);
+}
+.cta-text {
+  color: rgba(255,255,255,0.85);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ---- Vendor Detail (layout: vendor) --------------------- */
+.vendor-detail-header {
+  padding: 40px 0 20px;
+}
+.vendor-detail-header h1 {
+  font-family: 'Gilda Display', serif;
+}
+.vendor-gallery .img-zoom {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.vendor-gallery .img-zoom img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.vendor-gallery .img-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* ---- Sidebar (vendor detail) ----------------------------- */
+.vendor-sidebar { padding: 0; }
+.sidebar-card {
+  border: 1px solid #ede8e0;
+  padding: 25px;
+  background: #fff;
+}
+.sidebar-card-title {
+  font-family: 'Gilda Display', serif;
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ede8e0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.sidebar-card p {
+  font-size: 14px;
+  color: #676977;
+  margin-bottom: 10px;
+}
+.sidebar-card p i {
+  color: #a2783a;
+  margin-right: 8px;
+  width: 16px;
+  display: inline-block;
+}
+.sidebar-card a {
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sidebar-card a:hover { color: #a2783a; }
+.sidebar-cta {
+  text-align: center;
+  padding: 25px;
+  background: #f8f4ee;
+  border: 1px solid #ede8e0;
+}
+.sidebar-cta p {
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 15px;
+}
+.sidebar-cta .butn-dark {
+  display: block;
+  width: 100%;
+}
+.sidebar-cta .butn-dark a {
+  display: block;
+  text-align: center;
+}
+
+/* ---- Tag Pills (vendor serves / category) ---------------- */
+.vendor-tags { padding: 10px 0; }
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tag-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+  margin-right: 5px;
+}
+.tag-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000;
+  border: 1px solid #ded9d0;
+  padding: 4px 12px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.tag-pill:hover { border-color: #a2783a; color: #a2783a; }
+.tag-pill--location i { color: #a2783a; margin-right: 4px; }
+
+/* ---- Vendor header location label ------------------------ */
+.vendor-header-location {
+  color: rgba(255,255,255,0.85);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.vendor-header-location i { margin-right: 5px; }
+
+/* ---- Filter bar (vendors listing) on anchor tags --------- */
+a.filter-btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ---- Utility -------------------------------------------- */
+.mb-30 { margin-bottom: 30px; }
+.mb-40 { margin-bottom: 40px; }
+.mb-60 { margin-bottom: 60px; }
+.mt-20 { margin-top: 20px; }
+.mt-30 { margin-top: 30px; }
+.mt-60 { margin-top: 60px; }
+.py-60 { padding-top: 60px; padding-bottom: 60px; }

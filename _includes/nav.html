@@ -1,52 +1,95 @@
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
-  <div class="container">
+  <div class="container d-flex justify-content-between align-items-center">
 
-    <!-- Logo -->
-    <div class="logo-wrapper">
-      <a class="logo" href="{{ '/' | relative_url }}">
-        <span class="logo-text">The <em>Event Edit</em></span>
-      </a>
-    </div>
-
-    <!-- Mobile Toggle -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarMain" aria-controls="navbarMain"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"><i class="ti-menu"></i></span>
-    </button>
-
-    <!-- Nav Links -->
-    <div class="collapse navbar-collapse" id="navbarMain">
-      <ul class="navbar-nav ms-auto">
-        {% for item in site.data.nav %}
+    <!-- Left Navigation (Desktop) -->
+    <div class="d-none d-lg-flex">
+      <ul class="navbar-nav flex-row">
+        {% for item in site.data.nav limit:2 %}
           {% if item.dropdown %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}"
-              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ item.title }} <i class="ti-angle-down"></i>
             </a>
             <ul class="dropdown-menu">
               {% for sub in item.dropdown %}
-              <li>
-                <a href="{{ sub.url | relative_url }}" class="dropdown-item">
-                  <span>{{ sub.title }}</span>
-                </a>
-              </li>
+              <li><a class="dropdown-item" href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
               {% endfor %}
             </ul>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link {% if page.url == item.url %}active{% endif %}"
-              href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            <a class="nav-link {% if page.url == item.url %}active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
           </li>
           {% endif %}
         {% endfor %}
-        <li class="nav-item nav-cta">
+      </ul>
+    </div>
+
+    <!-- Logo (Centered) -->
+    <div class="text-center flex-grow-1">
+      <a class="logo" href="{{ '/' | relative_url }}">
+        <span class="logo-text">The <em>Event Edit</em></span>
+      </a>
+    </div>
+
+    <!-- Right Navigation (Desktop) -->
+    <div class="d-none d-lg-flex align-items-center">
+      <ul class="navbar-nav flex-row">
+        {% for item in site.data.nav offset:2 %}
+          {% if item.dropdown %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ item.title }} <i class="ti-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              {% for sub in item.dropdown %}
+              <li><a class="dropdown-item" href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link {% if page.url == item.url %}active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+        <li class="nav-item">
           <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
         </li>
       </ul>
     </div>
 
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="ti-menu"></i></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="collapse d-lg-none bg-white w-100" id="navbarMobile">
+    <ul class="navbar-nav mx-4 py-3">
+      {% for item in site.data.nav %}
+        {% if item.dropdown %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ item.title }} <i class="ti-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            {% for sub in item.dropdown %}
+            <li><a class="dropdown-item" href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+      <li class="nav-item mt-2">
+        <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
+      </li>
+    </ul>
   </div>
 </nav>
