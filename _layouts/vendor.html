@@ -66,7 +66,7 @@ layout: default
           <div class="tag-group">
             <span class="tag-label">Serves</span>
             {% for city in page.cities %}
-            <a href="{{ '/' | append: city | append: '/' | relative_url }}" class="tag-pill tag-pill--location">
+            <a href="{{ '/locations/' | append: city | append: '/' | relative_url }}" class="tag-pill tag-pill--location">
               <i class="ti-location-pin"></i> {{ city | replace: '-', ' ' | capitalize }}
             </a>
             {% endfor %}

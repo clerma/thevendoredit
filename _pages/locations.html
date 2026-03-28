@@ -22,7 +22,7 @@ permalink: /locations/
     <div class="row">
       {% for location in site.data.locations %}
       <div class="col-lg-4 col-md-6 mb-30">
-        <a href="{{ '/' | append: location.slug | append: '/' | relative_url }}" class="city-feature-card">
+        <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" class="city-feature-card">
           <div class="city-feature-card-inner bg-img" data-overlay-dark="3"
             data-background="/assets/img/locations/{{ location.slug }}.jpg">
             <div class="city-feature-body">

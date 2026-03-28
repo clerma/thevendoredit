@@ -31,7 +31,7 @@ layout: default
       {% for cat in site.data.categories %}
       {% if cat.phase == 1 %}
       <div class="col-lg-3 col-md-4 col-6 mb-20">
-        <a href="{{ '/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
+        <a href="{{ '/locations/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
           class="category-browse-card text-center d-block">
           <span class="cat-name">{{ cat.name }}</span>
         </a>

@@ -48,7 +48,7 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
               <h4>Lafayette &amp; Acadiana</h4>
               <h1>Local Vendors. Curated Just For You.</h1>
               <div class="butn-light mt-30">
-                <a href="{{ '/lafayette/' | relative_url }}"><span>Browse by City</span></a>
+                <a href="{{ '/locations/lafayette/' | relative_url }}"><span>Browse by City</span></a>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
     <div class="row justify-content-center">
       {% for location in site.data.locations %}
       <div class="col-lg-2 col-md-4 col-6 mb-20 text-center">
-        <a href="{{ '/' | append: location.slug | append: '/' | relative_url }}" class="city-card">
+        <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" class="city-card">
           <div class="city-card-inner">
             <h5>{{ location.name }}</h5>
             <span>{{ location.state }}</span>

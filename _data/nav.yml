@@ -24,15 +24,15 @@
   url: /locations/
   dropdown:
     - title: Lafayette
-      url: /lafayette/
+      url: /locations/lafayette/
     - title: Youngsville
-      url: /youngsville/
+      url: /locations/youngsville/
     - title: Broussard
-      url: /broussard/
+      url: /locations/broussard/
     - title: Carencro
-      url: /carencro/
+      url: /locations/carencro/
     - title: Opelousas
-      url: /opelousas/
+      url: /locations/opelousas/
 
 - title: Real Weddings
   url: /weddings/
