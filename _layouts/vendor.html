@@ -7,10 +7,8 @@ layout: default
   data-background="{{ page.hero_image | default: '/assets/img/banner-default.jpg' }}">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center caption mt-90">
-        <div class="section-subtitle">
-          <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">{{ page.category }}</a>
-        </div>
+      <div class="col-md-12 text-center">
+        <h5><a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}" style="color:rgba(255,255,255,0.8);">{{ page.category }}</a></h5>
         <h1>{{ page.title }}</h1>
         <span class="vendor-header-location"><i class="ti-location-pin"></i> {{ page.city }}, Louisiana</span>
       </div>

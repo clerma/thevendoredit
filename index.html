@@ -2,123 +2,180 @@
 layout: default
 title: The Event Edit — Curated Wedding Vendors in Acadiana
 description: Find the best wedding vendors in Lafayette and the Acadiana region of Louisiana. Venues, photographers, florists, DJs, photo booths, and more.
+permalink: /
+slider:
+  - title: Find Your Perfect Wedding Vendors
+    subtitle: Acadiana's Curated Directory
+    link: /vendors/
+    link_text: Browse Vendors
+    image: /assets/img/hero/01.jpg
+  - title: Real Weddings from Acadiana Couples
+    subtitle: Get Inspired
+    link: /weddings/
+    link_text: View Real Weddings
+    image: /assets/img/hero/02.jpg
+  - title: Local Vendors. Curated Just For You.
+    subtitle: Lafayette & Acadiana
+    link: /locations/lafayette/
+    link_text: Browse by City
+    image: /assets/img/hero/03.jpg
 ---
 
-<!-- Hero Slider -->
+<!-- Slider -->
 <header class="header slider-fade">
   <div class="owl-carousel owl-theme">
-
-    <div class="item bg-img" data-overlay-dark="3" data-background="/assets/img/hero/01.jpg">
+    {% for item in page.slider %}
+    <div class="item bg-img" data-overlay-dark="4" data-background="{{ item.image }}">
       <div class="v-middle caption">
         <div class="container">
           <div class="row">
-            <div class="col-lg-8 col-md-12">
-              <h4>Acadiana's Curated Directory</h4>
-              <h1>Find Your Perfect Wedding Vendors</h1>
+            <div class="col-lg-9 col-md-12">
+              <h4>{{ item.subtitle }}</h4>
+              <h1>{{ item.title }}</h1>
+              {% if item.link %}
               <div class="btn-light mt-30">
-                <a href="{{ '/vendors/' | relative_url }}"><span>Browse Vendors</span></a>
+                <a href="{{ item.link | relative_url }}"><span>{{ item.link_text }}</span></a>
               </div>
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="item bg-img" data-overlay-dark="3" data-background="/assets/img/hero/02.jpg">
-      <div class="v-middle caption">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 col-md-12">
-              <h4>Get Inspired</h4>
-              <h1>Real Weddings from Acadiana Couples</h1>
-              <div class="btn-light mt-30">
-                <a href="{{ '/weddings/' | relative_url }}"><span>View Real Weddings</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="item bg-img" data-overlay-dark="3" data-background="/assets/img/hero/03.jpg">
-      <div class="v-middle caption">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 col-md-12">
-              <h4>Lafayette &amp; Acadiana</h4>
-              <h1>Local Vendors. Curated Just For You.</h1>
-              <div class="btn-light mt-30">
-                <a href="{{ '/locations/lafayette/' | relative_url }}"><span>Browse by City</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    {% endfor %}
   </div>
 </header>
 
-<!-- Browse by Category -->
-<section class="categories section-padding">
+<!-- About -->
+<section class="about section-padding" data-scroll-index="1">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center mb-20">
-        <div class="section-subtitle">Find What You Need</div>
-        <div class="section-title">Browse by Category</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="owl-carousel owl-theme">
-          {% for cat in site.categories | sort: 'order' %}
-          {% if cat.phase == 1 %}
-          <div class="item">
-            <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}" class="category-card">
-              <div class="category-card-inner bg-img" data-overlay-dark="3"
-                data-background="/assets/img/categories/{{ cat.slug }}.jpg">
-                <div class="category-card-body">
-                  <h5>{{ cat.name }}</h5>
-                  <p>{{ cat.description }}</p>
-                </div>
-              </div>
-            </a>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12 mb-30 animate-box text-center" data-animate-effect="fadeInLeft">
+        <div class="section-subtitle">Lafayette & Acadiana</div>
+        <h1 class="section-title">The Event Edit</h1>
+        <p>A curated wedding vendor directory for couples in Lafayette and the surrounding Acadiana region. Every listing is hand-selected — photographers, venues, florists, DJs, planners, and more — so you can discover the best local talent without the guesswork.</p>
+        <div class="reservations mx-auto justify-content-center">
+          <div class="icon"><span class="ti-email"></span></div>
+          <div class="text">
+            <p>Get Listed</p>
+            <a href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
           </div>
-          {% endif %}
-          {% endfor %}
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Featured Vendors -->
-<section class="featured-vendors section-padding bg-lightbrown">
+<!-- Promo / CTA -->
+<section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="5"
+  data-background="/assets/img/cta-bg.jpg">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center mb-20">
-        <div class="section-subtitle">Hand-Picked</div>
-        <div class="section-title">Featured Vendors</div>
+      <div class="col-md-8 offset-md-2 text-center">
+        <div class="section-subtitle"><span>Are you a vendor?</span></div>
+        <div class="section-title"><span>List Your Business on The Event Edit</span></div>
+        <p style="color:rgba(255,255,255,0.8); margin-bottom:30px;">Join Acadiana's curated wedding vendor directory and connect with couples planning their perfect day.</p>
+        <div class="btn-light">
+          <a href="{{ '/list-your-business/' | relative_url }}"><span>Get Listed</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Browse by Category -->
+<section class="offers1 section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="section-subtitle">Find What You Need</div>
+        <div class="section-title">Browse by Category</div>
+      </div>
+    </div>
+    <div class="row mb-4 justify-content-center">
+      {% assign phase1_cats = site.categories | where: "phase", 1 | sort: "order" %}
+      {% for cat in phase1_cats %}
+      <div class="col-lg-3 col-md-6">
+        <div class="item">
+          <div class="img">
+            <img src="/assets/img/categories/{{ cat.slug }}.jpg"
+              alt="{{ cat.name }} in Lafayette, Louisiana" />
+          </div>
+          <div class="con">
+            <div class="title">{{ cat.name }}</div>
+            <div class="arrow">
+              <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">
+                <span class="ti-arrow-right"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Featured Vendors -->
+<section class="testimonials">
+  <div class="background bg-img bg-fixed section-padding" data-background="/assets/img/hero/02.jpg" data-overlay-dark="5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12 text-center">
+          <div class="head-box mb-30">
+            <h6>Hand-Picked</h6>
+            <h4>Featured Vendors</h4>
+          </div>
+          <div class="row">
+            {% assign featured_vendors = site.vendors | where: "featured", true | limit: 3 %}
+            {% if featured_vendors.size > 0 %}
+              {% for vendor in featured_vendors %}
+              <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+                {% include vendor-card.html vendor=vendor %}
+              </div>
+              {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+              <p style="color:rgba(255,255,255,0.8);">Vendor listings coming soon.</p>
+            </div>
+            {% endif %}
+          </div>
+          <div class="btn-dark mt-30">
+            <a href="{{ '/vendors/' | relative_url }}"><span>View All Vendors</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Real Weddings -->
+<section class="news2 section-padding bg-lightbrown">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center mb-30">
+        <div class="section-subtitle">Be Inspired</div>
+        <div class="section-title">Real Weddings</div>
       </div>
     </div>
     <div class="row">
-      {% assign featured_vendors = site.vendors | where: "featured", true | limit: 6 %}
-      {% if featured_vendors.size > 0 %}
-        {% for vendor in featured_vendors %}
-        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-          {% include vendor-card.html vendor=vendor %}
+      {% assign recent_weddings = site.weddings | limit: 3 %}
+      {% if recent_weddings.size > 0 %}
+        {% for wedding in recent_weddings %}
+        <div class="col-lg-4 col-md-6 mb-30">
+          {% include wedding-card.html wedding=wedding %}
         </div>
         {% endfor %}
       {% else %}
-        <div class="col-md-12 text-center">
-          <p>Vendor listings coming soon.</p>
-        </div>
+      <div class="col-md-12 text-center">
+        <p>Real weddings coming soon.</p>
+      </div>
       {% endif %}
     </div>
-    <div class="row mt-20">
-      <div class="col-md-12 text-center">
+    <div class="row">
+      <div class="col-md-12 text-center mt-20">
         <div class="btn-dark">
-          <a href="{{ '/vendors/' | relative_url }}"><span>View All Vendors</span></a>
+          <a href="{{ '/weddings/' | relative_url }}"><span>View All Weddings</span></a>
         </div>
       </div>
     </div>
@@ -126,7 +183,7 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
 </section>
 
 <!-- Browse by City -->
-<section class="browse-cities section-padding">
+<section class="about section-padding">
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center mb-30">
@@ -135,7 +192,8 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
       </div>
     </div>
     <div class="row justify-content-center">
-      {% for location in site.locations | sort: 'order' %}
+      {% assign sorted_locations = site.locations | sort: "order" %}
+      {% for location in sorted_locations %}
       <div class="col-lg-2 col-md-4 col-6 mb-20 text-center">
         <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" class="city-card">
           <div class="city-card-inner">
@@ -149,78 +207,46 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
   </div>
 </section>
 
-<!-- Real Weddings -->
-<section class="real-weddings section-padding bg-lightbrown">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center mb-20">
-        <div class="section-subtitle">Be Inspired</div>
-        <div class="section-title">Real Weddings</div>
-      </div>
-    </div>
-    <div class="row">
-      {% assign recent_weddings = site.weddings | limit: 6 %}
-      {% if recent_weddings.size > 0 %}
-        {% for wedding in recent_weddings %}
-        <div class="col-lg-4 col-md-6 mb-30">
-          {% include wedding-card.html wedding=wedding %}
-        </div>
-        {% endfor %}
-      {% else %}
-        <div class="col-md-12 text-center">
-          <p>Real weddings coming soon.</p>
-        </div>
-      {% endif %}
-    </div>
-    <div class="row mt-20">
-      <div class="col-md-12 text-center">
-        <div class="btn-dark">
-          <a href="{{ '/weddings/' | relative_url }}"><span>View All Weddings</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Vendor CTA (Parallax) -->
-<section class="cta-section section-padding bg-img bg-fixed" data-overlay-dark="6"
-  data-background="/assets/img/cta-bg.jpg">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-12 text-center">
-        <div class="section-subtitle"><span>Are you a vendor?</span></div>
-        <div class="section-title"><span>List Your Business on The Event Edit</span></div>
-        <p class="cta-text">Join Acadiana's curated wedding vendor directory and connect with couples planning their perfect day.</p>
-        <div class="btn-light mt-30">
-          <a href="{{ '/list-your-business/' | relative_url }}"><span>Get Listed</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Blog -->
-<section class="blog section-padding">
+<section class="news2 section-padding bg-lightbrown">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center mb-20">
+      <div class="col-md-12 text-center mb-30">
         <div class="section-subtitle">Planning Resources</div>
         <div class="section-title">From the Blog</div>
       </div>
     </div>
     <div class="row">
-      {% assign recent_posts = site.posts | limit: 3 %}
-      {% if recent_posts.size > 0 %}
-        {% for post in recent_posts %}
-        <div class="col-md-4 mb-30">
-          {% include blog-card.html post=post %}
+      <div class="col-lg-8 col-md-12 mx-auto">
+        <div class="row">
+          {% assign recent_posts = site.posts | limit: 3 %}
+          {% if recent_posts.size > 0 %}
+            {% for post in recent_posts %}
+            <div class="col-md-12">
+              <div class="item">
+                <div class="post-img">
+                  <a href="{{ post.url | relative_url }}">
+                    <img src="{{ post.image | default: '/assets/img/placeholder-blog.jpg' }}"
+                      class="img-fluid" alt="{{ post.title }}" />
+                  </a>
+                </div>
+                <div class="post-cont">
+                  <h5><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
+                  <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+                  <div class="btn-dark">
+                    <a href="{{ post.url | relative_url }}"><span>Read More</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+          <div class="col-md-12 text-center">
+            <p>Blog posts coming soon.</p>
+          </div>
+          {% endif %}
         </div>
-        {% endfor %}
-      {% else %}
-        <div class="col-md-12 text-center">
-          <p>Blog posts coming soon.</p>
-        </div>
-      {% endif %}
+      </div>
     </div>
   </div>
 </section>

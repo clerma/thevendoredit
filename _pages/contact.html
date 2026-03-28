@@ -5,67 +5,83 @@ description: Get in touch with The Event Edit — a curated wedding vendor direc
 permalink: /contact/
 ---
 
+<!-- Header Banner -->
 <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="5"
   data-background="/assets/img/banner-default.jpg">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center caption mt-90">
-        <div class="section-subtitle">Get In Touch</div>
+      <div class="col-md-12 text-left">
+        <h5>Get in touch</h5>
         <h1>Contact Us</h1>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Contact -->
 <section class="contact section-padding">
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-12">
-        <div class="section-subtitle text-center">Send a Message</div>
-        <div class="section-title text-center mb-40">We'd Love to Hear From You</div>
-        <form class="contact-form" action="#" method="POST">
-          <div class="row">
-            <div class="col-md-6 mb-20">
-              <input type="text" name="name" placeholder="Your Name" class="form-control" required>
-            </div>
-            <div class="col-md-6 mb-20">
-              <input type="email" name="email" placeholder="Your Email" class="form-control" required>
-            </div>
-            <div class="col-md-12 mb-20">
-              <input type="text" name="subject" placeholder="Subject" class="form-control">
-            </div>
-            <div class="col-md-12 mb-20">
-              <textarea name="message" rows="6" placeholder="Your Message" class="form-control" required></textarea>
-            </div>
-            <div class="col-md-12 text-center">
-              <button type="submit" class="btn-dark"><span>Send Message</span></button>
-            </div>
+    <div class="row">
+
+      <div class="col-lg-5 col-md-12">
+        <h3>Let's Connect</h3>
+        <p>Have a question about listing your business, or want to know more about The Event Edit? We'd love to hear from you.</p>
+        <div class="reservations mb-30">
+          <div class="icon"><span class="ti-email"></span></div>
+          <div class="text">
+            <p>Email</p>
+            <a href="mailto:{{ site.data.site.email }}">{{ site.data.site.email }}</a>
           </div>
-        </form>
-      </div>
-    </div>
-    <div class="row mt-60">
-      <div class="col-md-4 text-center mb-30">
-        <div class="contact-info-item">
-          <i class="ti-location-pin"></i>
-          <h5>Location</h5>
-          <p>Lafayette, Louisiana</p>
+        </div>
+        <div class="reservations mb-30">
+          <div class="icon"><span class="ti-location-pin"></span></div>
+          <div class="text">
+            <p>Location</p>
+            Lafayette, Louisiana
+          </div>
+        </div>
+        <div class="reservations mb-30">
+          <div class="icon"><span class="ti-instagram"></span></div>
+          <div class="text">
+            <p>Follow Along</p>
+            <a href="{{ site.data.site.instagram | default: '#' }}">@thevendoredit</a>
+          </div>
         </div>
       </div>
-      <div class="col-md-4 text-center mb-30">
-        <div class="contact-info-item">
-          <i class="ti-email"></i>
-          <h5>Email</h5>
-          <p><a href="mailto:{{ site.data.site.email }}">{{ site.data.site.email }}</a></p>
+
+      <div class="col-lg-7 col-md-12">
+        <div class="booking-box">
+          <div class="head-box">
+            <h6>The Event Edit</h6>
+            <h4>Send a Message</h4>
+          </div>
+          <div class="booking-inner clearfix">
+            <form class="contact__form" action="#" method="POST">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" placeholder="Your Name" class="form-control" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="email" name="email" placeholder="Your Email" class="form-control" required>
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" name="subject" placeholder="Subject" class="form-control">
+                </div>
+                <div class="col-md-12 form-group">
+                  <textarea name="message" rows="6" placeholder="Your Message" class="form-control" required></textarea>
+                </div>
+                <div class="col-md-12">
+                  <button type="submit" class="btn-dark"><span>Send Message</span></button>
+                </div>
+                <div class="col-md-12">
+                  <div class="contact__msg" style="display:none;" role="alert"></div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <div class="col-md-4 text-center mb-30">
-        <div class="contact-info-item">
-          <i class="ti-instagram"></i>
-          <h5>Instagram</h5>
-          <p><a href="{{ site.data.site.instagram | default: '#' }}">@thevendoredit</a></p>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>

@@ -2,27 +2,46 @@
 layout: default
 ---
 
-<!-- Banner -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="5"
+<!-- Header Banner -->
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
   data-background="{{ page.hero_image | default: '/assets/img/banner-blog.jpg' }}">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center caption mt-90">
-        <div class="section-subtitle">Planning Resources</div>
+      <div class="col-md-12 text-center">
+        <h5>{{ page.subtitle | default: 'The Event Edit' }}</h5>
         <h1>{{ page.title | default: 'The Blog' }}</h1>
       </div>
     </div>
   </div>
 </div>
 
-<section class="blog-listing section-padding">
+<!-- News 2 -->
+<section class="news2 section-padding">
   <div class="container">
     <div class="row">
-      {% for post in site.posts %}
-      <div class="col-md-4 mb-30 animate-box" data-animate-effect="fadeInUp">
-        {% include blog-card.html post=post %}
+      <div class="col-lg-8 col-md-12 mx-auto">
+        <div class="row">
+          {% for post in site.posts %}
+          <div class="col-md-12">
+            <div class="item">
+              <div class="post-img">
+                <a href="{{ post.url | relative_url }}">
+                  <img src="{{ post.image | default: '/assets/img/placeholder-blog.jpg' }}"
+                    class="img-fluid mx-auto d-block" alt="{{ post.title }}" />
+                </a>
+              </div>
+              <div class="post-cont">
+                <h5><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
+                <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+                <div class="btn-dark">
+                  <a href="{{ post.url | relative_url }}"><span>Read More</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      {% endfor %}
     </div>
   </div>
 </section>
