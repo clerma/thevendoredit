@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+<!-- Banner -->
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
+  data-background="{{ page.hero_image | default: '/assets/img/banner-location.jpg' }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center caption mt-90">
+        <div class="section-subtitle">Wedding Vendors in Louisiana</div>
+        <h1>{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="header-desc">{{ page.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Browse by Category in this City -->
+<section class="section-padding bg-lightbrown">
+  <div class="container">
+    <div class="row mb-30">
+      <div class="col-md-12 text-center">
+        <div class="section-subtitle">What are you looking for?</div>
+        <div class="section-title">Browse {{ page.title }} Vendors by Type</div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      {% for cat in site.data.categories %}
+      {% if cat.phase == 1 %}
+      <div class="col-lg-3 col-md-4 col-6 mb-20">
+        <a href="{{ '/' | append: page.location_slug | append: '/' | append: cat.slug | append: '/' | relative_url }}"
+          class="category-browse-card text-center d-block">
+          <span class="cat-name">{{ cat.name }}</span>
+        </a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- All Vendors in this City -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row mb-30">
+      <div class="col-md-12 text-center">
+        <div class="section-subtitle">Serving {{ page.title }}</div>
+        <div class="section-title">Featured Vendors</div>
+      </div>
+    </div>
+    <div class="row">
+      {% assign location_vendors = site.vendors | where_exp: "v", "v.cities contains page.location_slug" %}
+      {% if location_vendors.size > 0 %}
+        {% for vendor in location_vendors %}
+        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+          {% include vendor-card.html vendor=vendor %}
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-md-12 text-center py-60">
+          <p class="lead">No vendors listed yet for {{ page.title }}.</p>
+          <div class="butn-dark mt-20">
+            <a href="{{ '/list-your-business/' | relative_url }}"><span>List Your Business</span></a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

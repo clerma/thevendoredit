@@ -1,0 +1,96 @@
+---
+layout: default
+title: List Your Business
+description: Get your wedding business listed on The Event Edit, Acadiana's curated wedding vendor directory.
+permalink: /list-your-business/
+---
+
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="5"
+  data-background="/assets/img/cta-bg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center caption mt-90">
+        <div class="section-subtitle">Join the Directory</div>
+        <h1>List Your Business</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12 text-center mb-50">
+        <div class="section-subtitle">Get Discovered</div>
+        <div class="section-title">Join Acadiana's Premier Wedding Directory</div>
+        <p class="lead mt-20">Connect with couples planning their perfect day in Lafayette and the surrounding Acadiana region.</p>
+      </div>
+    </div>
+
+    <div class="row mb-50">
+      <div class="col-md-4 text-center mb-30">
+        <div class="feature-item">
+          <i class="ti-eye feature-icon"></i>
+          <h5>Curated Exposure</h5>
+          <p>Your business is presented alongside other top-tier vendors in a beautifully designed directory.</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mb-30">
+        <div class="feature-item">
+          <i class="ti-location-pin feature-icon"></i>
+          <h5>Local Discovery</h5>
+          <p>Reach couples searching specifically for vendors in your city and service area.</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mb-30">
+        <div class="feature-item">
+          <i class="ti-heart feature-icon"></i>
+          <h5>Real Wedding Features</h5>
+          <p>Get featured in real wedding galleries to showcase your work in context.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="section-title text-center mb-40">Apply to Be Listed</div>
+        <form class="contact-form" action="#" method="POST">
+          <div class="row">
+            <div class="col-md-6 mb-20">
+              <input type="text" name="business_name" placeholder="Business Name" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-20">
+              <input type="text" name="contact_name" placeholder="Your Name" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-20">
+              <input type="email" name="email" placeholder="Email Address" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-20">
+              <input type="text" name="phone" placeholder="Phone Number" class="form-control">
+            </div>
+            <div class="col-md-6 mb-20">
+              <select name="category" class="form-control" required>
+                <option value="">Select Your Category</option>
+                {% for cat in site.data.categories %}
+                <option value="{{ cat.slug }}">{{ cat.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6 mb-20">
+              <input type="text" name="city" placeholder="Primary City" class="form-control">
+            </div>
+            <div class="col-md-12 mb-20">
+              <input type="url" name="website" placeholder="Website URL" class="form-control">
+            </div>
+            <div class="col-md-12 mb-20">
+              <textarea name="message" rows="4" placeholder="Tell us about your business" class="form-control"></textarea>
+            </div>
+            <div class="col-md-12 text-center">
+              <button type="submit" class="butn-dark"><span>Submit Application</span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

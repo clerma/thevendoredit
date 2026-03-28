@@ -1,0 +1,22 @@
+{% assign post = include.post %}
+<div class="blog-card">
+  <div class="blog-card-img position-re o-hidden">
+    <img src="{{ post.image | default: '/assets/img/placeholder-blog.jpg' }}"
+      alt="{{ post.title }}" class="img-fluid">
+    <div class="date">
+      <a href="{{ post.url | relative_url }}">
+        <span>{{ post.date | date: "%b" }}</span>
+        <i>{{ post.date | date: "%d" }}</i>
+      </a>
+    </div>
+  </div>
+  <div class="con">
+    <span class="category">
+      <a href="{{ '/blog/' | relative_url }}">{{ post.category | default: 'Planning' }}</a>
+    </span>
+    <h5><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
+    {% if post.excerpt %}
+    <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,51 @@
+collections_config:
+  vendors:
+    path: _vendors
+    output: true
+    name: Vendors
+    singular_name: Vendor
+    icon: storefront
+  weddings:
+    path: _weddings
+    output: true
+    name: Real Weddings
+    singular_name: Wedding
+    icon: favorite
+  posts:
+    path: _posts
+    output: true
+    name: Blog Posts
+    singular_name: Blog Post
+    icon: article
+
+data_config:
+  categories:
+    path: _data/categories.yml
+  locations:
+    path: _data/locations.yml
+  nav:
+    path: _data/nav.yml
+  site:
+    path: _data/site.yml
+
+_inputs:
+  title:
+    type: text
+  hero_image:
+    type: image
+  gallery:
+    type: array
+  featured:
+    type: switch
+  category_slug:
+    type: select
+    options:
+      values: _data/categories.yml
+      value_key: slug
+      label_key: name
+  cities:
+    type: multiselect
+    options:
+      values: _data/locations.yml
+      value_key: slug
+      label_key: name

@@ -1,0 +1,29 @@
+- name: Lafayette
+  slug: lafayette
+  state: Louisiana
+  description: The heart of Acadiana, a city built on celebration, culture, and joie de vivre.
+  featured: true
+
+- name: Youngsville
+  slug: youngsville
+  state: Louisiana
+  description: A growing community with beautiful venues and Southern charm.
+  featured: true
+
+- name: Broussard
+  slug: broussard
+  state: Louisiana
+  description: Southern Louisiana hospitality at its finest.
+  featured: true
+
+- name: Carencro
+  slug: carencro
+  state: Louisiana
+  description: Intimate and welcoming, just north of Lafayette.
+  featured: true
+
+- name: Opelousas
+  slug: opelousas
+  state: Louisiana
+  description: Rich history and culture in the heart of Louisiana.
+  featured: true

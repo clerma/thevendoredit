@@ -1,0 +1,73 @@
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <!-- About -->
+        <div class="col-md-4">
+          <div class="footer-column footer-about">
+            <h3 class="footer-title">The Event Edit</h3>
+            <p class="footer-about-text">{{ site.data.site.description }}</p>
+            <div class="footer-about-social-list">
+              {% if site.data.site.instagram %}
+              <a href="{{ site.data.site.instagram }}" aria-label="Instagram"><i class="ti-instagram"></i></a>
+              {% endif %}
+              {% if site.data.site.facebook %}
+              <a href="{{ site.data.site.facebook }}" aria-label="Facebook"><i class="ti-facebook"></i></a>
+              {% endif %}
+              {% if site.data.site.pinterest %}
+              <a href="{{ site.data.site.pinterest }}" aria-label="Pinterest"><i class="ti-pinterest"></i></a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Explore -->
+        <div class="col-md-3 offset-md-1">
+          <div class="footer-column footer-explore">
+            <h3 class="footer-title">Explore</h3>
+            <ul class="footer-explore-list list-unstyled">
+              <li><a href="{{ '/vendors/' | relative_url }}">All Vendors</a></li>
+              <li><a href="{{ '/weddings/' | relative_url }}">Real Weddings</a></li>
+              <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+              <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+              <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+              <li><a href="{{ '/list-your-business/' | relative_url }}">List Your Business</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Cities -->
+        <div class="col-md-4">
+          <div class="footer-column footer-contact">
+            <h3 class="footer-title">Browse by City</h3>
+            <ul class="footer-explore-list list-unstyled">
+              {% for location in site.data.locations %}
+              <li>
+                <a href="{{ '/' | append: location.slug | append: '/' | relative_url }}">
+                  {{ location.name }}, {{ location.state }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="footer-bottom-inner">
+            <p class="footer-bottom-copy-right">
+              &copy; {{ 'now' | date: "%Y" }} The Event Edit &mdash; Lafayette, Louisiana
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

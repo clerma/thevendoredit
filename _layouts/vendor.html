@@ -1,0 +1,159 @@
+---
+layout: default
+---
+
+<!-- Vendor Hero -->
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
+  data-background="{{ page.hero_image | default: '/assets/img/banner-default.jpg' }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center caption mt-90">
+        <div class="section-subtitle">
+          <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">{{ page.category }}</a>
+        </div>
+        <h1>{{ page.title }}</h1>
+        <span class="vendor-header-location"><i class="ti-location-pin"></i> {{ page.city }}, Louisiana</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Vendor Content -->
+<section class="vendor-detail section-padding">
+  <div class="container">
+    <div class="row">
+
+      <!-- Main Column -->
+      <div class="col-lg-8 col-md-12">
+
+        <!-- Gallery -->
+        {% if page.gallery and page.gallery.size > 0 %}
+        <div class="vendor-gallery mb-60">
+          <div class="row g-2">
+            {% for image in page.gallery limit: 6 %}
+            <div class="col-4">
+              <a href="{{ image }}" class="img-zoom mfp-image">
+                <div class="img o-hidden">
+                  <img src="{{ image }}" alt="{{ page.title }}" class="img-fluid">
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- About -->
+        <div class="vendor-bio mb-60">
+          <div class="section-subtitle">About</div>
+          <div class="section-title">{{ page.title }}</div>
+          <div class="vendor-bio-content">{{ content }}</div>
+        </div>
+
+        <!-- Tags -->
+        <div class="vendor-tags mb-60">
+          {% if page.categories_tags %}
+          <div class="tag-group mb-15">
+            <span class="tag-label">Category</span>
+            {% for cat in page.categories_tags %}
+            <a href="{{ '/' | append: cat | append: '/' | relative_url }}" class="tag-pill">
+              {{ cat | replace: '-', ' ' | capitalize }}
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if page.cities %}
+          <div class="tag-group">
+            <span class="tag-label">Serves</span>
+            {% for city in page.cities %}
+            <a href="{{ '/' | append: city | append: '/' | relative_url }}" class="tag-pill tag-pill--location">
+              <i class="ti-location-pin"></i> {{ city | replace: '-', ' ' | capitalize }}
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4 col-md-12">
+        <div class="vendor-sidebar">
+
+          <!-- Contact Card -->
+          <div class="sidebar-card mb-30">
+            <div class="sidebar-card-title">Contact & Info</div>
+            {% if page.website %}
+            <p><i class="ti-world"></i> <a href="{{ page.website }}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>
+            {% endif %}
+            {% if page.phone %}
+            <p><i class="ti-mobile"></i> <a href="tel:{{ page.phone }}">{{ page.phone }}</a></p>
+            {% endif %}
+            {% if page.email %}
+            <p><i class="ti-email"></i> <a href="mailto:{{ page.email }}">{{ page.email }}</a></p>
+            {% endif %}
+            {% if page.instagram %}
+            <p><i class="ti-instagram"></i> <a href="{{ page.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+            {% endif %}
+          </div>
+
+          <!-- Details Card -->
+          {% if page.price_range or page.years_experience or page.service_area %}
+          <div class="sidebar-card mb-30">
+            <div class="sidebar-card-title">Details</div>
+            {% if page.price_range %}
+            <p><strong>Price Range:</strong> {{ page.price_range }}</p>
+            {% endif %}
+            {% if page.years_experience %}
+            <p><strong>Experience:</strong> {{ page.years_experience }} years</p>
+            {% endif %}
+            {% if page.service_area %}
+            <p><strong>Service Area:</strong> {{ page.service_area }}</p>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <!-- CTA -->
+          <div class="sidebar-cta">
+            <p>Are you this vendor?</p>
+            <a href="{{ '/list-your-business/' | relative_url }}" class="butn-dark btn-block"><span>Claim Your Listing</span></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Vendors -->
+    {% assign related_vendors = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" | limit: 3 %}
+    {% if related_vendors.size > 0 %}
+    <div class="row mt-60">
+      <div class="col-md-12 text-center mb-30">
+        <div class="section-subtitle">Discover More</div>
+        <div class="section-title">Similar Vendors</div>
+      </div>
+      {% for vendor in related_vendors %}
+      <div class="col-lg-4 col-md-6 mb-30">
+        {% include vendor-card.html vendor=vendor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Related Weddings -->
+    {% assign related_weddings = site.weddings | where_exp: "w", "w.vendors contains page.title" | limit: 3 %}
+    {% if related_weddings.size > 0 %}
+    <div class="row mt-60">
+      <div class="col-md-12 text-center mb-30">
+        <div class="section-subtitle">Real Events</div>
+        <div class="section-title">Featured In</div>
+      </div>
+      {% for wedding in related_weddings %}
+      <div class="col-lg-4 col-md-6 mb-30">
+        {% include wedding-card.html wedding=wedding %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>

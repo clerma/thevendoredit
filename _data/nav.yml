@@ -1,0 +1,41 @@
+- title: Vendors
+  url: /vendors/
+  dropdown:
+    - title: All Vendors
+      url: /vendors/
+    - title: Wedding Venues
+      url: /wedding-venues/
+    - title: Photographers
+      url: /photographers/
+    - title: Photo Booths
+      url: /photo-booths/
+    - title: Florists
+      url: /florists/
+    - title: DJs
+      url: /djs/
+    - title: Event Rentals
+      url: /event-rentals/
+    - title: Videographers
+      url: /videographers/
+    - title: Planners
+      url: /planners/
+
+- title: Browse Cities
+  url: /locations/
+  dropdown:
+    - title: Lafayette
+      url: /lafayette/
+    - title: Youngsville
+      url: /youngsville/
+    - title: Broussard
+      url: /broussard/
+    - title: Carencro
+      url: /carencro/
+    - title: Opelousas
+      url: /opelousas/
+
+- title: Real Weddings
+  url: /weddings/
+
+- title: Blog
+  url: /blog/

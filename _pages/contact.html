@@ -1,0 +1,71 @@
+---
+layout: default
+title: Contact The Event Edit
+description: Get in touch with The Event Edit — a curated wedding vendor directory for Lafayette and Acadiana, Louisiana.
+permalink: /contact/
+---
+
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="5"
+  data-background="/assets/img/banner-default.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center caption mt-90">
+        <div class="section-subtitle">Get In Touch</div>
+        <h1>Contact Us</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="contact section-padding">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="section-subtitle text-center">Send a Message</div>
+        <div class="section-title text-center mb-40">We'd Love to Hear From You</div>
+        <form class="contact-form" action="#" method="POST">
+          <div class="row">
+            <div class="col-md-6 mb-20">
+              <input type="text" name="name" placeholder="Your Name" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-20">
+              <input type="email" name="email" placeholder="Your Email" class="form-control" required>
+            </div>
+            <div class="col-md-12 mb-20">
+              <input type="text" name="subject" placeholder="Subject" class="form-control">
+            </div>
+            <div class="col-md-12 mb-20">
+              <textarea name="message" rows="6" placeholder="Your Message" class="form-control" required></textarea>
+            </div>
+            <div class="col-md-12 text-center">
+              <button type="submit" class="butn-dark"><span>Send Message</span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-60">
+      <div class="col-md-4 text-center mb-30">
+        <div class="contact-info-item">
+          <i class="ti-location-pin"></i>
+          <h5>Location</h5>
+          <p>Lafayette, Louisiana</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mb-30">
+        <div class="contact-info-item">
+          <i class="ti-email"></i>
+          <h5>Email</h5>
+          <p><a href="mailto:{{ site.data.site.email }}">{{ site.data.site.email }}</a></p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center mb-30">
+        <div class="contact-info-item">
+          <i class="ti-instagram"></i>
+          <h5>Instagram</h5>
+          <p><a href="{{ site.data.site.instagram | default: '#' }}">@thevendoredit</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

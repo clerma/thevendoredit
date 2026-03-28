@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <a class="logo" href="{{ '/' | relative_url }}">
+        <span class="logo-text">The <em>Event Edit</em></span>
+      </a>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarMain" aria-controls="navbarMain"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="ti-menu"></i></span>
+    </button>
+
+    <!-- Nav Links -->
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav ms-auto">
+        {% for item in site.data.nav %}
+          {% if item.dropdown %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ item.title }} <i class="ti-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              {% for sub in item.dropdown %}
+              <li>
+                <a href="{{ sub.url | relative_url }}" class="dropdown-item">
+                  <span>{{ sub.title }}</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link {% if page.url == item.url %}active{% endif %}"
+              href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+        <li class="nav-item nav-cta">
+          <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
