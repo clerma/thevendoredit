@@ -8,7 +8,7 @@ slider:
     subtitle: Acadiana's Curated Directory
     link: /vendors/
     link_text: Browse Vendors
-    image: /assets/img/rotator/1810-CAROLINE_DRAKE_WEDDING-copy-scaled-1500x700.jpg
+    video: https://player.vimeo.com/video/1111656718?background=1
   - title: Real Weddings from Acadiana Couples
     subtitle: Get Inspired
     link: /weddings/
@@ -25,23 +25,38 @@ slider:
 <header class="header slider-fade">
   <div class="owl-carousel owl-theme">
     {% for item in page.slider %}
-    <div class="item bg-img" data-overlay-dark="4" data-background="{{ item.image }}">
-      <div class="v-middle caption">
+    {% if item.video %}
+    <div class="video-fullscreen-wrap">
+      <div class="video-fullscreen-video" data-overlay-dark="4">
+        <iframe src="{{ item.video }}" width="100%" height="auto" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+      <div class="v-middle caption overlay">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-9 col-md-12">
+          <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
               <h4>{{ item.subtitle }}</h4>
               <h1>{{ item.title }}</h1>
-              {% if item.link %}
-              <div class="btn-light mt-30">
-                <a href="{{ item.link | relative_url }}"><span>{{ item.link_text }}</span></a>
-              </div>
-              {% endif %}
+              {% if item.link %}<div class="btn-light mt-30"><a href="{{ item.link | relative_url }}"><span>{{ item.link_text }}</span></a></div>{% endif %}
             </div>
           </div>
         </div>
       </div>
     </div>
+    {% else %}
+    <div class="item bg-img" data-overlay-dark="4" data-background="{{ item.image }}">
+      <div class="v-middle caption">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-12">
+              <h4>{{ item.subtitle }}</h4>
+              <h1>{{ item.title }}</h1>
+              {% if item.link %}<div class="btn-light mt-30"><a href="{{ item.link | relative_url }}"><span>{{ item.link_text }}</span></a></div>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
     {% endfor %}
   </div>
 </header>

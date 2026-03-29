@@ -3,7 +3,7 @@ layout: post
 title: "How to Choose the Right Wedding Photographer"
 date: 2024-10-01
 category: Photography
-image: /assets/img/blog/placeholder-blog.jpg
+image: /assets/img/client-investment.png
 description: Choosing a wedding photographer is one of the most important decisions you'll make. Here's what to look for.
 tags:
   - Photography

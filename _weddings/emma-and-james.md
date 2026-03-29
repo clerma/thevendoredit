@@ -3,7 +3,7 @@ title: "Emma & James"
 date: 2024-10-15
 location: Lafayette, Louisiana
 venue: The Magnolia Ballroom
-hero_image: /assets/img/weddings/placeholder-hero.jpg
+hero_image: /assets/img/floral.jpg
 gallery:
   - /assets/img/weddings/placeholder-gallery-1.jpg
   - /assets/img/weddings/placeholder-gallery-2.jpg
