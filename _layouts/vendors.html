@@ -25,7 +25,7 @@ layout: default
         <div class="filter-bar">
           <a href="{{ '/vendors/' | relative_url }}"
             class="filter-btn {% unless page.active_category %}active{% endunless %}">All</a>
-          {% for cat in site.categories | sort: 'order' %}
+          {% for cat in site.listing_categories | sort: 'order' %}
           {% if cat.phase == 1 %}
           <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
             class="filter-btn {% if page.active_category == cat.slug %}active{% endif %}">{{ cat.name }}</a>

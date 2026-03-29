@@ -13,7 +13,7 @@ collections:
   weddings:
     output: true
     permalink: /weddings/:slug/
-  categories:
+  listing_categories:
     output: true
     permalink: /:slug/
   locations:
@@ -39,7 +39,7 @@ defaults:
       layout: "post"
   - scope:
       path: ""
-      type: "categories"
+      type: "listing_categories"
     values:
       layout: "category"
   - scope:
@@ -66,7 +66,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
-  - vendor
+  - vendor/
   - .bundle
   - cappa
   - README.md

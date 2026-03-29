@@ -1,4 +1,5 @@
 ---
+layout: vendor
 title: Southern Lens Photography
 tagline: "Authentic, timeless wedding photography in Acadiana."
 category: Photographers
@@ -24,6 +25,7 @@ price_range: "$2,000 – $5,000"
 service_area: "Lafayette and surrounding Acadiana"
 featured: true
 ---
+layout: vendor
 
 Southern Lens Photography captures the authentic emotion and beauty of your wedding day. Based in Lafayette, Louisiana, we specialize in documentary-style wedding photography that tells your story naturally.
 

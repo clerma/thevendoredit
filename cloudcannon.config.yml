@@ -11,8 +11,8 @@ collections_config:
     name: Real Weddings
     singular_name: Wedding
     icon: favorite
-  categories:
-    path: _categories
+  listing_categories:
+    path: _listing_categories
     output: true
     name: Categories
     singular_name: Category
@@ -48,7 +48,7 @@ _inputs:
   category_slug:
     type: select
     options:
-      values: collections.categories
+      values: collections.listing_categories
       value_key: slug
       label_key: name
   cities:

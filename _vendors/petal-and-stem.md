@@ -1,4 +1,5 @@
 ---
+layout: vendor
 title: Petal & Stem
 tagline: "Lush, romantic floral design for your wedding day."
 category: Florists
@@ -23,6 +24,7 @@ price_range: "$1,500 – $8,000"
 service_area: "Lafayette and Acadiana"
 featured: true
 ---
+layout: vendor
 
 Petal & Stem creates lush, romantic floral arrangements that transform any venue into something magical. We specialize in organic, garden-inspired designs using locally sourced blooms whenever possible.
 

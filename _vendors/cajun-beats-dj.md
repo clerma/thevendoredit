@@ -1,4 +1,5 @@
 ---
+layout: vendor
 title: Cajun Beats DJ
 tagline: "Keeping Lafayette dancing since 2010."
 category: DJs
@@ -21,6 +22,7 @@ price_range: "$800 – $2,500"
 service_area: "Acadiana Region"
 featured: true
 ---
+layout: vendor
 
 Cajun Beats DJ brings the energy, the music, and the good times to every wedding reception. From Zydeco to Top 40, we read the room and keep your guests on the dance floor all night long.
 

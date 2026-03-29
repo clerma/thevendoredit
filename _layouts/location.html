@@ -25,7 +25,7 @@ layout: default
       <div class="col-md-12 text-center">
         <div class="filter-bar">
           <button class="filter-btn active" data-filter="all">All Vendors</button>
-          {% assign sorted_cats = site.categories | sort: 'order' %}
+          {% assign sorted_cats = site.listing_categories | sort: 'order' %}
           {% for cat in sorted_cats %}
           {% if cat.phase == 1 %}
           <button class="filter-btn" data-filter="{{ cat.slug }}">{{ cat.name }}</button>
