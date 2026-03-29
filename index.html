@@ -8,17 +8,17 @@ slider:
     subtitle: Acadiana's Curated Directory
     link: /vendors/
     link_text: Browse Vendors
-    image: /assets/img/hero/01.jpg
+    image: /assets/img/rotator/1810-CAROLINE_DRAKE_WEDDING-copy-scaled-1500x700.jpg
   - title: Real Weddings from Acadiana Couples
     subtitle: Get Inspired
     link: /weddings/
     link_text: View Real Weddings
-    image: /assets/img/hero/02.jpg
+    image: /assets/img/rotator/courtneypaul-9376-copy-1500x700.jpg
   - title: Local Vendors. Curated Just For You.
     subtitle: Lafayette & Acadiana
     link: /locations/lafayette/
     link_text: Browse by City
-    image: /assets/img/hero/03.jpg
+    image: /assets/img/rotator/Lantier_Galatas_Wedding_0433-copy-scaled-1500x700.jpg
 ---
 
 <!-- Slider -->
@@ -68,7 +68,7 @@ slider:
 
 <!-- Promo / CTA -->
 <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="5"
-  data-background="/assets/img/cta-bg.jpg">
+  data-background="/assets/img/sc-1.jpg">
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2 text-center">
@@ -98,7 +98,7 @@ slider:
       <div class="col-lg-3 col-md-6">
         <div class="item">
           <div class="img">
-            <img src="/assets/img/categories/{{ cat.slug }}.jpg"
+            <img src="{{ cat.image | default: '/assets/img/Unknown.avif' }}"
               alt="{{ cat.name }} in Lafayette, Louisiana" />
           </div>
           <div class="con">
@@ -118,7 +118,7 @@ slider:
 
 <!-- Featured Vendors -->
 <section class="testimonials">
-  <div class="background bg-img bg-fixed section-padding" data-background="/assets/img/hero/02.jpg" data-overlay-dark="5">
+  <div class="background bg-img bg-fixed section-padding" data-background="/assets/img/Unknown-8.avif" data-overlay-dark="5">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-12 text-center">
@@ -226,7 +226,7 @@ slider:
               <div class="item">
                 <div class="post-img">
                   <a href="{{ post.url | relative_url }}">
-                    <img src="{{ post.image | default: '/assets/img/placeholder-blog.jpg' }}"
+                    <img src="{{ post.image | default: '/assets/img/client-investment.png' }}"
                       class="img-fluid" alt="{{ post.title }}" />
                   </a>
                 </div>

@@ -10,12 +10,12 @@ cities:
   - youngsville
   - broussard
   - carencro
-hero_image: /assets/img/vendors/placeholder-hero.jpg
+hero_image: /assets/img/Unknown.avif
 gallery:
-  - /assets/img/vendors/placeholder-gallery-1.jpg
-  - /assets/img/vendors/placeholder-gallery-2.jpg
-  - /assets/img/vendors/placeholder-gallery-3.jpg
-  - /assets/img/vendors/placeholder-gallery-4.jpg
+  - /assets/img/Unknown.avif
+  - /assets/img/Unknown.avif
+  - /assets/img/Unknown.avif
+  - /assets/img/Unknown.avif
 categories_tags:
   - florists
 website: https://example.com
