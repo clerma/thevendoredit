@@ -1,16 +1,20 @@
 ---
+layout: real-wedding
 title: "Emma & James"
 date: 2024-10-15
+categories: [real-weddings]
+permalink: /weddings/emma-and-james/
 location: Lafayette, Louisiana
 venue: The Magnolia Ballroom
 hero_image: /assets/img/floral.jpg
+image: /assets/img/floral.jpg
 gallery:
-  - /assets/img/weddings/placeholder-gallery-1.jpg
-  - /assets/img/weddings/placeholder-gallery-2.jpg
-  - /assets/img/weddings/placeholder-gallery-3.jpg
-  - /assets/img/weddings/placeholder-gallery-4.jpg
-  - /assets/img/weddings/placeholder-gallery-5.jpg
-  - /assets/img/weddings/placeholder-gallery-6.jpg
+  - /assets/img/floral.jpg
+  - /assets/img/entrance.jpg
+  - /assets/img/fireworks.jpg
+  - /assets/img/Unknown-1.avif
+  - /assets/img/Unknown-2.avif
+  - /assets/img/Unknown-3.avif
 style_tags:
   - Romantic
   - Garden
@@ -20,6 +24,7 @@ vendors:
   - Petal & Stem
   - Cajun Beats DJ
 photographer: Southern Lens Photography
+description: A romantic garden wedding at The Magnolia Ballroom in Lafayette, Louisiana — blooms in blush and ivory, candlelight, and dancing well past midnight.
 ---
 
 Emma and James celebrated their love surrounded by lush florals and warm candlelight at The Magnolia Ballroom in Lafayette. This romantic garden wedding was a dream come true — blooms in blush and ivory, a live string quartet for the ceremony, and dancing that lasted well past midnight.

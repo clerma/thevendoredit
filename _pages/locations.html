@@ -20,7 +20,8 @@ permalink: /locations/
 <section class="section-padding">
   <div class="container">
     <div class="row">
-      {% for location in site.locations | sort: 'order' %}
+      {% assign sorted_locations = site.locations | sort: 'order' %}
+      {% for location in sorted_locations %}
       <div class="col-lg-4 col-md-6 mb-30">
         <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" class="city-feature-card">
           <div class="city-feature-card-inner bg-img" data-overlay-dark="3"

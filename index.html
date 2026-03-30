@@ -174,9 +174,9 @@ slider:
       </div>
     </div>
     <div class="row">
-      {% assign recent_weddings = site.weddings | limit: 3 %}
+      {% assign recent_weddings = site.categories["real-weddings"] %}
       {% if recent_weddings.size > 0 %}
-        {% for wedding in recent_weddings %}
+        {% for wedding in recent_weddings limit: 3 %}
         <div class="col-lg-4 col-md-6 mb-30">
           {% include wedding-card.html wedding=wedding %}
         </div>

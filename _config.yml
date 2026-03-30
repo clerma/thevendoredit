@@ -10,15 +10,16 @@ collections:
   vendors:
     output: true
     permalink: /vendors/:slug/
-  weddings:
-    output: true
-    permalink: /weddings/:slug/
   listing_categories:
     output: true
     permalink: /:slug/
   locations:
     output: true
     permalink: /locations/:slug/
+
+# Include _pages directory
+include:
+  - _pages
 
 # Defaults
 defaults:
@@ -27,11 +28,6 @@ defaults:
       type: "vendors"
     values:
       layout: "vendor"
-  - scope:
-      path: ""
-      type: "weddings"
-    values:
-      layout: "wedding"
   - scope:
       path: ""
       type: "posts"

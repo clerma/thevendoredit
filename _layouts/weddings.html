@@ -35,7 +35,8 @@ layout: default
     </div>
 
     <div class="row">
-      {% for wedding in site.weddings %}
+      {% assign real_weddings = site.categories["real-weddings"] %}
+      {% for wedding in real_weddings %}
       <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
         {% include wedding-card.html wedding=wedding %}
       </div>
