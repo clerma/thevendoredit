@@ -25,7 +25,6 @@ service_area: "Lafayette and Acadiana"
 featured: true
 is_subscribed: false
 ---
-layout: vendor
 
 Petal & Stem creates lush, romantic floral arrangements that transform any venue into something magical. We specialize in organic, garden-inspired designs using locally sourced blooms whenever possible.
 

@@ -27,7 +27,6 @@ featured: true
 is_subscribed: true
 form_endpoint: "https://formspree.io/f/your_form_id"
 ---
-layout: vendor
 
 Southern Lens Photography captures the authentic emotion and beauty of your wedding day. Based in Lafayette, Louisiana, we specialize in documentary-style wedding photography that tells your story naturally.
 

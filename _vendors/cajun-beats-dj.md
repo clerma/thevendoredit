@@ -23,7 +23,6 @@ service_area: "Acadiana Region"
 featured: true
 is_subscribed: false
 ---
-layout: vendor
 
 Cajun Beats DJ brings the energy, the music, and the good times to every wedding reception. From Zydeco to Top 40, we read the room and keep your guests on the dance floor all night long.
 
