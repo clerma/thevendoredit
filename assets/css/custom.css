@@ -9941,6 +9941,29 @@ a.filter-btn:hover, a.filter-btn.active {
   color: #a2783a;
 }
 
+/* Blurred banner for unsubscribed listings
+   The ::before pseudo-element carries the background image and
+   gets blurred independently, keeping the text overlay sharp. */
+.banner-blurred {
+  position: relative;
+  overflow: hidden;
+}
+.banner-blurred::before {
+  content: '';
+  position: absolute;
+  inset: -30px;           /* overshoot to hide blurred edges */
+  background: inherit;    /* picks up the JS-set background-image */
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.05);
+  z-index: 0;
+}
+.banner-blurred .container {
+  position: relative;
+  z-index: 1;
+}
+
 /* "Basic Listing" badge on vendor cards */
 .vendor-badge--basic {
   background: rgba(0,0,0,0.55);
