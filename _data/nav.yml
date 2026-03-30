@@ -20,7 +20,7 @@
     - title: Planners
       url: /planners/
 
-- title: Browse Cities
+- title: Cities
   url: /locations/
   dropdown:
     - title: Lafayette
@@ -34,7 +34,7 @@
     - title: Opelousas
       url: /locations/opelousas/
 
-- title: Real Weddings
+- title: Weddings
   url: /weddings/
 
 - title: Blog
