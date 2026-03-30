@@ -9958,9 +9958,16 @@ a.filter-btn:hover, a.filter-btn.active {
   filter: blur(20px);
   z-index: 0;
 }
+.banner-blurred::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
 .banner-blurred .container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* "Basic Listing" badge on vendor cards */
