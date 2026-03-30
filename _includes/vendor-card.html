@@ -6,9 +6,12 @@
         alt="{{ vendor.title }}" class="img-fluid">
       <div class="vendor-card-overlay">
         <span class="vendor-card-category">{{ vendor.category }}</span>
-        {% if vendor.featured %}
+        {% if vendor.featured and vendor.is_subscribed %}
         <span class="vendor-badge">Featured</span>
         {% endif %}
+        {% unless vendor.is_subscribed %}
+        <span class="vendor-badge--basic">Basic Listing</span>
+        {% endunless %}
       </div>
     </div>
   </a>

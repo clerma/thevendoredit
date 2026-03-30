@@ -2,7 +2,13 @@
 layout: default
 ---
 
-<!-- Vendor Hero -->
+{% if page.is_subscribed %}
+
+<!-- ============================================================
+     SUBSCRIBED LISTING — Full featured profile
+     ============================================================ -->
+
+<!-- Hero -->
 <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
   data-background="{{ page.hero_image | default: '/assets/img/Unknown-1.avif' }}">
   <div class="container">
@@ -10,7 +16,9 @@ layout: default
       <div class="col-md-12 text-center">
         <h5><a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}" style="color:rgba(255,255,255,0.8);">{{ page.category }}</a></h5>
         <h1>{{ page.title }}</h1>
-        <span class="vendor-header-location"><i class="ti-location-pin"></i> {{ page.city }}, Louisiana</span>
+        <span style="color:#fff;font-family:'Barlow',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;">
+          <i class="ti-location-pin"></i> {{ page.city }}, Louisiana
+        </span>
       </div>
     </div>
   </div>
@@ -72,6 +80,41 @@ layout: default
           {% endif %}
         </div>
 
+        <!-- Inquiry Form -->
+        {% assign form_action = page.form_endpoint | default: site.data.site.form_endpoint %}
+        {% if form_action and form_action != "" %}
+        <div class="vendor-inquiry mb-60">
+          <div class="section-subtitle">Get in Touch</div>
+          <div class="section-title">Send an Inquiry</div>
+          <div class="booking-box">
+            <form action="{{ form_action }}" method="POST" class="contact__form">
+              <input type="hidden" name="_subject" value="Inquiry via The Event Edit — {{ page.title }}">
+              <input type="hidden" name="vendor" value="{{ page.title }}">
+              <div class="row">
+                <div class="col-md-6 form-group mb-20">
+                  <input type="text" name="name" placeholder="Your Name" class="form-control" required>
+                </div>
+                <div class="col-md-6 form-group mb-20">
+                  <input type="email" name="email" placeholder="Your Email" class="form-control" required>
+                </div>
+                <div class="col-md-6 form-group mb-20">
+                  <input type="text" name="phone" placeholder="Phone (optional)" class="form-control">
+                </div>
+                <div class="col-md-6 form-group mb-20">
+                  <input type="text" name="wedding_date" placeholder="Wedding Date" class="form-control">
+                </div>
+                <div class="col-12 form-group mb-20">
+                  <textarea name="message" placeholder="Tell them a bit about your wedding..." class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn-dark"><span>Send Inquiry</span></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+
       </div>
 
       <!-- Sidebar -->
@@ -80,7 +123,7 @@ layout: default
 
           <!-- Contact Card -->
           <div class="sidebar-card mb-30">
-            <div class="sidebar-card-title">Contact & Info</div>
+            <div class="sidebar-card-title">Contact &amp; Info</div>
             {% if page.website %}
             <p><i class="ti-world"></i> <a href="{{ page.website }}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>
             {% endif %}
@@ -111,25 +154,20 @@ layout: default
           </div>
           {% endif %}
 
-          <!-- CTA -->
-          <div class="sidebar-cta">
-            <p>Are you this vendor?</p>
-            <a href="{{ '/list-your-business/' | relative_url }}" class="btn-dark btn-block"><span>Claim Your Listing</span></a>
-          </div>
-
         </div>
       </div>
+
     </div>
 
     <!-- Related Vendors -->
-    {% assign related_vendors = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" | limit: 3 %}
-    {% if related_vendors.size > 0 %}
+    {% assign related = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" %}
+    {% if related.size > 0 %}
     <div class="row mt-60">
       <div class="col-md-12 text-center mb-30">
         <div class="section-subtitle">Discover More</div>
         <div class="section-title">Similar Vendors</div>
       </div>
-      {% for vendor in related_vendors %}
+      {% for vendor in related limit: 3 %}
       <div class="col-lg-4 col-md-6 mb-30">
         {% include vendor-card.html vendor=vendor %}
       </div>
@@ -137,15 +175,15 @@ layout: default
     </div>
     {% endif %}
 
-    <!-- Related Weddings -->
-    {% assign related_weddings = site.weddings | where_exp: "w", "w.vendors contains page.title" | limit: 3 %}
+    <!-- Featured In Real Weddings -->
+    {% assign related_weddings = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains page.title" %}
     {% if related_weddings.size > 0 %}
     <div class="row mt-60">
       <div class="col-md-12 text-center mb-30">
         <div class="section-subtitle">Real Events</div>
         <div class="section-title">Featured In</div>
       </div>
-      {% for wedding in related_weddings %}
+      {% for wedding in related_weddings limit: 3 %}
       <div class="col-lg-4 col-md-6 mb-30">
         {% include wedding-card.html wedding=wedding %}
       </div>
@@ -155,3 +193,125 @@ layout: default
 
   </div>
 </section>
+
+{% else %}
+
+<!-- ============================================================
+     BASIC (UNSUBSCRIBED) LISTING — Limited view + upgrade CTA
+     ============================================================ -->
+
+<!-- Generic Banner — no hero image -->
+<div class="banner-header section-padding valign bg-fixed" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2318 100%);">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h5>{{ page.category }}</h5>
+        <h1>{{ page.title }}</h1>
+        <span style="color:rgba(255,255,255,0.6);font-family:'Barlow',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;">
+          <i class="ti-location-pin"></i> {{ page.city }}, Louisiana
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row">
+
+      <!-- Basic Info Column -->
+      <div class="col-lg-8 col-md-12">
+
+        <div class="vendor-bio mb-40">
+          <div class="section-subtitle">About</div>
+          <div class="section-title">{{ page.title }}</div>
+          <p style="font-family:'Barlow',sans-serif;font-size:16px;line-height:1.8;color:#555;">
+            {{ content | strip_html | truncatewords: 40 }}
+          </p>
+        </div>
+
+        <!-- Blurred upgrade teaser -->
+        <div class="basic-listing-blur mb-40">
+          <div class="basic-listing-blur-inner">
+            <div class="basic-listing-blur-content">
+              <div class="row g-2 mb-20">
+                {% for i in (1..3) %}
+                <div class="col-4"><div style="background:#ddd;height:120px;border-radius:4px;"></div></div>
+                {% endfor %}
+              </div>
+              <div style="background:#eee;height:18px;border-radius:3px;margin-bottom:10px;width:80%;"></div>
+              <div style="background:#eee;height:14px;border-radius:3px;margin-bottom:8px;width:60%;"></div>
+              <div style="background:#eee;height:14px;border-radius:3px;width:70%;"></div>
+            </div>
+            <div class="basic-listing-blur-overlay">
+              <i class="ti-lock" style="font-size:32px;color:#a2783a;display:block;margin-bottom:15px;"></i>
+              <p style="font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;margin-bottom:5px;color:#fff;">Full profile hidden</p>
+              <p style="font-family:'Barlow',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);">Gallery, contact details &amp; inquiry form available with a subscription.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Upgrade Sidebar -->
+      <div class="col-lg-4 col-md-12">
+        <div class="vendor-sidebar">
+
+          <!-- Locked Contact Card -->
+          <div class="sidebar-card mb-30">
+            <div class="sidebar-card-title">
+              <i class="ti-lock me-1"></i> Contact &amp; Info
+            </div>
+            <p style="font-family:'Barlow',sans-serif;font-size:13px;color:#888;margin-bottom:0;">
+              Contact details are only available on subscribed listings.
+            </p>
+          </div>
+
+          <!-- Upgrade CTA Card -->
+          <div class="sidebar-card sidebar-card--upgrade mb-30">
+            <div class="sidebar-card-title">Claim This Listing</div>
+            <p style="font-family:'Barlow',sans-serif;font-size:14px;line-height:1.7;margin-bottom:20px;">
+              Is this your business? Upgrade to a full listing for
+              <strong>{{ site.data.site.subscription_price }}</strong> and get:
+            </p>
+            <ul class="list-unstyled mb-25">
+              {% for feature in site.data.site.subscription_features %}
+              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:8px;">
+                <i class="ti-check" style="color:#a2783a;margin-right:6px;"></i>{{ feature }}
+              </li>
+              {% endfor %}
+            </ul>
+            <a href="{{ site.data.site.stripe_payment_link }}" target="_blank" rel="noopener noreferrer"
+              class="btn-dark" style="display:block;text-align:center;">
+              <span>Upgrade — {{ site.data.site.subscription_price }}</span>
+            </a>
+            <p style="font-family:'Barlow',sans-serif;font-size:11px;color:#aaa;text-align:center;margin-top:10px;margin-bottom:0;">
+              Powered by Stripe &middot; Cancel anytime
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Still show related vendors so unsubscribed page has value -->
+    {% assign related = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" %}
+    {% if related.size > 0 %}
+    <div class="row mt-60">
+      <div class="col-md-12 text-center mb-30">
+        <div class="section-subtitle">Also in {{ page.category }}</div>
+        <div class="section-title">More Vendors</div>
+      </div>
+      {% for vendor in related limit: 3 %}
+      <div class="col-lg-4 col-md-6 mb-30">
+        {% include vendor-card.html vendor=vendor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endif %}

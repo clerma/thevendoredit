@@ -9898,3 +9898,59 @@ a.filter-btn:hover, a.filter-btn.active {
 .mb-40 { margin-bottom: 40px; }
 .mb-60 { margin-bottom: 60px; }
 .mt-60 { margin-top: 60px; }
+
+/* =========================================================
+   SUBSCRIPTION GATING — Basic vs Subscribed listings
+   ========================================================= */
+
+/* Blur teaser block on basic listings */
+.basic-listing-blur {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.basic-listing-blur-inner {
+  position: relative;
+}
+.basic-listing-blur-content {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+}
+.basic-listing-blur-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 26, 26, 0.72);
+  border-radius: 6px;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+/* Upgrade CTA sidebar card */
+.sidebar-card--upgrade {
+  border: 1px solid #a2783a;
+}
+.sidebar-card--upgrade .sidebar-card-title {
+  color: #a2783a;
+}
+
+/* "Basic Listing" badge on vendor cards */
+.vendor-badge--basic {
+  background: rgba(0,0,0,0.55);
+  color: #ccc;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 4px;
+}

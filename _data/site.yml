@@ -8,3 +8,17 @@ address: "Lafayette, Louisiana"
 facebook: ""
 instagram: ""
 pinterest: ""
+
+# Stripe — replace with your live Payment Link URL
+stripe_payment_link: "https://buy.stripe.com/your_payment_link"
+subscription_price: "$29/month"
+subscription_features:
+  - Full profile with photo gallery
+  - Website, phone & email links
+  - Direct inquiry form from your listing
+  - Featured in relevant search results
+  - Appear in Real Weddings vendor credits
+
+# Contact form — replace with your Formspree form ID
+# Per-vendor override: add form_endpoint to the vendor's front matter
+form_endpoint: "https://formspree.io/f/your_form_id"

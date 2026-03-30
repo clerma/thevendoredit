@@ -23,6 +23,7 @@ instagram: https://instagram.com/example
 price_range: "$1,500 – $8,000"
 service_area: "Lafayette and Acadiana"
 featured: true
+is_subscribed: false
 ---
 layout: vendor
 

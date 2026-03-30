@@ -24,6 +24,8 @@ instagram: https://instagram.com/example
 price_range: "$2,000 – $5,000"
 service_area: "Lafayette and surrounding Acadiana"
 featured: true
+is_subscribed: true
+form_endpoint: "https://formspree.io/f/your_form_id"
 ---
 layout: vendor
 

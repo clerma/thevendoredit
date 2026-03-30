@@ -21,6 +21,7 @@ website: https://example.com
 price_range: "$800 – $2,500"
 service_area: "Acadiana Region"
 featured: true
+is_subscribed: false
 ---
 layout: vendor
 
