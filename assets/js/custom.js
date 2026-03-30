@@ -292,6 +292,31 @@
     });
   }
 
+  /* ---- Wedding style filtering ----------------------------- */
+  function initWeddingFilter() {
+    $(document).on("click", ".wedding-filter-btn", function () {
+      var $btn = $(this);
+      var filter = $btn.data("filter");
+
+      $btn.closest(".filter-bar").find(".wedding-filter-btn").removeClass("active");
+      $btn.addClass("active");
+
+      var $wrappers = $(".wedding-card-wrapper");
+      if (!$wrappers.length) return;
+
+      if (filter === "all") {
+        $wrappers.fadeIn(300);
+      } else {
+        $wrappers.each(function () {
+          var styles = ($(this).data("style") || "").toLowerCase();
+          var match  = styles.indexOf(filter.toLowerCase()) > -1;
+          if (match) { $(this).fadeIn(300); }
+          else        { $(this).fadeOut(200); }
+        });
+      }
+    });
+  }
+
   /* ---- Init all -------------------------------------------- */
   $(document).ready(function () {
     initBgImages();
@@ -308,6 +333,7 @@
     initActiveNav();
     initDropdownHover();
     initVendorFilter();
+    initWeddingFilter();
   });
 
 })(jQuery);

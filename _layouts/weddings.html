@@ -19,25 +19,38 @@ layout: default
 <section class="section-padding">
   <div class="container">
 
-    <!-- Style Filter -->
+    <!-- Style Filter — built from actual post data -->
+    {% assign real_weddings = site.categories["real-weddings"] %}
+    {% assign all_styles = "" %}
+    {% for wedding in real_weddings %}
+      {% for tag in wedding.style_tags %}
+        {% unless all_styles contains tag %}
+          {% assign all_styles = all_styles | append: tag | append: "," %}
+        {% endunless %}
+      {% endfor %}
+    {% endfor %}
+    {% assign style_list = all_styles | split: "," | uniq | sort %}
+
+    {% if style_list.size > 0 %}
     <div class="row mb-40">
       <div class="col-md-12 text-center">
         <div class="filter-bar">
-          <a href="{{ '/weddings/' | relative_url }}" class="filter-btn active">All</a>
-          <a href="#" class="filter-btn">Romantic</a>
-          <a href="#" class="filter-btn">Boho</a>
-          <a href="#" class="filter-btn">Classic</a>
-          <a href="#" class="filter-btn">Outdoor</a>
-          <a href="#" class="filter-btn">Modern</a>
-          <a href="#" class="filter-btn">Garden</a>
+          <a href="#" class="wedding-filter-btn active" data-filter="all">All</a>
+          {% for style in style_list %}
+          {% unless style == "" %}
+          <a href="#" class="wedding-filter-btn" data-filter="{{ style }}">{{ style }}</a>
+          {% endunless %}
+          {% endfor %}
         </div>
       </div>
     </div>
+    {% endif %}
 
-    <div class="row">
-      {% assign real_weddings = site.categories["real-weddings"] %}
+    <div class="row" id="weddingsGrid">
       {% for wedding in real_weddings %}
-      <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+      <div class="col-lg-4 col-md-6 mb-30 animate-box wedding-card-wrapper"
+        data-animate-effect="fadeInUp"
+        data-style="{{ wedding.style_tags | join: ' ' }}">
         {% include wedding-card.html wedding=wedding %}
       </div>
       {% endfor %}
