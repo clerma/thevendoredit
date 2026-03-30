@@ -9951,12 +9951,11 @@ a.filter-btn:hover, a.filter-btn.active {
 .banner-blurred::before {
   content: '';
   position: absolute;
-  inset: -30px;           /* overshoot to hide blurred edges */
-  background: inherit;    /* picks up the JS-set background-image */
+  inset: 0;
+  background: inherit;
   background-size: cover;
   background-position: center;
-  filter: blur(10px);
-  transform: scale(1.05);
+  filter: blur(20px);
   z-index: 0;
 }
 .banner-blurred .container {
