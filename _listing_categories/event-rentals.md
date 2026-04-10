@@ -6,4 +6,4 @@ description: Everything you need to style your event.
 phase: 1
 order: 6
 ---
-image: /assets/img/Unknown-2.avif
+

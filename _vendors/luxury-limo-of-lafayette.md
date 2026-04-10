@@ -2,8 +2,8 @@
 layout: vendor
 title: Luxury Limo of Lafayette
 tagline: "Treat yourself to Luxury."
-category: Entertainment
-category_slug: entertainment
+category: Transportation
+category_slug: transportation
 city: Lafayette
 cities:
   - lafayette
@@ -12,7 +12,7 @@ cities:
   - carencro
   - opelousas
 categories_tags:
-  - entertainment
+  - transportation
 hero_image: /assets/img/Unknown-6.avif
 gallery:
   - /assets/img/Unknown-6.avif
