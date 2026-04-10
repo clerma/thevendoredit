@@ -80,38 +80,21 @@ layout: default
           {% endif %}
         </div>
 
-        <!-- Inquiry Form -->
-        {% assign form_action = page.form_endpoint | default: site.data.site.form_endpoint %}
-        {% if form_action and form_action != "" %}
+        <!-- Inquiry — Paperform popup -->
+        {% assign inquiry_form = page.paperform_id | default: site.data.site.paperform_inquiry_id %}
+        {% if inquiry_form and inquiry_form != "" %}
         <div class="vendor-inquiry mb-60">
           <div class="section-subtitle">Get in Touch</div>
           <div class="section-title">Send an Inquiry</div>
-          <div class="booking-box">
-            <form action="{{ form_action }}" method="POST" class="contact__form">
-              <input type="hidden" name="_subject" value="Inquiry via The Event Edit — {{ page.title }}">
-              <input type="hidden" name="vendor" value="{{ page.title }}">
-              <div class="row">
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="name" placeholder="Your Name" class="form-control" required>
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="email" name="email" placeholder="Your Email" class="form-control" required>
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="phone" placeholder="Phone (optional)" class="form-control">
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="wedding_date" placeholder="Wedding Date" class="form-control">
-                </div>
-                <div class="col-12 form-group mb-20">
-                  <textarea name="message" placeholder="Tell them a bit about your wedding..." class="form-control" rows="5" required></textarea>
-                </div>
-                <div class="col-12 text-center">
-                  <button type="submit" class="btn-dark"><span>Send Inquiry</span></button>
-                </div>
-              </div>
-            </form>
-          </div>
+          <p style="font-family:'Barlow',sans-serif;font-size:15px;color:#555;margin-bottom:25px;">
+            Use the button below to send {{ page.title }} a message directly through our inquiry form.
+          </p>
+          <a data-paperform-id="{{ inquiry_form }}"
+             data-popup-button="1"
+             data-prefill="vendor={{ page.title | url_encode }}"
+             class="btn-dark" href="#">
+            <span>Send an Inquiry</span>
+          </a>
         </div>
         {% endif %}
 

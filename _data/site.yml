@@ -19,6 +19,10 @@ subscription_features:
   - Featured in relevant search results
   - Appear in Real Weddings vendor credits
 
-# Contact form — replace with your Formspree form ID
-# Per-vendor override: add form_endpoint to the vendor's front matter
-form_endpoint: "https://formspree.io/f/your_form_id"
+# Paperform IDs — replace with your actual form slugs/IDs
+# Vendor inquiry popup (shown on subscribed listing pages)
+paperform_inquiry_id: "your-inquiry-form-id"
+# General contact page form
+paperform_contact_id: "your-contact-form-id"
+# List Your Business application form
+paperform_listing_id: "your-listing-form-id"
