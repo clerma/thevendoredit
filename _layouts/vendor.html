@@ -56,6 +56,34 @@ layout: default
           <div class="vendor-bio-content">{{ content }}</div>
         </div>
 
+        <!-- Packages -->
+        {% if page.packages and page.packages.size > 0 %}
+        <div class="vendor-packages mb-60">
+          <div class="section-subtitle">Investment</div>
+          <div class="section-title">Packages &amp; Pricing</div>
+          <div class="row mt-30">
+            {% for pkg in page.packages %}
+            <div class="col-md-{{ 12 | divided_by: page.packages.size | floor }} mb-20">
+              <div class="package-card">
+                <div class="package-card-name">{{ pkg.name }}</div>
+                <div class="package-card-price">{{ pkg.price }}</div>
+                {% if pkg.description %}
+                <p class="package-card-desc">{{ pkg.description }}</p>
+                {% endif %}
+                {% if pkg.includes %}
+                <ul class="package-card-list list-unstyled">
+                  {% for item in pkg.includes %}
+                  <li><i class="ti-check"></i> {{ item }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
         <!-- Tags -->
         <div class="vendor-tags mb-60">
           {% if page.categories_tags %}
@@ -80,37 +108,39 @@ layout: default
           {% endif %}
         </div>
 
-        <!-- Inquiry Form -->
-        {% assign form_action = page.form_endpoint | default: site.data.site.form_endpoint %}
-        {% if form_action and form_action != "" %}
+        <!-- Inquiry — Paperform popup -->
+        {% assign inquiry_form = page.paperform_id | default: site.data.site.paperform_inquiry_id %}
+        {% if inquiry_form and inquiry_form != "" %}
         <div class="vendor-inquiry mb-60">
           <div class="section-subtitle">Get in Touch</div>
           <div class="section-title">Send an Inquiry</div>
-          <div class="booking-box">
-            <form action="{{ form_action }}" method="POST" class="contact__form">
-              <input type="hidden" name="_subject" value="Inquiry via The Event Edit — {{ page.title }}">
-              <input type="hidden" name="vendor" value="{{ page.title }}">
-              <div class="row">
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="name" placeholder="Your Name" class="form-control" required>
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="email" name="email" placeholder="Your Email" class="form-control" required>
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="phone" placeholder="Phone (optional)" class="form-control">
-                </div>
-                <div class="col-md-6 form-group mb-20">
-                  <input type="text" name="wedding_date" placeholder="Wedding Date" class="form-control">
-                </div>
-                <div class="col-12 form-group mb-20">
-                  <textarea name="message" placeholder="Tell them a bit about your wedding..." class="form-control" rows="5" required></textarea>
-                </div>
-                <div class="col-12 text-center">
-                  <button type="submit" class="btn-dark"><span>Send Inquiry</span></button>
-                </div>
+          <p style="font-family:'Barlow',sans-serif;font-size:15px;color:#555;margin-bottom:25px;">
+            Use the button below to send {{ page.title }} a message directly through our inquiry form.
+          </p>
+          <a data-paperform-id="{{ inquiry_form }}"
+             data-popup-button="1"
+             data-prefill="vendor={{ page.title | url_encode }}"
+             class="btn-dark" href="#">
+            <span>Send an Inquiry</span>
+          </a>
+        </div>
+        {% endif %}
+
+        <!-- Testimonials -->
+        {% if page.testimonials and page.testimonials.size > 0 %}
+        <div class="vendor-testimonials mb-60">
+          <div class="section-subtitle">Kind Words</div>
+          <div class="section-title">From Couples</div>
+          <div class="mt-30">
+            {% for t in page.testimonials %}
+            <div class="testimonial-card mb-20">
+              <blockquote class="testimonial-card-text">"{{ t.text }}"</blockquote>
+              <div class="testimonial-card-meta">
+                <strong>{{ t.author }}</strong>
+                {% if t.date %}<span class="testimonial-card-date">{{ t.date }}</span>{% endif %}
               </div>
-            </form>
+            </div>
+            {% endfor %}
           </div>
         </div>
         {% endif %}
@@ -151,6 +181,21 @@ layout: default
             {% if page.service_area %}
             <p><strong>Service Area:</strong> {{ page.service_area }}</p>
             {% endif %}
+          </div>
+          {% endif %}
+
+          <!-- Press & Accolades -->
+          {% if page.press and page.press.size > 0 %}
+          <div class="sidebar-card mb-30">
+            <div class="sidebar-card-title">Press &amp; Accolades</div>
+            <ul class="list-unstyled mb-0">
+              {% for item in page.press %}
+              <li style="font-family:'Barlow',sans-serif;font-size:13px;padding:6px 0;border-bottom:1px solid #f0f0f0;">
+                <i class="ti-star" style="color:#a2783a;margin-right:6px;font-size:11px;"></i>
+                {{ item.outlet }}{% if item.year %} <span style="color:#aaa;">{{ item.year }}</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
           </div>
           {% endif %}
 

@@ -9,16 +9,31 @@ facebook: ""
 instagram: ""
 pinterest: ""
 
-# Stripe — replace with your live Payment Link URL
-stripe_payment_link: "https://buy.stripe.com/your_payment_link"
-subscription_price: "$29/month"
-subscription_features:
+# Stripe — replace with your live Payment Link URLs
+stripe_payment_link: "https://buy.stripe.com/your_listed_link"
+stripe_featured_link: "https://buy.stripe.com/your_featured_link"
+
+# Pricing tiers
+listed_price: "$29/month"
+featured_price: "$59/month"
+
+listed_features:
   - Full profile with photo gallery
   - Website, phone & email links
+  - Packages & pricing section
   - Direct inquiry form from your listing
-  - Featured in relevant search results
   - Appear in Real Weddings vendor credits
+  - Listed in category & city search results
 
-# Contact form — replace with your Formspree form ID
-# Per-vendor override: add form_endpoint to the vendor's front matter
-form_endpoint: "https://formspree.io/f/your_form_id"
+featured_features:
+  - Everything in Listed
+  - Priority placement at top of category
+  - Homepage spotlight rotation
+  - Real wedding submission priority
+  - Monthly social media feature
+
+# Paperform IDs — replace with your actual form slugs/IDs
+paperform_inquiry_id: "your-inquiry-form-id"
+paperform_contact_id: "your-contact-form-id"
+paperform_listing_id: "your-listing-form-id"
+paperform_wedding_id: "your-wedding-submission-form-id"

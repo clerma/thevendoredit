@@ -54,43 +54,7 @@ permalink: /list-your-business/
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-12">
         <div class="section-title text-center mb-40">Apply to Be Listed</div>
-        <form class="contact-form" action="#" method="POST">
-          <div class="row">
-            <div class="col-md-6 mb-20">
-              <input type="text" name="business_name" placeholder="Business Name" class="form-control" required>
-            </div>
-            <div class="col-md-6 mb-20">
-              <input type="text" name="contact_name" placeholder="Your Name" class="form-control" required>
-            </div>
-            <div class="col-md-6 mb-20">
-              <input type="email" name="email" placeholder="Email Address" class="form-control" required>
-            </div>
-            <div class="col-md-6 mb-20">
-              <input type="text" name="phone" placeholder="Phone Number" class="form-control">
-            </div>
-            <div class="col-md-6 mb-20">
-              <select name="category" class="form-control" required>
-                <option value="">Select Your Category</option>
-                {% assign sorted_cats = site.listing_categories | sort: 'order' %}
-                {% for cat in sorted_cats %}
-                <option value="{{ cat.slug }}">{{ cat.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="col-md-6 mb-20">
-              <input type="text" name="city" placeholder="Primary City" class="form-control">
-            </div>
-            <div class="col-md-12 mb-20">
-              <input type="url" name="website" placeholder="Website URL" class="form-control">
-            </div>
-            <div class="col-md-12 mb-20">
-              <textarea name="message" rows="4" placeholder="Tell us about your business" class="form-control"></textarea>
-            </div>
-            <div class="col-md-12 text-center">
-              <button type="submit" class="btn-dark"><span>Submit Application</span></button>
-            </div>
-          </div>
-        </form>
+        <div data-paperform-id="{{ site.data.site.paperform_listing_id }}"></div>
       </div>
     </div>
   </div>

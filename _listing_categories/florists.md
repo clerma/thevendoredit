@@ -6,4 +6,4 @@ description: Stunning floral arrangements for your day.
 phase: 1
 order: 4
 ---
-image: /assets/img/floral.jpg
+

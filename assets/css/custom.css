@@ -9983,3 +9983,81 @@ a.filter-btn:hover, a.filter-btn.active {
   display: inline-block;
   margin-top: 4px;
 }
+
+/* =========================================================
+   VENDOR PROFILE — Packages, Testimonials, Press
+   ========================================================= */
+
+/* --- Packages --- */
+.package-card {
+  border: 1px solid #e8e0d5;
+  border-radius: 6px;
+  padding: 28px 24px;
+  height: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.package-card:hover {
+  border-color: #a2783a;
+  box-shadow: 0 4px 20px rgba(162,120,58,0.1);
+}
+.package-card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a2783a;
+  margin-bottom: 8px;
+}
+.package-card-price {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 22px;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+.package-card-desc {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.package-card-list li {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  color: #444;
+  padding: 4px 0;
+}
+.package-card-list li i {
+  color: #a2783a;
+  margin-right: 7px;
+  font-size: 11px;
+}
+
+/* --- Testimonials --- */
+.testimonial-card {
+  background: #faf8f5;
+  border-left: 3px solid #a2783a;
+  border-radius: 0 6px 6px 0;
+  padding: 24px 28px;
+}
+.testimonial-card-text {
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #444;
+  font-style: italic;
+  margin-bottom: 14px;
+  border: none;
+  padding: 0;
+}
+.testimonial-card-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+.testimonial-card-date {
+  color: #aaa;
+  margin-left: 10px;
+}

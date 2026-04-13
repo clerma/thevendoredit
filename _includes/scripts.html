@@ -18,3 +18,16 @@
 
 <!-- Custom -->
 <script src="{{ '/assets/js/custom.js' | relative_url }}"></script>
+
+<!-- Paperform widget (handles all embeds and popups) -->
+<script>
+  (function() {
+    var d = document, id = "paperform-js";
+    if (!d.getElementById(id)) {
+      var js = d.createElement("script");
+      js.id = id;
+      js.src = "https://tarforms.paperform.co/widget.js";
+      d.body.appendChild(js);
+    }
+  })();
+</script>
