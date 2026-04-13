@@ -2,41 +2,20 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container d-flex justify-content-between align-items-center">
 
-    <!-- Left Navigation (Desktop) -->
-    <div class="d-none d-lg-flex">
-      <ul class="navbar-nav flex-row">
-        {% for item in site.data.nav limit:2 %}
-          {% if item.dropdown %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ item.title }} <i class="ti-angle-down"></i>
-            </a>
-            <ul class="dropdown-menu">
-              {% for sub in item.dropdown %}
-              <li><a class="dropdown-item" href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link {% if page.url == item.url %}active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
-          </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
+    <!-- Logo (Left) -->
+    <a class="logo" href="{{ '/' | relative_url }}">
+      <img src="{{ site.data.site.logo_image }}" class="logo-img" alt="{{ site.title }}">
+    </a>
 
-    <!-- Logo (Centered) -->
-    <div class="text-md-center text-start flex-grow-1">
-      <a class="logo" href="{{ '/' | relative_url }}">
-        <img src="{{ site.data.site.logo_image }}" class="logo-img ms-2 ms-md-0" alt="{{ site.title }}">
-      </a>
-    </div>
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="ti-menu"></i></span>
+    </button>
 
-    <!-- Right Navigation (Desktop) -->
+    <!-- Desktop Navigation (Right) -->
     <div class="d-none d-lg-flex align-items-center">
-      <ul class="navbar-nav flex-row">
-        {% for item in site.data.nav offset:2 %}
+      <ul class="navbar-nav flex-row align-items-center">
+        {% for item in site.data.nav %}
           {% if item.dropdown %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,10 +45,6 @@
       </ul>
     </div>
 
-    <!-- Mobile Toggle -->
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"><i class="ti-menu"></i></span>
-    </button>
   </div>
 
   <!-- Mobile Menu -->
@@ -96,7 +71,6 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ '/favorites/' | relative_url }}">
           <i class="ti-heart"></i> Saved Items
-          <span class="nav-favorites-count" style="position:static;display:none;margin-left:5px;"></span>
         </a>
       </li>
       <li class="nav-item mt-2">

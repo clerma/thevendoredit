@@ -9677,6 +9677,14 @@ position it in the middle of its parent wrapper*/
    Only styles for components not in the base theme (style.css)
    ============================================================ */
 
+/* ---- Logo: left-aligned image logo ----------------------- */
+.logo-img {
+  width: auto !important;
+  max-height: 52px;
+  padding: 0 !important;
+  object-fit: contain;
+}
+
 /* ---- Logo: text-based (no image) ------------------------- */
 .logo-text {
   font-family: 'Gilda Display', serif;
