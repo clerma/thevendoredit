@@ -309,27 +309,41 @@ layout: default
               <i class="ti-lock me-1"></i> Contact &amp; Info
             </div>
             <p style="font-family:'Barlow',sans-serif;font-size:13px;color:#888;margin-bottom:0;">
-              Contact details are only available on subscribed listings.
+              Contact details are available on subscribed listings.
             </p>
           </div>
 
-          <!-- Upgrade CTA Card -->
-          <div class="sidebar-card sidebar-card--upgrade mb-30">
-            <div class="sidebar-card-title">Claim This Listing</div>
-            <p style="font-family:'Barlow',sans-serif;font-size:14px;line-height:1.7;margin-bottom:20px;">
-              Is this your business? Upgrade to a full listing for
-              <strong>{{ site.data.site.subscription_price }}</strong> and get:
-            </p>
-            <ul class="list-unstyled mb-25">
-              {% for feature in site.data.site.subscription_features %}
-              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:8px;">
+          <!-- Listed Tier CTA -->
+          <div class="sidebar-card sidebar-card--upgrade mb-20">
+            <div class="sidebar-card-title">Listed — {{ site.data.site.listed_price }}</div>
+            <ul class="list-unstyled mb-20">
+              {% for feature in site.data.site.listed_features %}
+              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:7px;">
                 <i class="ti-check" style="color:#a2783a;margin-right:6px;"></i>{{ feature }}
               </li>
               {% endfor %}
             </ul>
             <a href="{{ site.data.site.stripe_payment_link }}" target="_blank" rel="noopener noreferrer"
               class="btn-dark" style="display:block;text-align:center;">
-              <span>Upgrade — {{ site.data.site.subscription_price }}</span>
+              <span>Get Listed — {{ site.data.site.listed_price }}</span>
+            </a>
+          </div>
+
+          <!-- Featured Tier CTA -->
+          <div class="sidebar-card sidebar-card--featured mb-30">
+            <div class="sidebar-card-title" style="color:#a2783a;">
+              <i class="ti-star me-1"></i> Featured — {{ site.data.site.featured_price }}
+            </div>
+            <ul class="list-unstyled mb-20">
+              {% for feature in site.data.site.featured_features %}
+              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:7px;">
+                <i class="ti-check" style="color:#a2783a;margin-right:6px;"></i>{{ feature }}
+              </li>
+              {% endfor %}
+            </ul>
+            <a href="{{ site.data.site.stripe_featured_link }}" target="_blank" rel="noopener noreferrer"
+              class="btn-dark" style="display:block;text-align:center;background:#a2783a;border-color:#a2783a;">
+              <span>Get Featured — {{ site.data.site.featured_price }}</span>
             </a>
             <p style="font-family:'Barlow',sans-serif;font-size:11px;color:#aaa;text-align:center;margin-top:10px;margin-bottom:0;">
               Powered by Stripe &middot; Cancel anytime

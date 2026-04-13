@@ -142,7 +142,7 @@ slider:
             <h4>Featured Vendors</h4>
           </div>
           <div class="row">
-            {% assign featured_vendors = site.vendors | where: "featured", true | limit: 3 %}
+            {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
             {% if featured_vendors.size > 0 %}
               {% for vendor in featured_vendors %}
               <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">

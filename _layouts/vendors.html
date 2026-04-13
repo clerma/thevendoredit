@@ -45,6 +45,9 @@ layout: default
       {% if page.filter_location %}
         {% assign vendors = vendors | where_exp: "v", "v.cities contains page.filter_location" %}
       {% endif %}
+      {% assign featured_vendors = vendors | where: "is_featured", true %}
+      {% assign standard_vendors = vendors | where_exp: "v", "v.is_featured != true" %}
+      {% assign vendors = featured_vendors | concat: standard_vendors %}
       {% if vendors.size > 0 %}
         {% for vendor in vendors %}
         <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">

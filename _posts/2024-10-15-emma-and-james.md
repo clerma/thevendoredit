@@ -18,6 +18,12 @@ gallery:
 style_tags:
   - Romantic
   - Garden
+season: fall
+colors:
+  - blush
+  - ivory
+  - gold
+venue_type: ballroom
   - Classic
 vendors:
   - Southern Lens Photography

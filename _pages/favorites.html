@@ -1,0 +1,144 @@
+---
+layout: default
+title: Your Saved Vendors & Weddings
+description: Your saved vendors and wedding inspiration from The Event Edit.
+permalink: /favorites/
+---
+
+<!-- Banner -->
+<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
+  data-background="/assets/img/Unknown-3.avif">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h5>Your Collection</h5>
+        <h1>Saved Items</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-padding">
+  <div class="container">
+
+    <!-- Empty state (shown by default, hidden by JS when items exist) -->
+    <div id="favoritesEmpty" class="row justify-content-center text-center" style="display:none;">
+      <div class="col-lg-5 col-md-12">
+        <i class="ti-heart" style="font-size:48px;color:#e0d5c8;display:block;margin-bottom:20px;"></i>
+        <div class="section-title" style="margin-bottom:15px;">Nothing saved yet</div>
+        <p style="font-family:'Barlow',sans-serif;font-size:15px;color:#888;margin-bottom:30px;">
+          Hit the heart icon on any vendor or wedding to save it here.
+        </p>
+        <a href="{{ '/vendors/' | relative_url }}" class="btn-dark"><span>Browse Vendors</span></a>
+      </div>
+    </div>
+
+    <!-- Saved Vendors -->
+    <div id="savedVendors" style="display:none;">
+      <div class="row mb-20">
+        <div class="col-md-12">
+          <div class="section-subtitle">Saved</div>
+          <div class="section-title">Vendors</div>
+        </div>
+      </div>
+      <div class="row" id="savedVendorGrid"></div>
+    </div>
+
+    <!-- Saved Weddings -->
+    <div id="savedWeddings" style="display:none;">
+      <div class="row mb-20 mt-50">
+        <div class="col-md-12">
+          <div class="section-subtitle">Saved</div>
+          <div class="section-title">Real Weddings</div>
+        </div>
+      </div>
+      <div class="row" id="savedWeddingGrid"></div>
+    </div>
+
+    <!-- Clear all -->
+    <div id="favoritesClearRow" class="row justify-content-center mt-50 text-center" style="display:none;">
+      <div class="col-md-12">
+        <button id="clearFavorites" style="background:none;border:none;font-family:'Barlow',sans-serif;font-size:13px;color:#aaa;cursor:pointer;text-decoration:underline;">
+          Clear all saved items
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  var STORAGE_KEY = "tee_favorites";
+
+  function getFavorites() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function renderFavoriteCard(item) {
+    return '<div class="col-lg-4 col-md-6 mb-30">' +
+      '<div class="favorite-card">' +
+        '<a href="' + item.url + '" class="favorite-card-img-link">' +
+          '<div class="favorite-card-img position-re o-hidden">' +
+            '<img src="' + item.image + '" alt="' + item.title + '" class="img-fluid">' +
+            '<button class="save-btn save-btn--saved" data-url="' + item.url + '" aria-label="Remove">' +
+              '<i class="ti-heart"></i>' +
+            '</button>' +
+          '</div>' +
+        '</a>' +
+        '<div class="vendor-card-body">' +
+          '<h5 class="vendor-card-title"><a href="' + item.url + '">' + item.title + '</a></h5>' +
+          (item.meta ? '<div class="vendor-card-meta">' + item.meta + '</div>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function render() {
+    var favorites = getFavorites();
+    var vendors  = favorites.filter(function(f){ return f.type === "vendor"; });
+    var weddings = favorites.filter(function(f){ return f.type === "wedding"; });
+
+    if (favorites.length === 0) {
+      document.getElementById("favoritesEmpty").style.display = "";
+      document.getElementById("savedVendors").style.display = "none";
+      document.getElementById("savedWeddings").style.display = "none";
+      document.getElementById("favoritesClearRow").style.display = "none";
+      return;
+    }
+
+    document.getElementById("favoritesEmpty").style.display = "none";
+    document.getElementById("favoritesClearRow").style.display = "";
+
+    if (vendors.length > 0) {
+      document.getElementById("savedVendors").style.display = "";
+      document.getElementById("savedVendorGrid").innerHTML = vendors.map(renderFavoriteCard).join("");
+    }
+    if (weddings.length > 0) {
+      document.getElementById("savedWeddings").style.display = "";
+      document.getElementById("savedWeddingGrid").innerHTML = weddings.map(renderFavoriteCard).join("");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    render();
+
+    document.getElementById("clearFavorites").addEventListener("click", function() {
+      localStorage.removeItem(STORAGE_KEY);
+      render();
+    });
+
+    // Remove on click of saved heart on this page
+    document.addEventListener("click", function(e) {
+      var btn = e.target.closest(".save-btn--saved");
+      if (!btn) return;
+      e.preventDefault();
+      var url = btn.getAttribute("data-url");
+      var favorites = getFavorites().filter(function(f){ return f.url !== url; });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+      render();
+    });
+  });
+})();
+</script>

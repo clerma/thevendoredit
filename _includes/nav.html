@@ -55,6 +55,12 @@
           {% endif %}
         {% endfor %}
         <li class="nav-item">
+          <a class="nav-link nav-favorites-link" href="{{ '/favorites/' | relative_url }}" aria-label="Saved items">
+            <i class="ti-heart"></i>
+            <span class="nav-favorites-count">0</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
         </li>
       </ul>
@@ -87,6 +93,12 @@
         </li>
         {% endif %}
       {% endfor %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ '/favorites/' | relative_url }}">
+          <i class="ti-heart"></i> Saved Items
+          <span class="nav-favorites-count" style="position:static;display:none;margin-left:5px;"></span>
+        </a>
+      </li>
       <li class="nav-item mt-2">
         <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">Get a Listing</a>
       </li>

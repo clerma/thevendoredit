@@ -6,8 +6,8 @@
         alt="{{ vendor.title }}" class="img-fluid">
       <div class="vendor-card-overlay">
         <span class="vendor-card-category">{{ vendor.category }}</span>
-        {% if vendor.featured and vendor.is_subscribed %}
-        <span class="vendor-badge">Featured</span>
+        {% if vendor.is_featured and vendor.is_subscribed %}
+        <span class="vendor-badge vendor-badge--featured">&#9733; Featured</span>
         {% endif %}
         {% unless vendor.is_subscribed %}
         <span class="vendor-badge--basic">Basic Listing</span>
@@ -16,9 +16,20 @@
     </div>
   </a>
   <div class="vendor-card-body">
-    <h5 class="vendor-card-title">
-      <a href="{{ vendor.url | relative_url }}">{{ vendor.title }}</a>
-    </h5>
+    <div class="d-flex justify-content-between align-items-start">
+      <h5 class="vendor-card-title mb-0">
+        <a href="{{ vendor.url | relative_url }}">{{ vendor.title }}</a>
+      </h5>
+      <button class="save-btn"
+        data-type="vendor"
+        data-url="{{ vendor.url | relative_url }}"
+        data-title="{{ vendor.title }}"
+        data-image="{{ vendor.hero_image | default: '/assets/img/Unknown.avif' }}"
+        data-meta="{{ vendor.category }} &middot; {{ vendor.city }}"
+        aria-label="Save {{ vendor.title }}">
+        <i class="ti-heart"></i>
+      </button>
+    </div>
     <div class="vendor-card-meta">
       <span class="vendor-city"><i class="ti-location-pin"></i> {{ vendor.city }}</span>
     </div>

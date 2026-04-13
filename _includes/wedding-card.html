@@ -21,4 +21,13 @@
     </div>
     {% endif %}
   </a>
+  <button class="save-btn save-btn--card"
+    data-type="wedding"
+    data-url="{{ wedding.url | relative_url }}"
+    data-title="{{ wedding.title }}"
+    data-image="{{ wedding.hero_image | default: '/assets/img/floral.jpg' }}"
+    data-meta="{{ wedding.location }}"
+    aria-label="Save {{ wedding.title }}">
+    <i class="ti-heart"></i>
+  </button>
 </div>

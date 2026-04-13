@@ -36,6 +36,11 @@
 
 - title: Weddings
   url: /weddings/
+  dropdown:
+    - title: Real Weddings
+      url: /weddings/
+    - title: Submit Your Wedding
+      url: /submit-your-wedding/
 
 - title: Blog
   url: /blog/

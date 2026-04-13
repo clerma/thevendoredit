@@ -23,7 +23,7 @@ website: https://example.com
 instagram: https://instagram.com/example
 price_range: "$2,000 – $5,000"
 service_area: "Lafayette and surrounding Acadiana"
-featured: true
+is_featured: true
 is_subscribed: true
 paperform_id: "your-inquiry-form-id"
 packages:

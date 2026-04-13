@@ -10061,3 +10061,157 @@ a.filter-btn:hover, a.filter-btn.active {
   color: #aaa;
   margin-left: 10px;
 }
+
+/* Featured vendor badge */
+.vendor-badge--featured {
+  background: #a2783a;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Featured tier upgrade card */
+.sidebar-card--featured {
+  border: 2px solid #a2783a;
+  background: #fdf9f4;
+}
+.sidebar-card--featured .sidebar-card-title {
+  color: #a2783a;
+}
+
+/* =========================================================
+   REAL WEDDINGS — Multi-group filter bars
+   ========================================================= */
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.filter-group-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+/* Color swatch buttons */
+.color-filter-btn { display: inline-flex; align-items: center; gap: 5px; }
+.color-swatch {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+.color-blush   { background: #f4c2c2; }
+.color-ivory   { background: #fffff0; border-color: #ccc; }
+.color-gold    { background: #a2783a; }
+.color-white   { background: #fff; border-color: #ccc; }
+.color-sage    { background: #b2bd8a; }
+.color-dusty-blue { background: #a2b5c8; }
+.color-terracotta { background: #c8765a; }
+.color-burgundy { background: #722f37; }
+.color-navy    { background: #1a2744; }
+.color-lavender { background: #c9b8e8; }
+.color-greenery { background: #7d9e6e; }
+
+/* =========================================================
+   SAVE / FAVORITES — Heart button & nav counter
+   ========================================================= */
+.save-btn {
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.save-btn:hover {
+  background: #fff;
+  color: #c0392b;
+  transform: scale(1.1);
+}
+.save-btn.is-saved,
+.save-btn--saved {
+  background: #fff;
+  color: #c0392b;
+}
+.save-btn.is-saved i,
+.save-btn--saved i {
+  font-weight: 700;
+}
+
+/* Positioned on card image (wedding-card) */
+.save-btn--card {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+}
+
+/* Vendor card inline button (in card body flex row) */
+.vendor-card-body .save-btn {
+  background: transparent;
+  color: #ccc;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+.vendor-card-body .save-btn:hover,
+.vendor-card-body .save-btn.is-saved {
+  background: transparent;
+  color: #c0392b;
+}
+
+/* Nav favorites counter */
+.nav-favorites-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-favorites-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #a2783a;
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 9px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* Pulse animation on save */
+@keyframes savePulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.save-btn.pulse { animation: savePulse 0.4s ease; }
+
+/* Color swatch extras */
+.color-neutral  { background: #d4c4b0; }
