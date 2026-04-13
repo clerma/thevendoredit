@@ -23,7 +23,7 @@ phone: "(337) 565-4385"
 email: bookings@luxurylimooflafayette.net
 instagram: https://www.instagram.com/luxurylimooflafayette/
 service_area: "Lafayette and South Louisiana"
-featured: false
+is_featured: false
 is_subscribed: false
 ---
 
