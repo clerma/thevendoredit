@@ -9679,7 +9679,7 @@ position it in the middle of its parent wrapper*/
 
 /* ---- Logo: left-aligned image logo ----------------------- */
 .logo-img {
-  width: auto !important;
+  /* width: auto !important; */
   max-height: 52px;
   padding: 0 !important;
   object-fit: contain;

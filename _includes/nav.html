@@ -4,7 +4,7 @@
 
     <!-- Logo (Left) -->
     <a class="logo" href="{{ '/' | relative_url }}">
-      <img src="{{ site.data.site.logo_image }}" class="logo-img" alt="{{ site.title }}">
+      <img src="{{ site.data.site.logo_image }}" class="logo-img w-50" alt="{{ site.title }}">
     </a>
 
     <!-- Mobile Toggle -->
@@ -33,12 +33,7 @@
           </li>
           {% endif %}
         {% endfor %}
-        <li class="nav-item">
-          <a class="nav-link nav-favorites-link" href="{{ '/favorites/' | relative_url }}" aria-label="Saved items">
-            <i class="ti-heart"></i>
-            <span class="nav-favorites-count">0</span>
-          </a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
         </li>
@@ -68,11 +63,7 @@
         </li>
         {% endif %}
       {% endfor %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ '/favorites/' | relative_url }}">
-          <i class="ti-heart"></i> Saved Items
-        </a>
-      </li>
+
       <li class="nav-item mt-2">
         <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">Get a Listing</a>
       </li>
