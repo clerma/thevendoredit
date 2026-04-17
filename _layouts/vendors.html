@@ -98,6 +98,9 @@ layout: default
   </div>
 </section>
 
+<span id="vendor-init" data-active-cat="{{ page.active_category }}" style="display:none;"></span>
+
+{% raw %}
 <script>
 (function () {
   var PER_PAGE = 12;
@@ -213,7 +216,8 @@ layout: default
   });
 
   // Pre-select category if on a category sub-page
-  var initCat = '{{ page.active_category }}';
+  var initEl = document.getElementById('vendor-init');
+  var initCat = initEl ? initEl.dataset.activeCat : '';
   if (initCat) {
     var radio = document.querySelector('input[name="cat"][value="' + initCat + '"]');
     if (radio) radio.checked = true;
@@ -222,3 +226,4 @@ layout: default
   applyFilters();
 })();
 </script>
+{% endraw %}
