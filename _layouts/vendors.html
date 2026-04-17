@@ -2,42 +2,35 @@
 layout: default
 ---
 
-<!-- Header Banner -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
-  data-background="{{ page.hero_image | default: '/assets/img/Unknown-2.avif' }}">
+<!-- Editorial banner — cream, no dark overlay -->
+<div class="tve-vendors-banner" style="background:var(--tve-bg);padding:80px 0 60px;border-bottom:1px solid var(--tve-rule);">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5>{{ page.subtitle | default: 'Acadiana' }}</h5>
-        <h1>{{ page.title | default: 'Wedding Vendors' }}</h1>
-      </div>
-    </div>
+    <p class="tve-eyebrow mb-2">{{ page.subtitle | default: 'Lafayette & Acadiana' }}</p>
+    <h1 class="tve-display tve-display--lg mb-0">{{ page.title | default: 'Wedding Vendors' }}</h1>
   </div>
 </div>
 
 <!-- Vendor Listing -->
-<section class="vendors-listing section-padding">
+<section class="section-padding" style="background:#fff;">
   <div class="container">
 
-    <!-- Category Filter Bar -->
-    <div class="row mb-40">
-      <div class="col-md-12 text-center">
-        <div class="filter-bar">
-          <a href="{{ '/vendors/' | relative_url }}"
-            class="filter-btn {% unless page.active_category %}active{% endunless %}">All</a>
-          {% assign sorted_cats = site.listing_categories | sort: 'order' %}
-          {% for cat in sorted_cats %}
-          {% if cat.phase == 1 %}
-          <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
-            class="filter-btn {% if page.active_category == cat.slug %}active{% endif %}">{{ cat.name }}</a>
-          {% endif %}
-          {% endfor %}
-        </div>
-      </div>
+    <!-- Pill Filter Bar -->
+    <div class="tve-pill-filter mb-40 pb-3" style="border-bottom:1px solid var(--tve-rule);">
+      <a href="{{ '/vendors/' | relative_url }}"
+        class="tve-filter-pill filter-btn {% unless page.active_category %}active{% endunless %}"
+        data-filter="all">All</a>
+      {% assign sorted_cats = site.listing_categories | sort: 'order' %}
+      {% for cat in sorted_cats %}
+      {% if cat.phase == 1 %}
+      <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
+        class="tve-filter-pill filter-btn {% if page.active_category == cat.slug %}active{% endif %}"
+        data-filter="{{ cat.slug }}">{{ cat.name }}</a>
+      {% endif %}
+      {% endfor %}
     </div>
 
     <!-- Grid -->
-    <div class="row">
+    <div class="row g-4">
       {% assign vendors = site.vendors %}
       {% if page.filter_category %}
         {% assign vendors = vendors | where: "category_slug", page.filter_category %}
@@ -50,16 +43,17 @@ layout: default
       {% assign vendors = featured_vendors | concat: standard_vendors %}
       {% if vendors.size > 0 %}
         {% for vendor in vendors %}
-        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+        <div class="col-lg-4 col-md-6 vendor-grid-item"
+          data-featured="{{ vendor.is_featured }}"
+          data-title="{{ vendor.title | downcase }}"
+          data-date="{{ vendor.date }}">
           {% include vendor-card.html vendor=vendor %}
         </div>
         {% endfor %}
       {% else %}
-        <div class="col-md-12 text-center py-60">
-          <p class="lead">No vendors listed yet.</p>
-          <div class="btn-dark mt-20">
-            <a href="{{ '/list-your-business/' | relative_url }}"><span>List Your Business</span></a>
-          </div>
+        <div class="col-12 text-center py-5">
+          <p style="color:var(--tve-muted);">No vendors listed yet.</p>
+          <a class="tve-link mt-3 d-inline-block" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
         </div>
       {% endif %}
     </div>
