@@ -1,0 +1,344 @@
+/* Shared "editorial" system — sits on top of Bootstrap + the existing theme.
+   Only overrides / additions; all base classes still work. */
+
+:root {
+  --tve-ink: #1d1a16;
+  --tve-ink-soft: #5a5148;
+  --tve-muted: #8a8077;
+  --tve-rule: #e9e3d7;
+  --tve-bg: #f7f3ec;       /* warm cream */
+  --tve-bg-alt: #ede6d7;
+  --tve-accent: #a2783a;    /* existing brand gold */
+  --tve-accent-ink: #7a5828;
+  --tve-serif: 'Bodoni Moda', 'Gilda Display', Georgia, serif;
+  --tve-serif-alt: 'Gilda Display', Georgia, serif;
+  --tve-sans: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --tve-mono-eyebrow-letter: 0.22em;
+}
+
+body {
+  font-family: var(--tve-sans);
+  color: var(--tve-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Editorial eyebrow — replaces .section-subtitle tight caps */
+.tve-eyebrow {
+  font-family: var(--tve-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--tve-mono-eyebrow-letter);
+  text-transform: uppercase;
+  color: var(--tve-muted);
+}
+.tve-eyebrow--ink { color: var(--tve-ink); }
+.tve-eyebrow--gold { color: var(--tve-accent); }
+
+/* Editorial display — much bigger than theme defaults */
+.tve-display {
+  font-family: var(--tve-serif);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: var(--tve-ink);
+}
+.tve-display--xl { font-size: clamp(54px, 7vw, 108px); }
+.tve-display--lg { font-size: clamp(40px, 5vw, 72px); }
+.tve-display--md { font-size: clamp(28px, 3.4vw, 44px); }
+.tve-display--sm { font-size: clamp(20px, 2.2vw, 28px); }
+.tve-display em { font-style: italic; }
+
+/* Serif link with hairline underline */
+.tve-link {
+  font-family: var(--tve-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tve-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--tve-ink);
+  padding-bottom: 3px;
+  display: inline-block;
+  transition: color .2s, border-color .2s;
+}
+.tve-link:hover { color: var(--tve-accent); border-color: var(--tve-accent); }
+.tve-link--light { color: #fff; border-color: rgba(255,255,255,0.7); }
+.tve-link--light:hover { color: #fff; border-color: #fff; }
+
+/* Nav */
+.tve-nav {
+  background: #fff;
+  border-bottom: 1px solid var(--tve-rule);
+  padding: 18px 0;
+}
+.tve-nav .tve-wordmark {
+  font-family: var(--tve-serif);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  color: var(--tve-ink);
+  text-decoration: none;
+}
+.tve-nav .tve-wordmark em { font-style: italic; font-weight: 400; }
+.tve-nav a.tve-nav-link {
+  font-family: var(--tve-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tve-ink);
+  text-decoration: none;
+  padding: 8px 14px;
+}
+.tve-nav a.tve-nav-link:hover { color: var(--tve-accent); }
+.tve-nav .tve-pill {
+  font-family: var(--tve-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tve-ink);
+  border: 1px solid var(--tve-ink);
+  padding: 10px 18px;
+  text-decoration: none;
+  transition: .2s;
+  background: transparent;
+}
+.tve-nav .tve-pill:hover { background: var(--tve-ink); color: #fff; }
+
+/* Vendor card — editorial version (extends existing .vendor-card markup) */
+.tve-card { position: relative; background: transparent; }
+.tve-card .tve-card-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--tve-bg-alt);
+}
+.tve-card .tve-card-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.tve-card:hover .tve-card-media img { transform: scale(1.03); }
+.tve-card .tve-card-body { padding: 16px 2px 0; }
+.tve-card .tve-card-cat {
+  font-family: var(--tve-sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tve-muted);
+  margin-bottom: 6px;
+}
+.tve-card .tve-card-title {
+  font-family: var(--tve-serif);
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--tve-ink);
+  margin: 0 0 4px;
+}
+.tve-card .tve-card-title a { color: inherit; text-decoration: none; }
+.tve-card .tve-card-title a:hover { color: var(--tve-accent); }
+.tve-card .tve-card-meta {
+  font-family: var(--tve-sans);
+  font-size: 12px;
+  color: var(--tve-ink-soft);
+}
+.tve-card .tve-card-meta .dot { color: var(--tve-rule); margin: 0 6px; }
+
+.tve-badge-featured {
+  position: absolute; top: 14px; left: 14px;
+  background: #fff; color: var(--tve-accent-ink);
+  font-family: var(--tve-sans); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 6px 10px;
+}
+.tve-badge-featured i { color: var(--tve-accent); margin-right: 4px; }
+
+.tve-badge-rw {
+  position: absolute; bottom: 14px; left: 14px;
+  background: rgba(29,26,22,0.9); color: #fff;
+  font-family: var(--tve-sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 6px 10px;
+}
+
+.tve-save {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tve-ink); transition: .2s;
+}
+.tve-save:hover { background: #fff; color: var(--tve-accent); }
+
+/* Footer rule label */
+.tve-rule-label {
+  display: flex; align-items: center; gap: 18px;
+  font-family: var(--tve-sans);
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--tve-muted);
+}
+.tve-rule-label::before,
+.tve-rule-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--tve-rule);
+}
+
+/* Filter rail */
+.tve-filter-rail {
+  border-right: 1px solid var(--tve-rule);
+  padding-right: 28px;
+}
+.tve-filter-group { padding: 22px 0; border-bottom: 1px solid var(--tve-rule); }
+.tve-filter-group:first-child { padding-top: 0; }
+.tve-filter-group-title {
+  font-family: var(--tve-sans);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--tve-ink); margin-bottom: 14px;
+}
+.tve-facet {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0;
+  font-family: var(--tve-sans);
+  font-size: 14px; color: var(--tve-ink-soft);
+  cursor: pointer;
+}
+.tve-facet input { accent-color: var(--tve-ink); }
+.tve-facet .count { color: var(--tve-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.tve-facet:hover { color: var(--tve-ink); }
+.tve-facet.active { color: var(--tve-ink); font-weight: 500; }
+
+/* Pill filter */
+.tve-pill-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.tve-pill-filter .tve-filter-pill {
+  font-family: var(--tve-sans);
+  font-size: 12px; letter-spacing: 0.1em;
+  color: var(--tve-ink-soft);
+  background: transparent;
+  border: 1px solid var(--tve-rule);
+  padding: 9px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: .2s;
+  white-space: nowrap;
+}
+.tve-pill-filter .tve-filter-pill:hover {
+  color: var(--tve-ink); border-color: var(--tve-ink);
+}
+.tve-pill-filter .tve-filter-pill.active {
+  color: #fff; background: var(--tve-ink); border-color: var(--tve-ink);
+}
+
+.tve-sort {
+  font-family: var(--tve-sans);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--tve-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tve-ink);
+  padding: 6px 4px;
+  padding-right: 22px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231d1a16' stroke-width='1.2' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+}
+
+/* Masonry (CSS columns) */
+.tve-masonry { column-count: 4; column-gap: 12px; }
+.tve-masonry > * { break-inside: avoid; margin-bottom: 12px; display: block; }
+@media (max-width: 1100px) { .tve-masonry { column-count: 3; } }
+@media (max-width: 780px) { .tve-masonry { column-count: 2; } }
+
+/* Hero split */
+.tve-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 78vh;
+  background: var(--tve-bg);
+}
+.tve-hero-split .tve-hero-text {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 72px;
+}
+.tve-hero-split .tve-hero-img {
+  background-size: cover; background-position: center;
+}
+
+/* Full-bleed editorial hero */
+.tve-hero-full {
+  position: relative;
+  min-height: 86vh;
+  background: var(--tve-bg);
+  padding: 110px 0 70px;
+}
+.tve-hero-full .tve-hero-eyebrow {
+  font-family: var(--tve-sans);
+  font-size: 11px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--tve-accent);
+}
+.tve-hero-full .tve-hero-headline {
+  font-family: var(--tve-serif);
+  font-weight: 400;
+  line-height: 0.94;
+  font-size: clamp(60px, 9vw, 140px);
+  letter-spacing: -0.015em;
+  color: var(--tve-ink);
+  margin: 28px 0 40px;
+  text-wrap: balance;
+}
+.tve-hero-full .tve-hero-headline em { font-style: italic; }
+
+/* Count bar */
+.tve-countbar {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--tve-rule);
+  border-bottom: 1px solid var(--tve-rule);
+  font-family: var(--tve-sans);
+  font-size: 13px;
+  color: var(--tve-ink-soft);
+}
+.tve-countbar strong { color: var(--tve-ink); font-weight: 600; }
+
+/* Search bar */
+.tve-search {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--tve-ink);
+  padding: 14px 18px;
+  background: #fff;
+  max-width: 520px;
+}
+.tve-search input {
+  border: none; outline: none; flex: 1;
+  font-family: var(--tve-sans);
+  font-size: 15px;
+  color: var(--tve-ink);
+  background: transparent;
+}
+.tve-search input::placeholder { color: var(--tve-muted); }
+.tve-search .tve-search-btn {
+  font-family: var(--tve-sans);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tve-ink);
+  background: transparent; border: none;
+  cursor: pointer;
+}
+
+/* City chip */
+.tve-city-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--tve-sans); font-size: 13px;
+  color: var(--tve-ink);
+  padding: 8px 14px;
+  border: 1px solid var(--tve-rule);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: .2s;
+}
+.tve-city-chip:hover { border-color: var(--tve-ink); color: var(--tve-ink); }
+.tve-city-chip .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--tve-accent); }
