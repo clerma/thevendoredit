@@ -27,5 +27,8 @@
     <h5 class="tve-card-title">
       <a href="{{ vendor.url | relative_url }}">{{ vendor.title }}</a>
     </h5>
+    {% if vendor.tagline %}
+    <div class="tve-card-meta" style="font-family:var(--tve-serif-alt);font-size:14px;font-style:italic;color:var(--tve-ink-soft);margin-top:4px;">{{ vendor.tagline }}</div>
+    {% endif %}
   </div>
 </div>
