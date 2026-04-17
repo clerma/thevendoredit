@@ -132,32 +132,32 @@ slider:
 </section>
 
 <!-- Featured Vendors -->
-<section class="testimonials">
-  <div class="background bg-img bg-fixed section-padding" data-background="/assets/img/Unknown-8.avif" data-overlay-dark="5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-12 text-center">
-          <div class="head-box mb-30">
-            <h6>Hand-Picked</h6>
-            <h4>Featured Vendors</h4>
-          </div>
-          <div class="row">
-            {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
-            {% if featured_vendors.size > 0 %}
-              {% for vendor in featured_vendors %}
-              <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                {% include vendor-card.html vendor=vendor %}
-              </div>
-              {% endfor %}
-            {% else %}
-            <div class="col-md-12">
-              <p style="color:rgba(255,255,255,0.8);">Vendor listings coming soon.</p>
-            </div>
-            {% endif %}
-          </div>
-          <div class="btn-dark mt-30">
-            <a href="{{ '/vendors/' | relative_url }}"><span>View All Vendors</span></a>
-          </div>
+<section class="section-padding featured-vendors-section">
+  <div class="container">
+    <div class="row mb-40">
+      <div class="col-md-12 text-center">
+        <div class="section-subtitle">Hand-Picked</div>
+        <div class="section-title">Featured Vendors</div>
+      </div>
+    </div>
+    <div class="row">
+      {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
+      {% if featured_vendors.size > 0 %}
+        {% for vendor in featured_vendors %}
+        <div class="col-lg-4 col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+          {% include vendor-card.html vendor=vendor %}
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col-md-12 text-center">
+        <p style="color:#aaa;">Featured vendor listings coming soon.</p>
+      </div>
+      {% endif %}
+    </div>
+    <div class="row mt-20">
+      <div class="col-md-12 text-center">
+        <div class="btn-outline">
+          <a href="{{ '/vendors/' | relative_url }}"><span>View All Vendors</span></a>
         </div>
       </div>
     </div>

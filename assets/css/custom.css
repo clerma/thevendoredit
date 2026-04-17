@@ -10223,3 +10223,118 @@ a.filter-btn:hover, a.filter-btn.active {
 
 /* Color swatch extras */
 .color-neutral  { background: #d4c4b0; }
+
+/* =========================================================
+   EDITORIAL REFRESH — clean, whitespace-heavy, photo-forward
+   ========================================================= */
+
+/* Warm near-white body background */
+body { background-color: #fafaf8; }
+
+/* Section title — gold hairline accent above subtitle */
+.section-subtitle {
+  padding-top: 18px;
+}
+.section-subtitle::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: #a2783a;
+  margin: 0 auto 14px;
+}
+.text-start .section-subtitle::before,
+.col-md-12:not(.text-center) .section-subtitle::before { margin-left: 0; }
+
+/* Vendor card — editorial */
+.vendor-card {
+  border: 1px solid #ebebeb;
+  box-shadow: none;
+}
+.vendor-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+}
+.vendor-card-img { height: 280px; }
+
+/* Featured badge — clean gold pill on image */
+.vendor-badge--featured {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #a2783a;
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Save button on image (replaces in-body button) */
+.save-btn--img {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 3;
+  background: rgba(255,255,255,0.9);
+}
+.save-btn--img:hover { background: #fff; }
+
+/* Card body — airy */
+.vendor-card-body { padding: 16px 18px 20px; }
+
+/* Category + city label */
+.vendor-card-cat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b0a898;
+  margin-bottom: 6px;
+}
+.vendor-card-title { font-size: 17px; margin-bottom: 0; }
+
+/* Wedding card tags — no border box, quiet text */
+.wedding-card-tags {
+  border: none;
+  border-top: 1px solid #f0ede8;
+  padding: 10px 0 2px;
+  background: transparent;
+}
+.style-tag {
+  border: none;
+  color: #b0a898;
+  padding: 0;
+  margin-right: 14px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+/* Featured vendors section — cream, not dark */
+.featured-vendors-section { background: #fafaf8; }
+
+/* Outline button — editorial CTA */
+.btn-outline {
+  display: inline-block;
+  line-height: 1.2em;
+}
+.btn-outline a {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 13px;
+  padding: 13px 32px;
+  border: 1px solid #1a1a1a;
+  color: #1a1a1a;
+  background: transparent;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.btn-outline a span { position: relative; z-index: 2; }
+.btn-outline a:hover { background: #1a1a1a; color: #fff; }
+
+.btn-outline--gold a { border-color: #a2783a; color: #a2783a; }
+.btn-outline--gold a:hover { background: #a2783a; color: #fff; }
