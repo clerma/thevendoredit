@@ -10338,3 +10338,107 @@ body { background-color: #fafaf8; }
 
 .btn-outline--gold a { border-color: #a2783a; color: #a2783a; }
 .btn-outline--gold a:hover { background: #a2783a; color: #fff; }
+
+/* =========================================================
+   NAV — sans-serif override
+   ========================================================= */
+.navbar .navbar-nav .nav-link {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.navbar .dropdown-menu .dropdown-item {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   ABOUT SECTION — logo image
+   ========================================================= */
+.about-logo { display: flex; justify-content: center; }
+.about-logo-img {
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* =========================================================
+   WEDDING FILTER BAR — horizontal columns
+   ========================================================= */
+.wedding-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 50px;
+}
+.wedding-filter-bar .filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px;
+  border-right: 1px solid #ebebeb;
+  flex: 1;
+  min-width: 160px;
+  justify-content: flex-start;
+}
+.wedding-filter-bar .filter-group:last-child { border-right: none; }
+.wedding-filter-bar .filter-group-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #bbb;
+  white-space: nowrap;
+  margin-right: 6px;
+  width: 100%;
+  margin-bottom: 6px;
+}
+.wedding-filter-btn {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: #888;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.wedding-filter-btn:hover { color: #333; border-color: #ddd; }
+.wedding-filter-btn.active {
+  color: #1a1a1a;
+  border-color: #1a1a1a;
+  background: transparent;
+}
+@media (max-width: 767px) {
+  .wedding-filter-bar .filter-group {
+    width: 50%;
+    flex: none;
+    border-bottom: 1px solid #ebebeb;
+    padding: 14px 16px;
+  }
+  .wedding-filter-bar .filter-group:nth-child(even) { border-right: none; }
+}
+
+/* =========================================================
+   CITY CARDS — fix hover flicker (border-box sizing)
+   ========================================================= */
+.city-card { display: block; text-decoration: none; }
+.city-card .city-card-inner {
+  border: 1px solid #ebebeb;
+  padding: 20px 10px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.city-card:hover .city-card-inner {
+  border-color: #a2783a;
+  box-shadow: 0 4px 16px rgba(162,120,58,0.1);
+}
+.city-card:hover .city-card-inner h5 { color: #a2783a; }
+.city-card .city-card-inner h5 { transition: color 0.25s ease; }

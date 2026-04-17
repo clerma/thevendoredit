@@ -43,6 +43,5 @@
       url: /weddings/
     - title: Submit Your Wedding
       url: /submit-your-wedding/
-
-- title: Blog
-  url: /blog/
+    - title: Inspiration
+      url: /blog/

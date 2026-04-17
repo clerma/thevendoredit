@@ -40,54 +40,48 @@ layout: default
     {% assign color_list  = all_colors | split: "," | uniq | sort %}
     {% assign venue_list  = all_venues | split: "," | uniq | sort %}
 
-    <!-- Filter Bars -->
-    <div class="row mb-20">
-      <div class="col-md-12 text-center">
+    <!-- Filter Bar -->
+    <div class="wedding-filter-bar mb-50">
 
-        <!-- Style -->
-        <div class="filter-group mb-15" data-filter-group="style">
-          <span class="filter-group-label">Style</span>
-          <a href="#" class="wedding-filter-btn active" data-filter-group="style" data-filter="all">All</a>
-          {% for s in style_list %}{% unless s == "" %}
-          <a href="#" class="wedding-filter-btn" data-filter-group="style" data-filter="{{ s }}">{{ s }}</a>
-          {% endunless %}{% endfor %}
-        </div>
-
-        <!-- Season -->
-        <div class="filter-group mb-15" data-filter-group="season">
-          <span class="filter-group-label">Season</span>
-          <a href="#" class="wedding-filter-btn active" data-filter-group="season" data-filter="all">All</a>
-          <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="spring">Spring</a>
-          <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="summer">Summer</a>
-          <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="fall">Fall</a>
-          <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="winter">Winter</a>
-        </div>
-
-        <!-- Colors -->
-        {% if color_list.size > 0 %}
-        <div class="filter-group mb-15" data-filter-group="color">
-          <span class="filter-group-label">Color</span>
-          <a href="#" class="wedding-filter-btn active" data-filter-group="color" data-filter="all">All</a>
-          {% for c in color_list %}{% unless c == "" %}
-          <a href="#" class="wedding-filter-btn color-filter-btn" data-filter-group="color" data-filter="{{ c }}">
-            <span class="color-swatch color-{{ c }}"></span>{{ c | capitalize }}
-          </a>
-          {% endunless %}{% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- Venue Type -->
-        {% if venue_list.size > 0 %}
-        <div class="filter-group mb-15" data-filter-group="venue">
-          <span class="filter-group-label">Venue</span>
-          <a href="#" class="wedding-filter-btn active" data-filter-group="venue" data-filter="all">All</a>
-          {% for v in venue_list %}{% unless v == "" %}
-          <a href="#" class="wedding-filter-btn" data-filter-group="venue" data-filter="{{ v }}">{{ v | replace: '-', ' ' | capitalize }}</a>
-          {% endunless %}{% endfor %}
-        </div>
-        {% endif %}
-
+      <div class="filter-group" data-filter-group="style">
+        <span class="filter-group-label">Style</span>
+        <a href="#" class="wedding-filter-btn active" data-filter-group="style" data-filter="all">All</a>
+        {% for s in style_list %}{% unless s == "" %}
+        <a href="#" class="wedding-filter-btn" data-filter-group="style" data-filter="{{ s }}">{{ s }}</a>
+        {% endunless %}{% endfor %}
       </div>
+
+      <div class="filter-group" data-filter-group="season">
+        <span class="filter-group-label">Season</span>
+        <a href="#" class="wedding-filter-btn active" data-filter-group="season" data-filter="all">All</a>
+        <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="spring">Spring</a>
+        <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="summer">Summer</a>
+        <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="fall">Fall</a>
+        <a href="#" class="wedding-filter-btn" data-filter-group="season" data-filter="winter">Winter</a>
+      </div>
+
+      {% if color_list.size > 0 %}
+      <div class="filter-group" data-filter-group="color">
+        <span class="filter-group-label">Color</span>
+        <a href="#" class="wedding-filter-btn active" data-filter-group="color" data-filter="all">All</a>
+        {% for c in color_list %}{% unless c == "" %}
+        <a href="#" class="wedding-filter-btn color-filter-btn" data-filter-group="color" data-filter="{{ c }}">
+          <span class="color-swatch color-{{ c }}"></span>{{ c | capitalize }}
+        </a>
+        {% endunless %}{% endfor %}
+      </div>
+      {% endif %}
+
+      {% if venue_list.size > 0 %}
+      <div class="filter-group" data-filter-group="venue">
+        <span class="filter-group-label">Venue</span>
+        <a href="#" class="wedding-filter-btn active" data-filter-group="venue" data-filter="all">All</a>
+        {% for v in venue_list %}{% unless v == "" %}
+        <a href="#" class="wedding-filter-btn" data-filter-group="venue" data-filter="{{ v }}">{{ v | replace: '-', ' ' | capitalize }}</a>
+        {% endunless %}{% endfor %}
+      </div>
+      {% endif %}
+
     </div>
 
     <!-- Grid -->
