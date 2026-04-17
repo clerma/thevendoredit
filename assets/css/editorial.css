@@ -342,3 +342,24 @@ body {
 }
 .tve-city-chip:hover { border-color: var(--tve-ink); color: var(--tve-ink); }
 .tve-city-chip .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--tve-accent); }
+
+/* Page head — vendor/category/location listing pages */
+.tve-page-head { padding: 56px 0 40px; }
+.tve-page-head .tve-page-title {
+  font-family: var(--tve-serif);
+  font-weight: 400;
+  line-height: 1;
+  font-size: clamp(48px, 5.6vw, 80px);
+  letter-spacing: -0.01em;
+  color: var(--tve-ink);
+}
+.tve-page-head .tve-page-title em { font-style: italic; }
+
+/* Vendor filter rail — facet label click area */
+.tve-facet { cursor: pointer; user-select: none; }
+.tve-facet input { cursor: pointer; }
+
+/* Mobile: stack filter rail above grid */
+@media (max-width: 991px) {
+  .tve-filter-rail { border-right: none; border-bottom: 1px solid var(--tve-rule); padding-right: 0; margin-bottom: 32px; }
+}

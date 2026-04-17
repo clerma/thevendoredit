@@ -2,61 +2,270 @@
 layout: default
 ---
 
-<!-- Editorial banner — cream, no dark overlay -->
-<div class="tve-vendors-banner" style="background:var(--tve-bg);padding:80px 0 60px;border-bottom:1px solid var(--tve-rule);">
-  <div class="container">
-    <p class="tve-eyebrow mb-2">{{ page.subtitle | default: 'Lafayette & Acadiana' }}</p>
-    <h1 class="tve-display tve-display--lg mb-0">{{ page.title | default: 'Wedding Vendors' }}</h1>
-  </div>
-</div>
-
-<!-- Vendor Listing -->
-<section class="section-padding" style="background:#fff;">
-  <div class="container">
-
-    <!-- Pill Filter Bar -->
-    <div class="tve-pill-filter mb-40 pb-3" style="border-bottom:1px solid var(--tve-rule);">
-      <a href="{{ '/vendors/' | relative_url }}"
-        class="tve-filter-pill filter-btn {% unless page.active_category %}active{% endunless %}"
-        data-filter="all">All</a>
-      {% assign sorted_cats = site.listing_categories | sort: 'order' %}
-      {% for cat in sorted_cats %}
-      {% if cat.phase == 1 %}
-      <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
-        class="tve-filter-pill filter-btn {% if page.active_category == cat.slug %}active{% endif %}"
-        data-filter="{{ cat.slug }}">{{ cat.name }}</a>
-      {% endif %}
-      {% endfor %}
-    </div>
-
-    <!-- Grid -->
-    <div class="row g-4">
-      {% assign vendors = site.vendors %}
-      {% if page.filter_category %}
-        {% assign vendors = vendors | where: "category_slug", page.filter_category %}
-      {% endif %}
-      {% if page.filter_location %}
-        {% assign vendors = vendors | where_exp: "v", "v.cities contains page.filter_location" %}
-      {% endif %}
-      {% assign featured_vendors = vendors | where: "is_featured", true %}
-      {% assign standard_vendors = vendors | where_exp: "v", "v.is_featured != true" %}
-      {% assign vendors = featured_vendors | concat: standard_vendors %}
-      {% if vendors.size > 0 %}
-        {% for vendor in vendors %}
-        <div class="col-lg-4 col-md-6 vendor-grid-item"
-          data-featured="{{ vendor.is_featured }}"
-          data-title="{{ vendor.title | downcase }}"
-          data-date="{{ vendor.date }}">
-          {% include vendor-card.html vendor=vendor %}
+<!-- Page Head -->
+<section class="tve-page-head">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="tve-eyebrow mb-3">
+          <a href="{{ '/' | relative_url }}" style="color:var(--tve-muted);text-decoration:none;">Home</a>
+          &nbsp;/&nbsp; {{ page.title | default: 'Vendors' }}
         </div>
-        {% endfor %}
-      {% else %}
-        <div class="col-12 text-center py-5">
-          <p style="color:var(--tve-muted);">No vendors listed yet.</p>
-          <a class="tve-link mt-3 d-inline-block" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
-        </div>
-      {% endif %}
+        {% if page.active_category %}
+          {% assign cat_obj = site.listing_categories | where: "slug", page.active_category | first %}
+          <h1 class="tve-page-title">All <em>{{ cat_obj.name | downcase }}</em> in Acadiana.</h1>
+          <p style="font-family:var(--tve-serif-alt);font-size:19px;color:var(--tve-ink-soft);max-width:640px;margin-top:18px;">
+            {{ cat_obj.description | default: 'Every trusted vendor in this category, serving Lafayette and the Acadiana region.' }}
+          </p>
+        {% else %}
+          <h1 class="tve-page-title">All <em>vendors</em> in Acadiana.</h1>
+          <p style="font-family:var(--tve-serif-alt);font-size:19px;color:var(--tve-ink-soft);max-width:640px;margin-top:18px;">
+            Every photographer, planner, florist, venue, DJ and rental partner we trust,
+            filterable by category and credit.
+          </p>
+        {% endif %}
+      </div>
     </div>
-
   </div>
 </section>
+
+<!-- Grid + Rail -->
+<section style="padding:0 0 100px;">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row" style="border-top:1px solid var(--tve-rule);">
+
+      <!-- FILTER RAIL -->
+      <aside class="col-lg-3 tve-filter-rail" style="padding-top:30px;">
+
+        <div class="tve-filter-group">
+          <div class="tve-filter-group-title">Category</div>
+          {% assign total_count = site.vendors | size %}
+          <label class="tve-facet">
+            <span><input type="radio" name="cat" value="all" class="me-2" checked> All vendors</span>
+            <span class="count">{{ total_count }}</span>
+          </label>
+          {% assign phase1_cats = site.listing_categories | where: "phase", 1 | sort: "order" %}
+          {% for cat in phase1_cats %}
+          {% assign cat_count = site.vendors | where: "category_slug", cat.slug | size %}
+          <label class="tve-facet">
+            <span><input type="radio" name="cat" value="{{ cat.slug }}" class="me-2"> {{ cat.name }}</span>
+            <span class="count">{{ cat_count }}</span>
+          </label>
+          {% endfor %}
+        </div>
+
+        <div class="tve-filter-group">
+          <div class="tve-filter-group-title">Featured In</div>
+          <label class="tve-facet">
+            <span><input type="checkbox" id="filter-rw" class="me-2"> Real Weddings on The Edit</span>
+            <span class="count" id="rw-count"></span>
+          </label>
+          {% assign picks_count = site.vendors | where: "is_featured", true | where: "is_subscribed", true | size %}
+          <label class="tve-facet">
+            <span><input type="checkbox" id="filter-picks" class="me-2"> Editor's Picks this month</span>
+            <span class="count">{{ picks_count }}</span>
+          </label>
+        </div>
+
+        <div class="tve-filter-group">
+          <div class="tve-filter-group-title">Listing Tier</div>
+          {% assign featured_count = site.vendors | where: "is_featured", true | where: "is_subscribed", true | size %}
+          <label class="tve-facet">
+            <span><input type="checkbox" id="filter-featured" class="me-2"><i class="ti-star ms-1 me-1" style="color:var(--tve-accent);font-size:11px;"></i>Featured Listings</span>
+            <span class="count">{{ featured_count }}</span>
+          </label>
+          {% assign subscribed_count = site.vendors | where: "is_subscribed", true | size %}
+          <label class="tve-facet">
+            <span><input type="checkbox" id="filter-subscribed" class="me-2"> Subscribed Vendors</span>
+            <span class="count">{{ subscribed_count }}</span>
+          </label>
+        </div>
+
+        <div class="tve-filter-group" style="border-bottom:none;">
+          <button id="clear-filters" style="background:transparent;border:none;font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);padding:0;cursor:pointer;">
+            <i class="ti-close me-1"></i> Clear all filters
+          </button>
+        </div>
+      </aside>
+
+      <!-- RESULTS -->
+      <div class="col-lg-9" style="padding-top:30px;padding-left:clamp(20px,3vw,40px);">
+
+        <div class="tve-countbar mb-4">
+          <div><strong id="vendor-count">{{ site.vendors | size }}</strong> vendors across Acadiana</div>
+          <div class="d-flex align-items-center gap-3">
+            <span class="tve-eyebrow">Sort by</span>
+            <select class="tve-sort" id="vendor-sort">
+              <option value="featured">Featured</option>
+              <option value="alpha">A – Z</option>
+              <option value="newest">Newest</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Vendor grid -->
+        <div class="row g-4" id="vendor-grid">
+          {% assign all_vendors = site.vendors %}
+          {% assign featured_vendors = all_vendors | where: "is_featured", true %}
+          {% assign standard_vendors = all_vendors | where_exp: "v", "v.is_featured != true" %}
+          {% assign all_vendors = featured_vendors | concat: standard_vendors %}
+          {% if all_vendors.size > 0 %}
+            {% for vendor in all_vendors %}
+            {% assign rw_count = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains vendor.title" | size %}
+            <div class="col-lg-4 col-md-6 vendor-grid-item"
+              data-category="{{ vendor.category_slug }}"
+              data-featured="{{ vendor.is_featured }}"
+              data-subscribed="{{ vendor.is_subscribed }}"
+              data-rw="{{ rw_count }}"
+              data-title="{{ vendor.title | downcase }}"
+              data-date="{{ vendor.date }}">
+              {% include vendor-card.html vendor=vendor %}
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-12 text-center py-5">
+              <p style="color:var(--tve-muted);">No vendors listed yet.</p>
+              <a class="tve-link mt-3 d-inline-block" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-5 pt-4" style="border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-muted);" id="pagination-info"></div>
+          <div class="d-flex align-items-center gap-3">
+            <button class="tve-link" id="prev-page" style="font-size:11px;background:transparent;border:none;cursor:pointer;">← Prev</button>
+            <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink);" id="page-indicator"></span>
+            <button class="tve-link" id="next-page" style="font-size:11px;background:transparent;border:none;cursor:pointer;">Next →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var PER_PAGE = 12;
+  var currentPage = 1;
+  var allItems = Array.from(document.querySelectorAll('.vendor-grid-item'));
+  var visibleItems = allItems.slice();
+
+  var countEl = document.getElementById('vendor-count');
+  var infoEl  = document.getElementById('pagination-info');
+  var pageEl  = document.getElementById('page-indicator');
+  var prevBtn = document.getElementById('prev-page');
+  var nextBtn = document.getElementById('next-page');
+
+  // Fill real-weddings count dynamically
+  var rwTotal = allItems.filter(function (i) { return parseInt(i.dataset.rw) > 0; }).length;
+  var rwCountEl = document.getElementById('rw-count');
+  if (rwCountEl) rwCountEl.textContent = rwTotal;
+
+  function getFilters() {
+    return {
+      cat:          (document.querySelector('input[name="cat"]:checked') || {}).value || 'all',
+      rwOnly:       document.getElementById('filter-rw') && document.getElementById('filter-rw').checked,
+      picksOnly:    document.getElementById('filter-picks') && document.getElementById('filter-picks').checked,
+      featuredOnly: document.getElementById('filter-featured') && document.getElementById('filter-featured').checked,
+      subscribedOnly: document.getElementById('filter-subscribed') && document.getElementById('filter-subscribed').checked
+    };
+  }
+
+  function applyFilters() {
+    var f = getFilters();
+    visibleItems = allItems.filter(function (item) {
+      var d = item.dataset;
+      if (f.cat !== 'all' && d.category !== f.cat) return false;
+      if (f.rwOnly && parseInt(d.rw) < 1) return false;
+      if (f.picksOnly && !(d.featured === 'true' && d.subscribed === 'true')) return false;
+      if (f.featuredOnly && !(d.featured === 'true' && d.subscribed === 'true')) return false;
+      if (f.subscribedOnly && d.subscribed !== 'true') return false;
+      return true;
+    });
+    currentPage = 1;
+    render();
+  }
+
+  function render() {
+    var total = visibleItems.length;
+    var start = (currentPage - 1) * PER_PAGE;
+    var end   = Math.min(start + PER_PAGE, total);
+
+    allItems.forEach(function (item) { item.style.display = 'none'; });
+    visibleItems.slice(start, end).forEach(function (item) { item.style.display = ''; });
+
+    if (countEl) countEl.textContent = total;
+    if (infoEl)  infoEl.textContent  = total > 0 ? 'Showing ' + (start + 1) + '\u2013' + end + ' of ' + total : 'No vendors found';
+    if (pageEl)  pageEl.innerHTML    = 'Page <strong>' + currentPage + '</strong>';
+
+    if (prevBtn) {
+      prevBtn.style.opacity      = currentPage <= 1 ? '0.3' : '1';
+      prevBtn.style.pointerEvents = currentPage <= 1 ? 'none' : '';
+    }
+    if (nextBtn) {
+      nextBtn.style.opacity      = end >= total ? '0.3' : '1';
+      nextBtn.style.pointerEvents = end >= total ? 'none' : '';
+    }
+
+    // Sync active class on category facets
+    document.querySelectorAll('label.tve-facet').forEach(function (label) {
+      var inp = label.querySelector('input[name="cat"]');
+      if (inp) label.classList.toggle('active', inp.checked);
+    });
+  }
+
+  // Category radios
+  document.querySelectorAll('input[name="cat"]').forEach(function (radio) {
+    radio.addEventListener('change', applyFilters);
+  });
+
+  // Checkboxes
+  ['filter-rw', 'filter-picks', 'filter-featured', 'filter-subscribed'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('change', applyFilters);
+  });
+
+  // Sort
+  document.getElementById('vendor-sort').addEventListener('change', function () {
+    var grid = document.getElementById('vendor-grid');
+    var val  = this.value;
+    allItems.sort(function (a, b) {
+      if (val === 'alpha')   return a.dataset.title.localeCompare(b.dataset.title);
+      if (val === 'newest')  return (b.dataset.date || '').localeCompare(a.dataset.date || '');
+      return (a.dataset.featured === 'true' ? 0 : 1) - (b.dataset.featured === 'true' ? 0 : 1);
+    });
+    allItems.forEach(function (item) { grid.appendChild(item); });
+    applyFilters();
+  });
+
+  // Pagination buttons
+  if (prevBtn) prevBtn.addEventListener('click', function () {
+    if (currentPage > 1) { currentPage--; render(); window.scrollTo(0, 0); }
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function () {
+    if (currentPage * PER_PAGE < visibleItems.length) { currentPage++; render(); window.scrollTo(0, 0); }
+  });
+
+  // Clear filters
+  document.getElementById('clear-filters').addEventListener('click', function () {
+    var allRadio = document.querySelector('input[name="cat"][value="all"]');
+    if (allRadio) allRadio.checked = true;
+    ['filter-rw', 'filter-picks', 'filter-featured', 'filter-subscribed'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.checked = false;
+    });
+    applyFilters();
+  });
+
+  // Pre-select category if on a category sub-page
+  var initCat = '{{ page.active_category }}';
+  if (initCat) {
+    var radio = document.querySelector('input[name="cat"][value="' + initCat + '"]');
+    if (radio) radio.checked = true;
+  }
+
+  applyFilters();
+})();
+</script>
