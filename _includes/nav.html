@@ -1,10 +1,10 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-  <div class="container d-flex justify-content-between align-items-center">
+<nav class="tve-nav navbar">
+  <div class="container-fluid px-4 px-lg-5 d-flex align-items-center justify-content-between">
 
     <!-- Logo (Left) -->
-    <a class="logo" href="{{ '/' | relative_url }}">
-      <img src="{{ site.data.site.logo_image }}" class="logo-img w-50" alt="{{ site.title }}">
+    <a href="{{ '/' | relative_url }}" class="tve-wordmark">
+      <img src="{{ site.data.site.logo_image }}" class="logo-img" alt="{{ site.title }}">
     </a>
 
     <!-- Mobile Toggle -->
@@ -18,8 +18,8 @@
         {% for item in site.data.nav %}
           {% if item.dropdown %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ item.title }} <i class="ti-angle-down"></i>
+            <a class="tve-nav-link dropdown-toggle" href="{{ item.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ item.title }}
             </a>
             <ul class="dropdown-menu">
               {% for sub in item.dropdown %}
@@ -29,13 +29,18 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link {% if page.url == item.url %}active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            <a class="tve-nav-link {% if page.url == item.url %}active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
           </li>
           {% endif %}
         {% endfor %}
-
         <li class="nav-item">
-          <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
+          <a class="tve-nav-link ms-2" href="{{ '/favorites/' | relative_url }}" aria-label="Saved items">
+            <i class="ti-heart"></i>
+            <span class="nav-favorites-count">0</span>
+          </a>
+        </li>
+        <li class="nav-item ms-3">
+          <a class="tve-pill" href="{{ '/list-your-business/' | relative_url }}">List Your Business</a>
         </li>
       </ul>
     </div>
@@ -49,7 +54,7 @@
         {% if item.dropdown %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ item.title }} <i class="ti-angle-down"></i>
+            {{ item.title }}
           </a>
           <ul class="dropdown-menu">
             {% for sub in item.dropdown %}
@@ -63,9 +68,11 @@
         </li>
         {% endif %}
       {% endfor %}
-
+      <li class="nav-item">
+        <a class="nav-link" href="{{ '/favorites/' | relative_url }}"><i class="ti-heart"></i> Saved Items</a>
+      </li>
       <li class="nav-item mt-2">
-        <a class="nav-link btn-list" href="{{ '/list-your-business/' | relative_url }}">Get a Listing</a>
+        <a class="tve-pill" href="{{ '/list-your-business/' | relative_url }}">Get a Listing</a>
       </li>
     </ul>
   </div>
