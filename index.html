@@ -7,63 +7,55 @@ permalink: /
 
 <!-- Hero -->
 <section class="tve-hero-full">
-  <div class="container">
-    <div class="row align-items-end g-5">
-      <div class="col-lg-7">
-        <p class="tve-hero-eyebrow">Lafayette &amp; Acadiana</p>
-        <h1 class="tve-hero-headline">Find your<br><em>perfect</em><br>wedding<br>vendors.</h1>
-        <a class="tve-link mt-3 d-inline-block" href="{{ '/vendors/' | relative_url }}">Browse All Vendors</a>
-      </div>
-      <div class="col-lg-5 d-none d-lg-flex flex-column gap-4 pb-2">
-        <p style="font-family:var(--tve-sans);font-size:15px;color:var(--tve-ink-soft);line-height:1.8;max-width:340px;">A hand-curated directory of wedding vendors serving Lafayette and the Acadiana region of Louisiana.</p>
-        <a class="tve-link" href="{{ '/weddings/' | relative_url }}">View Real Weddings</a>
-      </div>
+  <div class="container-fluid px-4 px-lg-5">
+    <p class="tve-eyebrow tve-eyebrow--gold mb-3">Vol. III · The Acadiana Edit</p>
+    <h1 class="tve-hero-headline">The best of<br>Lafayette weddings,<br><em>curated by hand.</em></h1>
+    <div class="tve-search mt-5">
+      <input type="text" placeholder="Search vendors, venues, photographers…" id="hero-search" onkeydown="if(event.key==='Enter'){window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(this.value)}">
+      <button class="tve-search-btn" onclick="window.location='{{ '/vendors/' | relative_url }}'">Search</button>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      {% assign phase1_cats = site.listing_categories | where: "phase", 1 | sort: "order" | limit: 6 %}
+      {% for cat in phase1_cats %}
+      <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
+        style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--tve-rule);border-radius:99px;color:var(--tve-ink-soft);text-decoration:none;transition:.2s;"
+        onmouseover="this.style.borderColor='var(--tve-ink)';this.style.color='var(--tve-ink)'"
+        onmouseout="this.style.borderColor='var(--tve-rule)';this.style.color='var(--tve-ink-soft)'">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- Browse by Category -->
+<!-- The Feed -->
 <section class="section-padding" style="background:#fff;">
-  <div class="container">
-    <div class="row mb-40">
-      <div class="col-md-12 text-center">
-        <p class="tve-eyebrow mb-2">Find What You Need</p>
-        <h2 class="tve-display tve-display--md">Browse by Category</h2>
-      </div>
-    </div>
-    <div class="row mb-4 justify-content-center">
-      {% assign phase1_cats = site.listing_categories | where: "phase", 1 | sort: "order" %}
-      {% for cat in phase1_cats %}
-      <div class="col-lg-3 col-md-6">
-        <div class="item">
-          <div class="img">
-            <img src="{{ cat.image | default: '/assets/img/Unknown.avif' }}"
-              alt="{{ cat.name }} in Lafayette, Louisiana" />
-          </div>
-          <div class="con">
-            <div class="title">{{ cat.name }}</div>
-            <div class="arrow">
-              <a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">
-                <span class="ti-arrow-right"></span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-rule-label mb-5"><span>The Feed</span></div>
+    <div class="tve-masonry">
+      {% assign feed_vendors = site.vendors | limit: 8 %}
+      {% for vendor in feed_vendors %}
+        {% include vendor-card.html vendor=vendor %}
       {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+      <a class="tve-link" href="{{ '/vendors/' | relative_url }}">Browse All Vendors</a>
     </div>
   </div>
 </section>
 
 <!-- Featured Vendors -->
 <section class="section-padding" style="background:var(--tve-bg);">
-  <div class="container">
-    <div class="d-flex align-items-baseline justify-content-between mb-40">
-      <div>
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row mb-40 align-items-end">
+      <div class="col-md-8">
         <p class="tve-eyebrow mb-2">Hand-Picked</p>
         <h2 class="tve-display tve-display--md mb-0">Featured Vendors</h2>
       </div>
-      <a class="tve-link d-none d-md-inline-block" href="{{ '/vendors/' | relative_url }}">View All</a>
+      <div class="col-md-4 text-md-end d-none d-md-block">
+        <p style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);line-height:1.7;max-width:280px;margin-left:auto;">Three vendors we're recommending this month — trusted, talented, and taking bookings.</p>
+        <a class="tve-link mt-2 d-inline-block" href="{{ '/vendors/' | relative_url }}">View All</a>
+      </div>
     </div>
     <div class="row g-4">
       {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
@@ -87,13 +79,16 @@ permalink: /
 
 <!-- Real Weddings -->
 <section class="section-padding" style="background:#fff;">
-  <div class="container">
-    <div class="d-flex align-items-baseline justify-content-between mb-40">
-      <div>
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row mb-40 align-items-end">
+      <div class="col-md-8">
         <p class="tve-eyebrow mb-2">Be Inspired</p>
         <h2 class="tve-display tve-display--md mb-0">Real Weddings</h2>
       </div>
-      <a class="tve-link d-none d-md-inline-block" href="{{ '/weddings/' | relative_url }}">View All</a>
+      <div class="col-md-4 text-md-end d-none d-md-block">
+        <p style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);line-height:1.7;max-width:280px;margin-left:auto;">Acadiana love stories, with every vendor credited.</p>
+        <a class="tve-link mt-2 d-inline-block" href="{{ '/weddings/' | relative_url }}">View All</a>
+      </div>
     </div>
     <div class="row g-4">
       {% assign recent_weddings = site.categories["real-weddings"] %}
@@ -115,63 +110,36 @@ permalink: /
   </div>
 </section>
 
-<!-- Browse by City -->
+<!-- City Index -->
 <section class="section-padding" style="background:var(--tve-bg);">
-  <div class="container">
-    <div class="row mb-40">
-      <div class="col-md-12 text-center">
-        <p class="tve-eyebrow mb-2">Acadiana Region</p>
-        <h2 class="tve-display tve-display--md">Browse by City</h2>
-      </div>
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="text-center mb-40">
+      <p class="tve-eyebrow mb-2">Acadiana Region</p>
+      <h2 class="tve-display tve-display--md">Browse by City</h2>
     </div>
-    <div class="d-flex flex-wrap justify-content-center gap-3">
+    <div class="row g-4">
       {% assign sorted_locations = site.locations | sort: "order" %}
       {% for location in sorted_locations %}
-      <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" class="tve-city-chip">
-        <span class="dot"></span>{{ location.name }}
-      </a>
+      {% assign loc_count = site.vendors | where_exp: "v", "v.cities contains location.name" | size %}
+      <div class="col-lg-2 col-md-4 col-6">
+        <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}" style="text-decoration:none;color:inherit;display:block;">
+          <div style="border-top:1px solid var(--tve-ink);padding-top:14px;">
+            <div style="font-family:var(--tve-serif);font-size:clamp(20px,2.2vw,34px);font-weight:400;line-height:1.1;">{{ location.name }}</div>
+            <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.2em;color:var(--tve-muted);margin-top:6px;text-transform:uppercase;">{{ loc_count }} Vendor{% if loc_count != 1 %}s{% endif %}</div>
+          </div>
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- Inspiration -->
-<section class="section-padding" style="background:#fff;">
-  <div class="container">
-    <div class="d-flex align-items-baseline justify-content-between mb-40">
-      <div>
-        <p class="tve-eyebrow mb-2">Planning Resources</p>
-        <h2 class="tve-display tve-display--md mb-0">Inspiration</h2>
-      </div>
-      <a class="tve-link d-none d-md-inline-block" href="{{ '/blog/' | relative_url }}">View All</a>
-    </div>
-    <div class="row g-4">
-      {% assign recent_posts = site.posts | limit: 3 %}
-      {% if recent_posts.size > 0 %}
-        {% for post in recent_posts %}
-        <div class="col-lg-4 col-md-6">
-          <div class="tve-card">
-            <a href="{{ post.url | relative_url }}" style="text-decoration:none;">
-              <div class="tve-card-media">
-                <img src="{{ post.image | default: '/assets/img/client-investment.png' }}" alt="{{ post.title }}" loading="lazy">
-              </div>
-            </a>
-            <div class="tve-card-body">
-              <div class="tve-card-cat">{{ post.date | date: "%B %d, %Y" }}</div>
-              <h5 class="tve-card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
-              <p style="font-family:var(--tve-sans);font-size:14px;color:var(--tve-ink-soft);margin-top:8px;line-height:1.6;">{{ post.excerpt | strip_html | truncatewords: 18 }}</p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      {% else %}
-      <div class="col-12 text-center py-5">
-        <p style="color:var(--tve-muted);">Inspiration coming soon.</p>
-      </div>
-      {% endif %}
-    </div>
-    <div class="text-center mt-4 d-md-none">
-      <a class="tve-link" href="{{ '/blog/' | relative_url }}">View All</a>
-    </div>
+<!-- Dark CTA -->
+<section style="background:var(--tve-ink);padding:120px 0;">
+  <div class="container-fluid px-4 px-lg-5 text-center">
+    <p class="tve-eyebrow" style="color:var(--tve-accent);">For Wedding Vendors</p>
+    <h2 style="font-family:var(--tve-serif);font-size:clamp(52px,6vw,96px);color:#fff;font-weight:400;line-height:1;margin:16px 0 24px;">Join the Edit.</h2>
+    <p style="font-family:var(--tve-sans);font-size:15px;color:rgba(255,255,255,.6);max-width:400px;margin:0 auto;line-height:1.7;">Get listed in the most curated wedding directory in Acadiana.</p>
+    <a class="tve-link tve-link--light mt-4 d-inline-block" href="{{ '/list-your-business/' | relative_url }}">List Your Business →</a>
   </div>
 </section>
