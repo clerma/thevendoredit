@@ -9796,8 +9796,15 @@ position it in the middle of its parent wrapper*/
 .category-card-body p { font-size: 13px; color: rgba(255,255,255,0.8); margin: 0; }
 
 /* ---- City Card ------------------------------------------- */
-.city-card { display: block; text-decoration: none; }
+.city-card {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
 .city-card-inner {
+  display: inline-block;
+  width: 100%;
   border: 1px solid #ede8e0; padding: 20px 15px;
   text-align: center; transition: background 0.25s ease, border-color 0.25s ease; background: #fff;
 }
@@ -9809,6 +9816,7 @@ position it in the middle of its parent wrapper*/
 .city-card:hover .city-card-inner h5,
 .city-card:hover .city-card-inner span { color: #fff; }
 .city-card-inner span {
+  display: inline-block;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
   color: #888; transition: color 0.25s ease;
