@@ -9709,7 +9709,7 @@ position it in the middle of its parent wrapper*/
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 13px;
-  margin-left: 15px;
+  margin-left: 40px;
   transition: background 0.3s ease;
 }
 .navbar-nav .btn-list:hover { background: #8a6530; }
