@@ -15,14 +15,17 @@ layout: default
   .rw-byline { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.7); display: flex; gap: 30px; flex-wrap: wrap; }
   .rw-byline strong { color: #fff; font-weight: 500; }
 
-  /* ── Overlay nav (transparent when over cover) ── */
-  .rw-cover-nav.tve-nav { background: transparent !important; border-bottom: none !important; position: absolute !important; top: 0; left: 0; right: 0; width: 100%; z-index: 100; }
+  /* ── Overlay nav — transparent when cover is visible, no position change ── */
+  .rw-cover-nav.tve-nav { background: transparent !important; border-bottom-color: transparent !important; box-shadow: none !important; }
   .rw-cover-nav .logo-img { filter: brightness(0) invert(1); }
   .rw-cover-nav .tve-wordmark { color: #fff !important; }
-  .rw-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; }
+  .rw-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; border-bottom-color: transparent !important; }
   .rw-cover-nav .tve-nav-link:hover { color: #fff !important; }
-  .rw-cover-nav .tve-pill { background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.4) !important; color: #fff !important; }
+  .rw-cover-nav .tve-pill { background: rgba(255,255,255,.2) !important; border-color: rgba(255,255,255,.5) !important; color: #fff !important; }
   .rw-cover-nav .navbar-toggler { filter: invert(1); }
+  .rw-cover-nav .dropdown-menu { background: rgba(20,17,14,.92) !important; border-color: rgba(255,255,255,.15) !important; }
+  .rw-cover-nav .dropdown-menu .dropdown-item { color: rgba(255,255,255,.85) !important; }
+  .rw-cover-nav .dropdown-menu .dropdown-item:hover { background: rgba(255,255,255,.1) !important; color: #fff !important; }
 
   /* ── Opening dek quote ── */
   .rw-dek { padding: 100px 0 80px; background: #fff; }
@@ -98,7 +101,8 @@ layout: default
     var nav = document.querySelector('.tve-nav');
     var cover = document.querySelector('.rw-cover');
     if (!nav || !cover) return;
-    if (window.scrollY > cover.clientHeight - 80) {
+    var coverBottom = cover.getBoundingClientRect().bottom;
+    if (coverBottom < nav.clientHeight + 20) {
       nav.classList.remove('rw-cover-nav');
     } else {
       nav.classList.add('rw-cover-nav');

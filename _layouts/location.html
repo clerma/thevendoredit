@@ -13,14 +13,17 @@ layout: default
   .loc-title em { font-style: italic; }
   .loc-deck { font-family: var(--tve-serif-alt); font-style: italic; font-size: 22px; color: rgba(255,255,255,.85); max-width: 640px; margin-top: 26px; line-height: 1.55; }
 
-  /* ── Transparent overlay nav ── */
-  .loc-cover-nav.tve-nav { background: transparent !important; border-bottom: none !important; position: absolute !important; top: 0; left: 0; right: 0; width: 100%; z-index: 100; }
+  /* ── Transparent overlay nav — no position change ── */
+  .loc-cover-nav.tve-nav { background: transparent !important; border-bottom-color: transparent !important; box-shadow: none !important; }
   .loc-cover-nav .logo-img { filter: brightness(0) invert(1); }
   .loc-cover-nav .tve-wordmark { color: #fff !important; }
-  .loc-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; }
+  .loc-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; border-bottom-color: transparent !important; }
   .loc-cover-nav .tve-nav-link:hover { color: #fff !important; }
-  .loc-cover-nav .tve-pill { background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.4) !important; color: #fff !important; }
+  .loc-cover-nav .tve-pill { background: rgba(255,255,255,.2) !important; border-color: rgba(255,255,255,.5) !important; color: #fff !important; }
   .loc-cover-nav .navbar-toggler { filter: invert(1); }
+  .loc-cover-nav .dropdown-menu { background: rgba(20,17,14,.92) !important; border-color: rgba(255,255,255,.15) !important; }
+  .loc-cover-nav .dropdown-menu .dropdown-item { color: rgba(255,255,255,.85) !important; }
+  .loc-cover-nav .dropdown-menu .dropdown-item:hover { background: rgba(255,255,255,.1) !important; color: #fff !important; }
 
   /* ── Nearby cities bar ── */
   .loc-nearby { display: flex; gap: 20px; padding: 20px 60px; background: var(--tve-ink); overflow-x: auto; scrollbar-width: none; }
@@ -116,7 +119,8 @@ layout: default
     var nav = document.querySelector('.tve-nav');
     var hero = document.querySelector('.loc-hero');
     if (!nav || !hero) return;
-    if (window.scrollY > hero.clientHeight - 80) {
+    var heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom < nav.clientHeight + 20) {
       nav.classList.remove('loc-cover-nav');
     } else {
       nav.classList.add('loc-cover-nav');

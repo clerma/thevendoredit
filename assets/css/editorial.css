@@ -72,13 +72,74 @@ body {
   background: #fff;
   border-bottom: 1px solid var(--tve-rule);
   padding: 18px 0;
+  /* Override old theme's fixed 100px height */
+  height: auto !important;
+  /* Sticky header — replaces the old theme's janky fixed/scroll-jump behavior */
+  position: sticky !important;
+  top: 0;
+  z-index: 200;
 }
+
+/* Old theme sets .nav-scroll { position: fixed; top: -100px; transform: translateY(100px) }
+   which removes the nav from document flow and causes content to jump.
+   We keep sticky instead — same visual result, no layout shift. */
+.tve-nav.nav-scroll {
+  position: sticky !important;
+  top: 0 !important;
+  transform: none !important;
+  height: auto !important;
+  padding: 18px 0 !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+/* Old theme's .logo-img has padding:20px 0 and width:16em !important
+   which bloats the nav height and overrides the image width. */
+.tve-nav .logo-img {
+  padding: 0 !important;
+  width: auto !important;
+  height: 32px;
+  display: block;
+}
+
+/* Old theme makes dropdown li slide 5px right on hover — remove that shift */
+.tve-nav .dropdown-menu li,
+.tve-nav .dropdown-menu li:hover {
+  padding-left: 0 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Dropdown styling to match editorial system */
+.tve-nav .dropdown-menu {
+  border: 1px solid var(--tve-rule) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,.08) !important;
+  padding: 8px 0 !important;
+  min-width: 200px;
+}
+.tve-nav .dropdown-menu .dropdown-item {
+  font-family: var(--tve-sans);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--tve-ink);
+  padding: 10px 20px;
+  transition: color .15s, background .15s;
+}
+.tve-nav .dropdown-menu .dropdown-item:hover,
+.tve-nav .dropdown-menu .dropdown-item:focus {
+  background: var(--tve-bg) !important;
+  color: var(--tve-accent) !important;
+}
+
 .tve-nav .tve-wordmark {
   font-family: var(--tve-serif);
   font-size: 22px;
   letter-spacing: 0.02em;
   color: var(--tve-ink);
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 .tve-nav .tve-wordmark em { font-style: italic; font-weight: 400; }
 .tve-nav a.tve-nav-link {
@@ -87,25 +148,34 @@ body {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--tve-ink);
+  color: var(--tve-ink) !important;
   text-decoration: none;
   padding: 8px 14px;
+  /* Lock dimensions — nothing changes on hover except color */
+  display: inline-block;
+  line-height: 1;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
 }
-.tve-nav a.tve-nav-link:hover { color: var(--tve-accent); }
+.tve-nav a.tve-nav-link:hover { color: var(--tve-accent) !important; }
+.tve-nav a.tve-nav-link.active { border-bottom-color: var(--tve-accent); }
+
 .tve-nav .tve-pill {
   font-family: var(--tve-sans);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--tve-ink);
+  /* Matches mockup: dark background by default */
+  color: #fff;
+  background: var(--tve-ink);
   border: 1px solid var(--tve-ink);
   padding: 10px 18px;
   text-decoration: none;
-  transition: .2s;
-  background: transparent;
+  display: inline-block;
+  transition: background .15s, color .15s;
 }
-.tve-nav .tve-pill:hover { background: var(--tve-ink); color: #fff; }
+.tve-nav .tve-pill:hover { background: var(--tve-accent); border-color: var(--tve-accent); color: #fff; }
 
 /* Vendor card — editorial version (extends existing .vendor-card markup) */
 .tve-card { position: relative; background: transparent; }
