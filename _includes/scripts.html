@@ -31,3 +31,115 @@
     }
   })();
 </script>
+
+{% if page.layout == 'real-wedding' %}
+<!-- Overlay nav: transparent while the magazine cover is on-screen -->
+<script>
+(function () {
+  var nav = document.querySelector('.tve-nav');
+  if (nav) nav.classList.add('rw-cover-nav');
+  window.addEventListener('scroll', function () {
+    var nav = document.querySelector('.tve-nav');
+    var cover = document.querySelector('.rw-cover');
+    if (!nav || !cover) return;
+    var coverBottom = cover.getBoundingClientRect().bottom;
+    if (coverBottom < nav.clientHeight + 20) {
+      nav.classList.remove('rw-cover-nav');
+    } else {
+      nav.classList.add('rw-cover-nav');
+    }
+  }, { passive: true });
+})();
+</script>
+{% endif %}
+
+{% if page.layout == 'location' %}
+<!-- Overlay nav: transparent while the dark location hero is on-screen -->
+<script>
+(function () {
+  var nav = document.querySelector('.tve-nav');
+  if (nav) nav.classList.add('loc-cover-nav');
+  window.addEventListener('scroll', function () {
+    var nav = document.querySelector('.tve-nav');
+    var hero = document.querySelector('.loc-hero');
+    if (!nav || !hero) return;
+    var heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom < nav.clientHeight + 20) {
+      nav.classList.remove('loc-cover-nav');
+    } else {
+      nav.classList.add('loc-cover-nav');
+    }
+  }, { passive: true });
+})();
+</script>
+{% endif %}
+
+{% if page.layout == 'category' %}
+<!-- Category page: client-side filter + sort for the vendor grid -->
+<script>
+(function () {
+  var grid = document.getElementById('cat-vendor-grid');
+  var countEl = document.getElementById('cat-visible-count');
+  var noResults = document.getElementById('cat-no-results');
+  var btnRW = document.getElementById('btn-rw-filter');
+  var selCity = document.getElementById('cat-city-filter');
+  var selSort = document.getElementById('cat-sort');
+  if (!grid) return;
+
+  var rwActive = false;
+  var cityFilter = '';
+
+  function applyFilters() {
+    var cards = Array.from(grid.querySelectorAll('.vcard'));
+    var visible = 0;
+    cards.forEach(function (c) {
+      var cities = c.dataset.city || '';
+      var rw = parseInt(c.dataset.rw, 10) || 0;
+      var show = true;
+      if (rwActive && rw === 0) show = false;
+      if (cityFilter && cities.indexOf(cityFilter) === -1) show = false;
+      c.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    if (countEl) countEl.textContent = visible;
+    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  if (btnRW) {
+    btnRW.addEventListener('click', function () {
+      rwActive = !rwActive;
+      btnRW.classList.toggle('active', rwActive);
+      applyFilters();
+    });
+  }
+  if (selCity) {
+    selCity.addEventListener('change', function () {
+      cityFilter = this.value;
+      applyFilters();
+    });
+  }
+  if (selSort) {
+    selSort.addEventListener('change', function () {
+      var cards = Array.from(grid.querySelectorAll('.vcard'));
+      if (this.value === 'az') {
+        cards.sort(function (a, b) {
+          var na = a.querySelector('.vname') ? a.querySelector('.vname').textContent : '';
+          var nb = b.querySelector('.vname') ? b.querySelector('.vname').textContent : '';
+          return na.localeCompare(nb);
+        });
+        cards.forEach(function (c) { grid.appendChild(c); });
+      }
+    });
+  }
+
+  window.resetCatFilters = function () {
+    rwActive = false;
+    cityFilter = '';
+    if (btnRW) btnRW.classList.remove('active');
+    if (selCity) selCity.value = '';
+    if (selSort) selSort.value = 'default';
+    applyFilters();
+  };
+})();
+</script>
+{% endif %}
