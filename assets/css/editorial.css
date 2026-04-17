@@ -117,6 +117,26 @@ body {
   padding: 8px 0 !important;
   min-width: 200px;
 }
+
+/* Old theme forces .navbar .dropdown-menu { display:block; visibility:hidden;
+   transform:translateY(20px); width:190px } at ≥992px and relies on hover to
+   un-hide it. That keeps the menu in the DOM flow with a fixed width, so on
+   first page load the browser reserves space for it below the nav. Reset back
+   to Bootstrap 5 defaults and use a plain CSS hover for desktop. */
+@media (min-width: 992px) {
+  .tve-nav .dropdown-menu {
+    display: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    width: auto;
+    position: absolute;
+  }
+  .tve-nav .dropdown-menu.show,
+  .tve-nav .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+}
 .tve-nav .dropdown-menu .dropdown-item {
   font-family: var(--tve-sans);
   font-size: 11px;
