@@ -1,74 +1,298 @@
 ---
 layout: default
 ---
+<style>
+  /* ── Location hero ── */
+  .loc-hero { position: relative; min-height: 70vh; background: var(--tve-ink); overflow: hidden; }
+  .loc-hero .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .55; }
+  .loc-hero .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.7)); }
+  .loc-hero-content { position: relative; z-index: 2; padding: 100px 60px 70px; color: #fff; }
+  .loc-eyebrow { font-family: var(--tve-sans); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 30px; display: flex; align-items: center; gap: 14px; }
+  .loc-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.3); max-width: 200px; }
+  .loc-title { font-family: var(--tve-serif); font-weight: 400; line-height: .92; font-size: clamp(64px, 9vw, 144px); color: #fff; letter-spacing: -.02em; margin: 0; }
+  .loc-title em { font-style: italic; }
+  .loc-deck { font-family: var(--tve-serif-alt); font-style: italic; font-size: 22px; color: rgba(255,255,255,.85); max-width: 640px; margin-top: 26px; line-height: 1.55; }
 
-<!-- Banner -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
-  data-background="{{ page.hero_image | default: '/assets/img/Unknown-5.avif' }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5>Wedding Vendors in Louisiana</h5>
-        <h1>{{ page.name }}</h1>
-        {% if page.description %}
-        <p class="header-desc">{{ page.description }}</p>
-        {% endif %}
-      </div>
-    </div>
+  /* ── Transparent overlay nav ── */
+  .loc-cover-nav.tve-nav { background: transparent !important; border-bottom: none !important; position: absolute !important; top: 0; left: 0; right: 0; width: 100%; z-index: 100; }
+  .loc-cover-nav .logo-img { filter: brightness(0) invert(1); }
+  .loc-cover-nav .tve-wordmark { color: #fff !important; }
+  .loc-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; }
+  .loc-cover-nav .tve-nav-link:hover { color: #fff !important; }
+  .loc-cover-nav .tve-pill { background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.4) !important; color: #fff !important; }
+  .loc-cover-nav .navbar-toggler { filter: invert(1); }
+
+  /* ── Nearby cities bar ── */
+  .loc-nearby { display: flex; gap: 20px; padding: 20px 60px; background: var(--tve-ink); overflow-x: auto; scrollbar-width: none; }
+  .loc-nearby::-webkit-scrollbar { display: none; }
+  .loc-nearby a { color: rgba(255,255,255,.7); font-family: var(--tve-sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; white-space: nowrap; padding: 8px 0; flex-shrink: 0; transition: color .2s; }
+  .loc-nearby a.active { color: #fff; border-bottom: 1px solid var(--tve-accent); }
+  .loc-nearby a:hover { color: #fff; }
+
+  /* ── Intro + stats ── */
+  .loc-intro { padding: 90px 0; }
+  .loc-intro-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: start; }
+  .loc-intro h2 { font-family: var(--tve-serif); font-weight: 400; font-size: 52px; line-height: 1.05; margin: 0 0 24px; }
+  .loc-intro h2 em { font-style: italic; }
+  .loc-intro p { font-family: var(--tve-serif-alt); font-size: 19px; line-height: 1.65; color: var(--tve-ink); margin: 0 0 18px; }
+  .loc-stats { background: var(--tve-bg); padding: 40px; }
+  .loc-stat { padding: 20px 0; border-bottom: 1px solid var(--tve-rule); display: flex; justify-content: space-between; align-items: baseline; }
+  .loc-stat:last-child { border-bottom: none; }
+  .loc-stat .k { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-muted); }
+  .loc-stat .v { font-family: var(--tve-serif); font-size: 28px; }
+  .loc-stat .v em { font-style: italic; color: var(--tve-accent); }
+
+  /* ── Category tiles ── */
+  .cats-sec { padding: 80px 0; background: var(--tve-bg); }
+  .cats-sec h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 52px; line-height: 1; margin: 0 0 50px; }
+  .cats-sec h3 em { font-style: italic; }
+  .cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cat-tile { position: relative; aspect-ratio: 3/4; background-size: cover; background-position: center; text-decoration: none; color: #fff; overflow: hidden; }
+  .cat-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.8)); transition: .3s; }
+  .cat-tile:hover::after { background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,.9)); }
+  .cat-tile .inner { position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 2; }
+  .cat-tile .ct { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.8); }
+  .cat-tile .nm { font-family: var(--tve-serif); font-size: 28px; line-height: 1.05; margin-top: 4px; }
+  .cat-tile .nm em { font-style: italic; }
+
+  /* ── Venues ── */
+  .venues-sec { padding: 90px 0; }
+  .venues-sec h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 52px; line-height: 1; margin: 0; }
+  .venues-sec h3 em { font-style: italic; }
+  .venues-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+  .venue-card { border: 1px solid var(--tve-rule); padding: 24px; display: grid; grid-template-columns: 140px 1fr; gap: 22px; text-decoration: none; color: inherit; transition: border-color .15s; }
+  .venue-card:hover { border-color: var(--tve-ink); }
+  .venue-card .img { aspect-ratio: 1; background-size: cover; background-position: center; }
+  .venue-card .cap { font-family: var(--tve-serif); font-size: 22px; line-height: 1.15; margin: 0 0 6px; }
+  .venue-card .cap em { font-style: italic; }
+  .venue-card .info { font-family: var(--tve-serif-alt); font-style: italic; font-size: 14px; color: var(--tve-ink-soft); margin-bottom: 8px; }
+  .venue-card .meta { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--tve-muted); }
+
+  /* ── Local real weddings ── */
+  .rw-local { background: var(--tve-bg); padding: 90px 0; }
+  .rw-local h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 52px; line-height: 1; margin: 0 0 14px; }
+  .rw-local h3 em { font-style: italic; }
+  .rw-local .deck { font-family: var(--tve-serif-alt); font-style: italic; font-size: 18px; color: var(--tve-ink-soft); max-width: 640px; margin-bottom: 50px; }
+  .rw-local-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .rwl { text-decoration: none; color: inherit; display: block; }
+  .rwl .img { aspect-ratio: 4/5; background-size: cover; background-position: center; margin-bottom: 14px; }
+  .rwl .couple { font-family: var(--tve-serif); font-size: 24px; line-height: 1.1; }
+  .rwl .couple em { font-style: italic; }
+  .rwl .venue-name { font-family: var(--tve-serif-alt); font-style: italic; font-size: 13px; color: var(--tve-muted); margin-top: 3px; }
+
+  /* ── Seasons ── */
+  .seasons { padding: 90px 0; border-top: 1px solid var(--tve-rule); }
+  .seasons h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 44px; line-height: 1; margin: 0 0 50px; }
+  .seasons h3 em { font-style: italic; }
+  .season-row { display: grid; grid-template-columns: 100px 1fr 200px; gap: 30px; padding: 22px 0; border-top: 1px solid var(--tve-rule); align-items: center; }
+  .season-row:last-child { border-bottom: 1px solid var(--tve-rule); }
+  .season-name { font-family: var(--tve-serif); font-style: italic; font-size: 28px; color: var(--tve-accent); }
+  .season-desc { font-family: var(--tve-serif-alt); font-size: 16px; line-height: 1.5; color: var(--tve-ink); }
+  .season-popularity { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--tve-muted); text-align: right; }
+  .season-bar { height: 4px; background: var(--tve-rule); margin-top: 8px; position: relative; }
+  .season-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; background: var(--tve-accent); }
+  .p-peak::after { width: 90%; }
+  .p-high::after { width: 70%; }
+  .p-med::after { width: 45%; }
+  .p-low::after { width: 20%; }
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .loc-hero-content { padding: 80px 24px 50px; }
+    .loc-intro-grid { grid-template-columns: 1fr; gap: 40px; }
+    .cats-grid { grid-template-columns: repeat(2, 1fr); }
+    .venues-grid { grid-template-columns: 1fr; }
+    .rw-local-grid { grid-template-columns: 1fr 1fr; }
+    .season-row { grid-template-columns: 80px 1fr; }
+    .season-popularity { display: none; }
+  }
+</style>
+
+{% raw %}<script>
+(function () {
+  var nav = document.querySelector('.tve-nav');
+  if (nav) nav.classList.add('loc-cover-nav');
+  window.addEventListener('scroll', function () {
+    var nav = document.querySelector('.tve-nav');
+    var hero = document.querySelector('.loc-hero');
+    if (!nav || !hero) return;
+    if (window.scrollY > hero.clientHeight - 80) {
+      nav.classList.remove('loc-cover-nav');
+    } else {
+      nav.classList.add('loc-cover-nav');
+    }
+  }, { passive: true });
+})();
+</script>{% endraw %}
+
+{% assign loc_vendors = site.vendors | where_exp: "v", "v.cities contains page.slug" %}
+{% assign loc_rw = site.categories["real-weddings"] | where_exp: "w", "w.location contains page.name" %}
+{% assign venue_vendors = loc_vendors | where: "category_slug", "venues" %}
+
+<!-- Hero -->
+<section class="loc-hero">
+  <div class="bg" style="background-image:url('{{ page.image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+  <div class="grad"></div>
+  <div class="loc-hero-content">
+    <div class="loc-eyebrow">Acadiana · {{ page.state }}</div>
+    <h1 class="loc-title">{{ page.name }}<br><em>weddings.</em></h1>
+    {% if page.description %}
+    <p class="loc-deck">{{ page.description }}</p>
+    {% endif %}
   </div>
+</section>
+
+<!-- Nearby cities -->
+{% assign all_locations = site.locations | sort: "order" %}
+<div class="loc-nearby">
+  {% for loc in all_locations %}
+  <a href="{{ loc.url | relative_url }}"{% if loc.slug == page.slug %} class="active"{% endif %}>{{ loc.name }}</a>
+  {% endfor %}
 </div>
 
-<!-- Category Filter Bar -->
-<section class="section-padding bg-lightbrown">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <div class="filter-bar">
-          <button class="filter-btn active" data-filter="all">All Vendors</button>
-          {% assign sorted_cats = site.listing_categories | sort: 'order' %}
-          {% for cat in sorted_cats %}
-          {% if cat.phase == 1 %}
-          <button class="filter-btn" data-filter="{{ cat.slug }}">{{ cat.name }}</button>
-          {% endif %}
-          {% endfor %}
+<!-- Intro + stats -->
+<section class="loc-intro">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="loc-intro-grid">
+      <div>
+        <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Local Edit</div>
+        <h2>A wedding market that<br>still feels <em>hand-made.</em></h2>
+        {% if content != "" %}
+        {{ content }}
+        {% else %}
+        <p>{{ page.name }} is big enough to have a proper wedding industry and small enough that everyone who works in it knows each other. Book a photographer here and she'll already know the florist, who'll already know the caterer — every weekend, in front of each other's families.</p>
+        <p>That's the quiet magic of hiring in Acadiana — the vendors aren't performing for Instagram. They're performing for each other.</p>
+        {% endif %}
+      </div>
+      <div class="loc-stats">
+        <div class="loc-stat">
+          <span class="k">Vendors listed</span>
+          <span class="v"><em>{{ loc_vendors | size }}</em></span>
+        </div>
+        {% if venue_vendors.size > 0 %}
+        <div class="loc-stat">
+          <span class="k">Venues</span>
+          <span class="v"><em>{{ venue_vendors | size }}</em></span>
+        </div>
+        {% endif %}
+        {% if loc_rw.size > 0 %}
+        <div class="loc-stat">
+          <span class="k">Real Weddings featured</span>
+          <span class="v"><em>{{ loc_rw | size }}</em></span>
+        </div>
+        {% endif %}
+        <div class="loc-stat">
+          <span class="k">Peak season</span>
+          <span class="v">Oct–Nov</span>
+        </div>
+        <div class="loc-stat">
+          <span class="k">Off-season value</span>
+          <span class="v">Jun–Aug</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Vendor Grid -->
-<section class="section-padding">
-  <div class="container">
-    <div class="row mb-30">
-      <div class="col-md-12 text-center">
-        <div class="section-subtitle">Serving {{ page.name }}</div>
-        <div class="section-title">Find Your Vendors</div>
-      </div>
-    </div>
-    <div class="row">
-      {% assign location_vendors = site.vendors | where_exp: "v", "v.cities contains page.slug" %}
-      {% if location_vendors.size > 0 %}
-        {% for vendor in location_vendors %}
-        <div class="col-lg-4 col-md-6 mb-30 animate-box vendor-card-wrapper"
-             data-category="{{ vendor.category_slug }}"
-             data-animate-effect="fadeInUp">
-          {% include vendor-card.html vendor=vendor %}
-        </div>
-        {% endfor %}
-      {% else %}
-        <div class="col-md-12 text-center py-60">
-          <p class="lead">No vendors listed yet for {{ page.name }}.</p>
-          <div class="btn-dark mt-20">
-            <a href="{{ '/list-your-business/' | relative_url }}"><span>List Your Business</span></a>
+<!-- Categories in this city -->
+{% assign sorted_cats = site.listing_categories | sort: "order" %}
+{% assign phase1_cats = sorted_cats | where: "phase", 1 %}
+{% if loc_vendors.size > 0 %}
+<section class="cats-sec">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Browse by Category</div>
+    <h3><em>Every</em> vendor<br>in one directory.</h3>
+    <div class="cats-grid">
+      {% for cat in phase1_cats limit: 8 %}
+        {% assign cat_vendors = loc_vendors | where: "category_slug", cat.slug %}
+        {% if cat_vendors.size > 0 %}
+        {% assign sample_vendor = cat_vendors | first %}
+        <a class="cat-tile" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
+          style="background-image:url('{{ sample_vendor.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');">
+          <div class="inner">
+            <div class="ct">{{ cat_vendors | size }} {{ cat_vendors | size | pluralize: 'Vendor', 'Vendors' }}</div>
+            <div class="nm"><em>{{ cat.name }}</em></div>
           </div>
-        </div>
-      {% endif %}
+        </a>
+        {% endif %}
+      {% endfor %}
     </div>
-    <div class="row d-none" id="noResults">
-      <div class="col-md-12 text-center py-60">
-        <p class="lead">No vendors found for that type. <a href="#" class="reset-filter">Show all vendors.</a></p>
-      </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Venue showcase -->
+{% if venue_vendors.size > 0 %}
+<section class="venues-sec">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Places</div>
+    <h3><em>{{ venue_vendors | size }}</em> {{ page.name }} venue{% if venue_vendors.size != 1 %}s{% endif %}<br>worth a look.</h3>
+    <div class="venues-grid">
+      {% for v in venue_vendors limit: 4 %}
+      <a class="venue-card" href="{{ v.url | relative_url }}">
+        <div class="img" style="background-image:url('{{ v.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+        <div>
+          <div class="cap">{{ v.title }}</div>
+          {% if v.tagline %}<div class="info">{{ v.tagline }}</div>{% endif %}
+          {% if v.service_area %}<div class="meta">{{ v.service_area }}</div>{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% if venue_vendors.size > 4 %}
+    <div style="margin-top:40px;text-align:center;">
+      <a href="{{ '/venues/' | relative_url }}" class="tve-link">Browse all {{ venue_vendors | size }} venues →</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Local real weddings -->
+{% assign all_rw = site.categories["real-weddings"] %}
+{% if all_rw.size > 0 %}
+<section class="rw-local">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Real Weddings · {{ page.name }}</div>
+    <h3>Here's what a {{ page.name }}<br>wedding actually <em>looks like.</em></h3>
+    <p class="deck">Real couples, real venues, real vendors — documented in full.</p>
+    <div class="rw-local-grid">
+      {% for wedding in all_rw limit: 3 %}
+      <a class="rwl" href="{{ wedding.url | relative_url }}">
+        <div class="img" style="background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+        <div class="couple">{{ wedding.title }}</div>
+        <div class="venue-name">{{ wedding.venue }}{% if wedding.date %} · {{ wedding.date | date: "%b %Y" }}{% endif %}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Season calendar -->
+<section class="seasons">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Calendar</div>
+    <h3>When to marry<br>in <em>Acadiana.</em></h3>
+    <div class="season-row">
+      <div class="season-name">Spring</div>
+      <div class="season-desc">March–May. Camellias, magnolia bloom, mid-70s. Best for garden ceremonies and farm venues before humidity arrives.</div>
+      <div class="season-popularity">Popularity · High<div class="season-bar p-high"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Summer</div>
+      <div class="season-desc">June–August. Hot and humid. Book indoor venues, or lean into it with evening ceremonies and plantation homes with porches.</div>
+      <div class="season-popularity">Popularity · Low<div class="season-bar p-low"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Fall</div>
+      <div class="season-desc">September–November. The peak season. Pecan harvest, golden light, 70s-and-falling weather. Book 12 months out.</div>
+      <div class="season-popularity">Popularity · Peak<div class="season-bar p-peak"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Winter</div>
+      <div class="season-desc">December–February. Mild by national standards (50s–60s). Romantic for candlelit indoor receptions; great vendor availability.</div>
+      <div class="season-popularity">Popularity · Med<div class="season-bar p-med"></div></div>
     </div>
   </div>
 </section>

@@ -1,377 +1,446 @@
 ---
 layout: default
 ---
+<style>
+  /* ── Vendor hero ── */
+  .v-hero { padding: 50px 0 30px; background: var(--tve-bg); }
+  .v-breadcrumb { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-muted); margin-bottom: 30px; }
+  .v-breadcrumb a { color: var(--tve-muted); text-decoration: none; }
+  .v-breadcrumb a:hover { color: var(--tve-ink); }
+  .v-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 40px; }
+  .v-title { font-family: var(--tve-serif); font-weight: 400; line-height: .96; font-size: clamp(48px, 5.5vw, 78px); letter-spacing: -.01em; margin: 0 0 14px; }
+  .v-title em { font-style: italic; }
+  .v-sub { font-family: var(--tve-serif-alt); font-style: italic; font-size: 20px; color: var(--tve-ink-soft); line-height: 1.5; }
+  .v-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-family: var(--tve-sans); font-size: 13px; color: var(--tve-ink-soft); margin-top: 18px; }
+  .v-meta .dot { width: 3px; height: 3px; background: var(--tve-muted); border-radius: 50%; display: inline-block; }
+  .v-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+  .act-btn { font-family: var(--tve-sans); font-size: 11px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; padding: 14px 22px; background: transparent; border: 1px solid var(--tve-ink); color: var(--tve-ink); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: .2s; }
+  .act-btn:hover { background: var(--tve-ink); color: #fff; }
+  .act-btn.primary { background: var(--tve-ink); color: #fff; }
+  .act-btn.primary:hover { background: var(--tve-accent); border-color: var(--tve-accent); }
+  .badge-featured { background: var(--tve-accent); color: #fff; font-family: var(--tve-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
+  .unclaimed-badge { background: var(--tve-muted); color: #fff; font-family: var(--tve-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; padding: 6px 12px; display: inline-flex; align-items: center; gap: 8px; }
+
+  /* ── Gallery ── */
+  .v-gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: repeat(2, 300px); gap: 6px; margin-bottom: 80px; }
+  .v-gallery .cell { background-size: cover; background-position: center; position: relative; cursor: pointer; }
+  .v-gallery .cell:first-child { grid-row: 1 / 3; }
+  .v-gallery .more { position: absolute; bottom: 16px; right: 16px; background: rgba(0,0,0,.7); color: #fff; font-family: var(--tve-sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; padding: 10px 16px; }
+  .ghost { filter: grayscale(.5) opacity(.6); pointer-events: none; user-select: none; }
+  .gallery-lock-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(247,243,236,.4) 40%, var(--tve-bg) 95%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px; pointer-events: none; }
+
+  /* ── Body ── */
+  .v-body { display: grid; grid-template-columns: 1fr 360px; gap: 80px; padding: 0 0 80px; }
+  .v-section { margin-bottom: 70px; padding-bottom: 70px; border-bottom: 1px solid var(--tve-rule); }
+  .v-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .v-sec-eyebrow { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--tve-accent); margin-bottom: 14px; font-weight: 600; }
+  .v-sec-title { font-family: var(--tve-serif); font-weight: 400; font-size: 44px; line-height: 1.05; margin: 0 0 28px; }
+  .v-sec-title em { font-style: italic; }
+  .v-lead { font-family: var(--tve-serif-alt); font-style: italic; font-size: 22px; line-height: 1.55; color: var(--tve-ink); margin-bottom: 26px; }
+  .v-body p { font-family: var(--tve-sans); font-size: 16px; line-height: 1.7; color: var(--tve-ink-soft); margin: 0 0 18px; }
+  .v-body-content p { font-family: var(--tve-sans); font-size: 16px; line-height: 1.7; color: var(--tve-ink-soft); margin: 0 0 18px; }
+
+  /* ── Packages ── */
+  .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+  .pkg { padding: 32px; border: 1px solid var(--tve-rule); display: flex; flex-direction: column; gap: 10px; }
+  .pkg.pkg--featured { background: var(--tve-ink); color: #fff; border-color: var(--tve-ink); }
+  .pkg.pkg--featured .pkg-price, .pkg.pkg--featured .pkg-name { color: #fff; }
+  .pkg.pkg--featured ul li { color: rgba(255,255,255,.85); border-color: rgba(255,255,255,.15); }
+  .pkg.pkg--featured ul li i { color: var(--tve-accent); }
+  .pkg-tier { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--tve-accent); font-weight: 600; }
+  .pkg-name { font-family: var(--tve-serif); font-size: 32px; line-height: 1; margin: 4px 0; }
+  .pkg-name em { font-style: italic; }
+  .pkg-price { font-family: var(--tve-serif); font-size: 26px; border-top: 1px solid var(--tve-rule); border-bottom: 1px solid var(--tve-rule); padding: 14px 0; margin: 8px 0 6px; }
+  .pkg.pkg--featured .pkg-price { border-color: rgba(255,255,255,.2); }
+  .pkg ul { list-style: none; padding: 0; margin: 0; font-family: var(--tve-sans); font-size: 13px; }
+  .pkg ul li { padding: 9px 0; border-bottom: 1px solid var(--tve-rule); display: flex; gap: 10px; align-items: flex-start; }
+  .pkg ul li:last-child { border-bottom: none; }
+  .pkg ul li i { color: var(--tve-accent); font-size: 10px; padding-top: 5px; flex-shrink: 0; }
+
+  /* ── Real weddings strip ── */
+  .rw-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .rw-card { text-decoration: none; color: inherit; display: block; }
+  .rw-card .img { aspect-ratio: 4/5; background-size: cover; background-position: center; margin-bottom: 12px; }
+  .rw-card .couple { font-family: var(--tve-serif); font-size: 20px; line-height: 1.1; }
+  .rw-card .couple em { font-style: italic; }
+  .rw-card .venue { font-family: var(--tve-serif-alt); font-style: italic; font-size: 13px; color: var(--tve-muted); margin-top: 3px; }
+
+  /* ── Sidebar ── */
+  .side-card { background: var(--tve-bg); padding: 36px; position: sticky; top: 30px; }
+  .side-card > h4 { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--tve-muted); margin: 0 0 18px; font-weight: 500; }
+  .side-price { font-family: var(--tve-serif); font-size: 44px; line-height: 1; margin-bottom: 4px; }
+  .side-price em { font-style: italic; color: var(--tve-accent); }
+  .side-price-lbl { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-muted); }
+  .side-field { margin-bottom: 16px; }
+  .side-field label { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-muted); display: block; margin-bottom: 6px; font-weight: 500; }
+  .side-field input, .side-field select, .side-field textarea { width: 100%; border: none; border-bottom: 1px solid var(--tve-ink); background: transparent; padding: 8px 0; font-family: var(--tve-serif); font-size: 18px; color: var(--tve-ink); outline: none; }
+  .side-field textarea { min-height: 90px; font-size: 15px; line-height: 1.5; resize: vertical; font-family: var(--tve-sans); }
+  .side-info { padding: 18px 0; border-top: 1px solid var(--tve-rule); font-family: var(--tve-sans); font-size: 13px; color: var(--tve-ink-soft); margin-top: 10px; }
+  .side-info i { color: var(--tve-accent); margin-right: 10px; }
+  .side-info div { padding: 6px 0; display: flex; align-items: center; }
+  .side-info a { color: var(--tve-ink-soft); text-decoration: none; }
+  .side-info a:hover { color: var(--tve-ink); }
+
+  /* ── Claim banner (unlisted) ── */
+  .claim-banner { background: var(--tve-ink); color: #fff; padding: 22px 40px; display: flex; align-items: center; gap: 20px; justify-content: space-between; flex-wrap: wrap; }
+  .claim-banner .l { display: flex; align-items: center; gap: 18px; }
+  .claim-banner .banner-icon { font-size: 22px; color: var(--tve-accent); }
+  .claim-banner .t { font-family: var(--tve-serif); font-size: 20px; }
+  .claim-banner .t em { font-style: italic; }
+  .claim-banner .d { font-family: var(--tve-serif-alt); font-style: italic; font-size: 14px; color: rgba(255,255,255,.7); }
+  .claim-btn { background: var(--tve-accent); color: #fff; font-family: var(--tve-sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; padding: 14px 26px; text-decoration: none; flex-shrink: 0; }
+  .claim-btn:hover { background: #fff; color: var(--tve-ink); }
+
+  /* ── Locked sections (unlisted) ── */
+  .locked-section { position: relative; border: 1px dashed var(--tve-muted); padding: 50px 40px; background: var(--tve-bg); text-align: center; }
+  .locked-section .lock-i { font-size: 32px; color: var(--tve-accent); display: block; margin-bottom: 14px; }
+  .locked-section h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 30px; line-height: 1.2; margin: 0 0 10px; }
+  .locked-section h3 em { font-style: italic; }
+  .locked-section p { font-family: var(--tve-serif-alt); font-style: italic; font-size: 16px; color: var(--tve-ink-soft); max-width: 480px; margin: 0 auto 24px; line-height: 1.5; }
+  .stub p { font-family: var(--tve-sans); font-size: 15px; line-height: 1.7; color: var(--tve-ink-soft); margin: 0 0 16px; }
+
+  /* ── Claim sidebar (unlisted) ── */
+  .side-card--claim { text-align: center; }
+  .side-card--claim .lock-icon { width: 64px; height: 64px; border: 1px solid var(--tve-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .side-card--claim .lock-icon i { font-size: 24px; color: var(--tve-accent); }
+  .side-card--claim h4 { font-family: var(--tve-serif); font-weight: 400; font-size: 28px; line-height: 1.2; margin: 0 0 10px; letter-spacing: 0; text-transform: none; color: var(--tve-ink); }
+  .side-card--claim h4 em { font-style: italic; }
+  .side-card--claim p { font-family: var(--tve-serif-alt); font-style: italic; font-size: 15px; color: var(--tve-ink-soft); line-height: 1.55; margin: 0 0 22px; }
+  .side-card--claim .claim-price { font-family: var(--tve-serif); font-size: 18px; padding: 16px 0; border-top: 1px solid var(--tve-rule); border-bottom: 1px solid var(--tve-rule); margin: 0 0 22px; }
+  .side-card--claim .claim-price em { font-style: italic; color: var(--tve-accent); }
+  .side-claim { display: block; background: var(--tve-ink); color: #fff; font-family: var(--tve-sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; padding: 16px; text-decoration: none; margin-bottom: 10px; }
+  .side-claim:hover { background: var(--tve-accent); color: #fff; }
+  .side-alt { font-family: var(--tve-serif-alt); font-style: italic; font-size: 13px; color: var(--tve-muted); }
+  .side-alt a { color: var(--tve-ink); border-bottom: 1px solid var(--tve-ink); text-decoration: none; }
+
+  /* ── Claimed vendors section (unlisted) ── */
+  .claimed-vendors { background: var(--tve-ink); color: #fff; padding: 80px 0; }
+  .claimed-vendors h3 { font-family: var(--tve-serif); font-weight: 400; font-size: 44px; line-height: 1.05; }
+  .claimed-vendors h3 em { font-style: italic; color: var(--tve-accent); }
+  .claimed-vendors .cv-lead { font-family: var(--tve-serif-alt); font-style: italic; font-size: 18px; color: rgba(255,255,255,.8); max-width: 520px; line-height: 1.5; }
+  .cv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+  .cv-grid .c { aspect-ratio: 1; background-size: cover; background-position: center; position: relative; text-decoration: none; display: block; }
+  .cv-grid .c::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.7)); }
+  .cv-grid .c span { position: absolute; bottom: 14px; left: 14px; color: #fff; font-family: var(--tve-serif); font-size: 15px; z-index: 2; }
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .v-header { grid-template-columns: 1fr; gap: 24px; }
+    .v-actions { justify-content: flex-start; }
+    .v-gallery { grid-template-columns: 1fr 1fr; }
+    .v-gallery .cell:first-child { grid-row: auto; }
+    .v-gallery .cell { height: 200px; }
+    .v-body { grid-template-columns: 1fr; gap: 40px; }
+    .side-card { position: static; }
+    .pkg-grid { grid-template-columns: 1fr; }
+    .rw-strip { grid-template-columns: 1fr 1fr; }
+    .cv-grid { grid-template-columns: repeat(2, 1fr); }
+    .claim-banner { padding: 22px 24px; }
+  }
+</style>
+
+{% assign rw_count = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains page.title" | size %}
 
 {% if page.is_subscribed %}
 
-<!-- ============================================================
-     SUBSCRIBED LISTING — Full featured profile
-     ============================================================ -->
+<!-- ════════════════════════════════════════════════════
+     SUBSCRIBED — Full profile
+     ════════════════════════════════════════════════════ -->
 
-<!-- Hero -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4"
-  data-background="{{ page.hero_image | default: '/assets/img/Unknown-1.avif' }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5><a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}" style="color:rgba(255,255,255,0.8);">{{ page.category }}</a></h5>
-        <h1>{{ page.title }}</h1>
-        <span style="color:#fff;font-family:'Barlow',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;">
-          <i class="ti-location-pin"></i> {{ page.city }}, Louisiana
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="v-hero">
+  <div class="container-fluid px-4 px-lg-5">
 
-<!-- Vendor Content -->
-<section class="vendor-detail section-padding">
-  <div class="container">
-    <div class="row">
-
-      <!-- Main Column -->
-      <div class="col-lg-8 col-md-12">
-
-        <!-- Gallery -->
-        {% if page.gallery and page.gallery.size > 0 %}
-        <div class="vendor-gallery mb-60">
-          <div class="row g-2">
-            {% for image in page.gallery limit: 6 %}
-            <div class="col-4">
-              <a href="{{ image }}" class="img-zoom mfp-image">
-                <div class="img o-hidden">
-                  <img src="{{ image }}" alt="{{ page.title }}" class="img-fluid">
-                </div>
-              </a>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-
-        <!-- About -->
-        <div class="vendor-bio mb-60">
-          <div class="section-subtitle">About</div>
-          <div class="section-title">{{ page.title }}</div>
-          <div class="vendor-bio-content">{{ content }}</div>
-        </div>
-
-        <!-- Packages -->
-        {% if page.packages and page.packages.size > 0 %}
-        <div class="vendor-packages mb-60">
-          <div class="section-subtitle">Investment</div>
-          <div class="section-title">Packages &amp; Pricing</div>
-          <div class="row mt-30">
-            {% for pkg in page.packages %}
-            <div class="col-md-{{ 12 | divided_by: page.packages.size | floor }} mb-20">
-              <div class="package-card">
-                <div class="package-card-name">{{ pkg.name }}</div>
-                <div class="package-card-price">{{ pkg.price }}</div>
-                {% if pkg.description %}
-                <p class="package-card-desc">{{ pkg.description }}</p>
-                {% endif %}
-                {% if pkg.includes %}
-                <ul class="package-card-list list-unstyled">
-                  {% for item in pkg.includes %}
-                  <li><i class="ti-check"></i> {{ item }}</li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-
-        <!-- Tags -->
-        <div class="vendor-tags mb-60">
-          {% if page.categories_tags %}
-          <div class="tag-group mb-15">
-            <span class="tag-label">Category</span>
-            {% for cat in page.categories_tags %}
-            <a href="{{ '/' | append: cat | append: '/' | relative_url }}" class="tag-pill">
-              {{ cat | replace: '-', ' ' | capitalize }}
-            </a>
-            {% endfor %}
-          </div>
-          {% endif %}
-          {% if page.cities %}
-          <div class="tag-group">
-            <span class="tag-label">Serves</span>
-            {% for city in page.cities %}
-            <a href="{{ '/locations/' | append: city | append: '/' | relative_url }}" class="tag-pill tag-pill--location">
-              <i class="ti-location-pin"></i> {{ city | replace: '-', ' ' | capitalize }}
-            </a>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </div>
-
-        <!-- Inquiry — Paperform popup -->
-        {% assign inquiry_form = page.paperform_id | default: site.data.site.paperform_inquiry_id %}
-        {% if inquiry_form and inquiry_form != "" %}
-        <div class="vendor-inquiry mb-60">
-          <div class="section-subtitle">Get in Touch</div>
-          <div class="section-title">Send an Inquiry</div>
-          <p style="font-family:'Barlow',sans-serif;font-size:15px;color:#555;margin-bottom:25px;">
-            Use the button below to send {{ page.title }} a message directly through our inquiry form.
-          </p>
-          <a data-paperform-id="{{ inquiry_form }}"
-             data-popup-button="1"
-             data-prefill="vendor={{ page.title | url_encode }}"
-             class="btn-dark" href="#">
-            <span>Send an Inquiry</span>
-          </a>
-        </div>
-        {% endif %}
-
-        <!-- Testimonials -->
-        {% if page.testimonials and page.testimonials.size > 0 %}
-        <div class="vendor-testimonials mb-60">
-          <div class="section-subtitle">Kind Words</div>
-          <div class="section-title">From Couples</div>
-          <div class="mt-30">
-            {% for t in page.testimonials %}
-            <div class="testimonial-card mb-20">
-              <blockquote class="testimonial-card-text">"{{ t.text }}"</blockquote>
-              <div class="testimonial-card-meta">
-                <strong>{{ t.author }}</strong>
-                {% if t.date %}<span class="testimonial-card-date">{{ t.date }}</span>{% endif %}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-
-      </div>
-
-      <!-- Sidebar -->
-      <div class="col-lg-4 col-md-12">
-        <div class="vendor-sidebar">
-
-          <!-- Contact Card -->
-          <div class="sidebar-card mb-30">
-            <div class="sidebar-card-title">Contact &amp; Info</div>
-            {% if page.website %}
-            <p><i class="ti-world"></i> <a href="{{ page.website }}" target="_blank" rel="noopener noreferrer">Visit Website</a></p>
-            {% endif %}
-            {% if page.phone %}
-            <p><i class="ti-mobile"></i> <a href="tel:{{ page.phone }}">{{ page.phone }}</a></p>
-            {% endif %}
-            {% if page.email %}
-            <p><i class="ti-email"></i> <a href="mailto:{{ page.email }}">{{ page.email }}</a></p>
-            {% endif %}
-            {% if page.instagram %}
-            <p><i class="ti-instagram"></i> <a href="{{ page.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></p>
-            {% endif %}
-          </div>
-
-          <!-- Details Card -->
-          {% if page.price_range or page.years_experience or page.service_area %}
-          <div class="sidebar-card mb-30">
-            <div class="sidebar-card-title">Details</div>
-            {% if page.price_range %}
-            <p><strong>Price Range:</strong> {{ page.price_range }}</p>
-            {% endif %}
-            {% if page.years_experience %}
-            <p><strong>Experience:</strong> {{ page.years_experience }} years</p>
-            {% endif %}
-            {% if page.service_area %}
-            <p><strong>Service Area:</strong> {{ page.service_area }}</p>
-            {% endif %}
-          </div>
-          {% endif %}
-
-          <!-- Press & Accolades -->
-          {% if page.press and page.press.size > 0 %}
-          <div class="sidebar-card mb-30">
-            <div class="sidebar-card-title">Press &amp; Accolades</div>
-            <ul class="list-unstyled mb-0">
-              {% for item in page.press %}
-              <li style="font-family:'Barlow',sans-serif;font-size:13px;padding:6px 0;border-bottom:1px solid #f0f0f0;">
-                <i class="ti-star" style="color:#a2783a;margin-right:6px;font-size:11px;"></i>
-                {{ item.outlet }}{% if item.year %} <span style="color:#aaa;">{{ item.year }}</span>{% endif %}
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-
-        </div>
-      </div>
-
+    <div class="v-breadcrumb">
+      <a href="{{ '/vendors/' | relative_url }}">Vendors</a>
+      {% if page.category %} / <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">{{ page.category }}</a>{% endif %}
+       / <span style="color:var(--tve-ink);">{{ page.title }}</span>
     </div>
 
-    <!-- Related Vendors -->
-    {% assign related = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" %}
-    {% if related.size > 0 %}
-    <div class="row mt-60">
-      <div class="col-md-12 text-center mb-30">
-        <div class="section-subtitle">Discover More</div>
-        <div class="section-title">Similar Vendors</div>
+    <div class="v-header">
+      <div>
+        {% if page.is_featured %}
+        <span class="badge-featured"><i class="ti-star"></i> Featured · Top of Category</span>
+        {% endif %}
+        <h1 class="v-title" style="margin-top:{% if page.is_featured %}16px{% else %}0{% endif %};">{{ page.title }}{% if page.tagline %}<br><em>{{ page.tagline }}</em>{% endif %}</h1>
+        {% if page.tagline == blank %}
+        <p class="v-sub">{{ content | strip_html | truncatewords: 30 }}</p>
+        {% endif %}
+        <div class="v-meta">
+          {% if page.city %}<span><i class="ti-location-pin" style="color:var(--tve-accent);"></i> {{ page.city }}, LA</span>{% endif %}
+          {% if page.service_area %}<span class="dot"></span><span>Serves {{ page.service_area }}</span>{% endif %}
+          {% if rw_count > 0 %}<span class="dot"></span><span>{{ rw_count }} wedding{% if rw_count != 1 %}s{% endif %} featured</span>{% endif %}
+        </div>
       </div>
-      {% for vendor in related limit: 3 %}
-      <div class="col-lg-4 col-md-6 mb-30">
-        {% include vendor-card.html vendor=vendor %}
+      <div class="v-actions">
+        <button class="act-btn save-btn" data-type="vendor" data-url="{{ page.url | relative_url }}"
+          data-title="{{ page.title }}" data-image="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}"
+          data-meta="{{ page.category }} &middot; {{ page.city }}" aria-label="Save {{ page.title }}">
+          <i class="ti-heart"></i> Save
+        </button>
+        <a href="#" class="act-btn" onclick="navigator.share ? navigator.share({title:'{{ page.title }}',url:window.location.href}) : navigator.clipboard.writeText(window.location.href); return false;">
+          <i class="ti-share"></i> Share
+        </a>
+        <a href="#inquire" class="act-btn primary"><i class="ti-email"></i> Inquire</a>
+      </div>
+    </div>
+
+    {% assign gallery_images = page.gallery %}
+    <div class="v-gallery">
+      <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
+      {% for img in gallery_images limit: 4 %}
+      <div class="cell" style="background-image:url('{{ img }}');">
+        {% if forloop.last and gallery_images.size > 4 %}
+        {% assign extra = gallery_images.size | minus: 4 %}
+        <span class="more">+ {{ extra }} photos</span>
+        {% endif %}
       </div>
       {% endfor %}
+      {% assign cells_filled = gallery_images | size %}
+      {% if cells_filled < 4 %}
+        {% assign remaining = 4 | minus: cells_filled %}
+        {% for i in (1..remaining) %}
+        <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></div>
+        {% endfor %}
+      {% endif %}
     </div>
-    {% endif %}
-
-    <!-- Featured In Real Weddings -->
-    {% assign related_weddings = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains page.title" %}
-    {% if related_weddings.size > 0 %}
-    <div class="row mt-60">
-      <div class="col-md-12 text-center mb-30">
-        <div class="section-subtitle">Real Events</div>
-        <div class="section-title">Featured In</div>
-      </div>
-      {% for wedding in related_weddings limit: 3 %}
-      <div class="col-lg-4 col-md-6 mb-30">
-        {% include wedding-card.html wedding=wedding %}
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
 
   </div>
 </section>
+
+<div class="container-fluid px-4 px-lg-5">
+  <div class="v-body">
+    <main>
+
+      <!-- About -->
+      <section class="v-section">
+        <div class="v-sec-eyebrow">About {{ page.category | downcase }}</div>
+        <h2 class="v-sec-title">{{ page.title }}{% if page.tagline %}<br><em>{{ page.tagline }}</em>{% endif %}</h2>
+        <div class="v-body-content">{{ content }}</div>
+      </section>
+
+      <!-- Packages -->
+      {% if page.packages and page.packages.size > 0 %}
+      <section class="v-section">
+        <div class="v-sec-eyebrow">Packages &amp; pricing</div>
+        <h2 class="v-sec-title"><em>{{ page.packages.size }}</em> {% if page.packages.size == 1 %}way{% else %}ways{% endif %} to work together.</h2>
+        <div class="pkg-grid" {% if page.packages.size == 2 %}style="grid-template-columns:repeat(2,1fr);"{% elsif page.packages.size == 1 %}style="grid-template-columns:1fr;"{% endif %}>
+          {% for pkg in page.packages %}
+          <div class="pkg{% if pkg.featured %} pkg--featured{% endif %}">
+            {% if pkg.tier %}<div class="pkg-tier">{{ pkg.tier }}</div>{% endif %}
+            <div class="pkg-name">{{ pkg.name }}</div>
+            {% if pkg.price %}<div class="pkg-price">{{ pkg.price }}</div>{% endif %}
+            {% if pkg.description %}<p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:14px;color:{% if pkg.featured %}rgba(255,255,255,.75){% else %}var(--tve-ink-soft){% endif %};margin:0;">{{ pkg.description }}</p>{% endif %}
+            {% if pkg.includes and pkg.includes.size > 0 %}
+            <ul>
+              {% for item in pkg.includes %}
+              <li><i class="ti-check"></i> {{ item }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Featured in Real Weddings -->
+      {% assign related_weddings = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains page.title" %}
+      {% if related_weddings.size > 0 %}
+      <section class="v-section">
+        <div class="v-sec-eyebrow">Featured in real weddings</div>
+        <h2 class="v-sec-title"><em>{{ related_weddings.size }}</em> {% if related_weddings.size == 1 %}couple{% else %}couples{% endif %}, documented.</h2>
+        <div class="rw-strip">
+          {% for wedding in related_weddings limit: 3 %}
+          <a href="{{ wedding.url | relative_url }}" class="rw-card">
+            <div class="img" style="background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
+            <div class="couple">{{ wedding.couple | replace: ' & ', ' &amp; ' | replace: ' and ', ' &amp; ' }}<br><em>{{ wedding.venue }}</em></div>
+            <div class="venue">{{ wedding.venue }} &middot; {{ wedding.date | date: "%b %Y" }}</div>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Testimonials / Reviews -->
+      {% if page.testimonials and page.testimonials.size > 0 %}
+      <section class="v-section" id="inquire">
+        <div class="v-sec-eyebrow">Reviews</div>
+        <h2 class="v-sec-title">What <em>couples</em> say.</h2>
+        {% for t in page.testimonials %}
+        <blockquote style="font-family:var(--tve-serif-alt);font-style:italic;font-size:24px;line-height:1.5;color:var(--tve-ink);border-left:2px solid var(--tve-accent);padding:8px 0 8px 30px;margin:0 0 40px;">
+          "{{ t.text }}"
+          <footer style="font-family:var(--tve-sans);font-style:normal;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--tve-muted);margin-top:20px;">— {{ t.author }}{% if t.date %} &middot; {{ t.date }}{% endif %}</footer>
+        </blockquote>
+        {% endfor %}
+      </section>
+      {% else %}
+      <div id="inquire"></div>
+      {% endif %}
+
+    </main>
+
+    <aside>
+      <div class="side-card">
+        {% assign starting_pkg = page.packages | where: "featured", true | first %}
+        {% unless starting_pkg %}{% assign starting_pkg = page.packages | first %}{% endunless %}
+
+        {% if starting_pkg %}
+        <h4>Starting at</h4>
+        <div class="side-price">${{ starting_pkg.price | remove: '$' | split: ',' | first | split: '.' | first | remove: ',' }}</div>
+        <div class="side-price-lbl">{{ starting_pkg.name }}</div>
+        {% elsif page.price_range %}
+        <h4>Investment</h4>
+        <div class="side-price" style="font-size:32px;">{{ page.price_range }}</div>
+        {% endif %}
+
+        <form style="margin-top:30px;" action="mailto:{{ page.email }}" method="get" enctype="text/plain">
+          <div class="side-field"><label>Your name</label><input type="text" name="name" placeholder="Your name"></div>
+          <div class="side-field"><label>Email</label><input type="email" name="email" placeholder="you@email.com"></div>
+          <div class="side-field"><label>Wedding date</label><input type="date" name="date"></div>
+          <div class="side-field"><label>Message</label><textarea name="message" placeholder="Tell us about your day…"></textarea></div>
+          <button type="submit" class="act-btn primary" style="width:100%;justify-content:center;margin-top:6px;">Send inquiry →</button>
+        </form>
+
+        <div class="side-info">
+          {% if page.website %}<div><i class="ti-world"></i><a href="{{ page.website }}" target="_blank" rel="noopener noreferrer">{{ page.website | remove: 'https://' | remove: 'http://' | remove: 'www.' | split: '/' | first }}</a></div>{% endif %}
+          {% if page.phone %}<div><i class="ti-mobile"></i><a href="tel:{{ page.phone }}">{{ page.phone }}</a></div>{% endif %}
+          {% if page.instagram %}<div><i class="ti-instagram"></i><a href="{{ page.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></div>{% endif %}
+          {% if page.email %}<div><i class="ti-email"></i><a href="mailto:{{ page.email }}">{{ page.email }}</a></div>{% endif %}
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
 
 {% else %}
 
-<!-- ============================================================
-     BASIC (UNSUBSCRIBED) LISTING — Limited view + upgrade CTA
-     ============================================================ -->
+<!-- ════════════════════════════════════════════════════
+     UNLISTED — Claim prompt + limited view
+     ════════════════════════════════════════════════════ -->
 
-<!-- Basic Listing Banner — hero image blurred via CSS pseudo-element -->
-<div class="banner-header section-padding valign bg-img bg-fixed banner-blurred"
-  data-background="{{ page.hero_image | default: '/assets/img/Unknown-1.avif' }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5>{{ page.category }}</h5>
-        <h1>{{ page.title }}</h1>
-        <span style="color:rgba(255,255,255,0.6);font-family:'Barlow',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;">
-          <i class="ti-location-pin"></i> {{ page.city }}, Louisiana
-        </span>
-      </div>
+<div class="claim-banner">
+  <div class="l">
+    <i class="ti-info-alt banner-icon"></i>
+    <div>
+      <div class="t">This listing is <em>unclaimed.</em></div>
+      <div class="d">Are you the owner? Claim it to publish your gallery, packages, and inquiry form.</div>
     </div>
   </div>
+  <a href="{{ '/list-your-business/' | relative_url }}" class="claim-btn">Claim this listing →</a>
 </div>
 
-<section class="section-padding">
-  <div class="container">
-    <div class="row">
+<section class="v-hero">
+  <div class="container-fluid px-4 px-lg-5">
 
-      <!-- Basic Info Column -->
-      <div class="col-lg-8 col-md-12">
-
-        <div class="vendor-bio mb-40">
-          <div class="section-subtitle">About</div>
-          <div class="section-title">{{ page.title }}</div>
-          <p style="font-family:'Barlow',sans-serif;font-size:16px;line-height:1.8;color:#555;">
-            {{ content | strip_html | truncatewords: 40 }}
-          </p>
-        </div>
-
-        <!-- Blurred upgrade teaser -->
-        <div class="basic-listing-blur mb-40">
-          <div class="basic-listing-blur-inner">
-            <div class="basic-listing-blur-content">
-              <div class="row g-2 mb-20">
-                {% for i in (1..3) %}
-                <div class="col-4"><div style="background:#ddd;height:120px;border-radius:4px;"></div></div>
-                {% endfor %}
-              </div>
-              <div style="background:#eee;height:18px;border-radius:3px;margin-bottom:10px;width:80%;"></div>
-              <div style="background:#eee;height:14px;border-radius:3px;margin-bottom:8px;width:60%;"></div>
-              <div style="background:#eee;height:14px;border-radius:3px;width:70%;"></div>
-            </div>
-            <div class="basic-listing-blur-overlay">
-              <i class="ti-lock" style="font-size:32px;color:#a2783a;display:block;margin-bottom:15px;"></i>
-              <p style="font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;margin-bottom:5px;color:#fff;">Full profile hidden</p>
-              <p style="font-family:'Barlow',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);">Gallery, contact details &amp; inquiry form available with a subscription.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Upgrade Sidebar -->
-      <div class="col-lg-4 col-md-12">
-        <div class="vendor-sidebar">
-
-          <!-- Locked Contact Card -->
-          <div class="sidebar-card mb-30">
-            <div class="sidebar-card-title">
-              <i class="ti-lock me-1"></i> Contact &amp; Info
-            </div>
-            <p style="font-family:'Barlow',sans-serif;font-size:13px;color:#888;margin-bottom:0;">
-              Contact details are available on subscribed listings.
-            </p>
-          </div>
-
-          <!-- Listed Tier CTA -->
-          <div class="sidebar-card sidebar-card--upgrade mb-20">
-            <div class="sidebar-card-title">Listed — {{ site.data.site.listed_price }}</div>
-            <ul class="list-unstyled mb-20">
-              {% for feature in site.data.site.listed_features %}
-              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:7px;">
-                <i class="ti-check" style="color:#a2783a;margin-right:6px;"></i>{{ feature }}
-              </li>
-              {% endfor %}
-            </ul>
-            <a href="{{ site.data.site.stripe_payment_link }}" target="_blank" rel="noopener noreferrer"
-              class="btn-dark" style="display:block;text-align:center;">
-              <span>Get Listed — {{ site.data.site.listed_price }}</span>
-            </a>
-          </div>
-
-          <!-- Featured Tier CTA -->
-          <div class="sidebar-card sidebar-card--featured mb-30">
-            <div class="sidebar-card-title" style="color:#a2783a;">
-              <i class="ti-star me-1"></i> Featured — {{ site.data.site.featured_price }}
-            </div>
-            <ul class="list-unstyled mb-20">
-              {% for feature in site.data.site.featured_features %}
-              <li style="font-family:'Barlow',sans-serif;font-size:13px;margin-bottom:7px;">
-                <i class="ti-check" style="color:#a2783a;margin-right:6px;"></i>{{ feature }}
-              </li>
-              {% endfor %}
-            </ul>
-            <a href="{{ site.data.site.stripe_featured_link }}" target="_blank" rel="noopener noreferrer"
-              class="btn-dark" style="display:block;text-align:center;background:#a2783a;border-color:#a2783a;">
-              <span>Get Featured — {{ site.data.site.featured_price }}</span>
-            </a>
-            <p style="font-family:'Barlow',sans-serif;font-size:11px;color:#aaa;text-align:center;margin-top:10px;margin-bottom:0;">
-              Powered by Stripe &middot; Cancel anytime
-            </p>
-          </div>
-
-        </div>
-      </div>
-
+    <div class="v-breadcrumb">
+      <a href="{{ '/vendors/' | relative_url }}">Vendors</a>
+      {% if page.category %} / <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">{{ page.category }}</a>{% endif %}
+       / <span style="color:var(--tve-ink);">{{ page.title }}</span>
     </div>
 
-    <!-- Still show related vendors so unsubscribed page has value -->
-    {% assign related = site.vendors | where: "category_slug", page.category_slug | where_exp: "v", "v.url != page.url" %}
-    {% if related.size > 0 %}
-    <div class="row mt-60">
-      <div class="col-md-12 text-center mb-30">
-        <div class="section-subtitle">Also in {{ page.category }}</div>
-        <div class="section-title">More Vendors</div>
+    <div class="row g-5 align-items-end" style="margin-bottom:40px;">
+      <div class="col-lg-8">
+        <span class="unclaimed-badge"><i class="ti-lock"></i> Unclaimed listing</span>
+        <h1 class="v-title" style="margin-top:16px;">{{ page.title }}</h1>
+        {% if page.tagline %}
+        <p class="v-sub">{{ page.tagline }}</p>
+        {% else %}
+        <p class="v-sub">{{ page.category }} serving {{ page.city }} and surrounding parishes — based on public directory info.</p>
+        {% endif %}
+        <div class="v-meta">
+          {% if page.city %}<span><i class="ti-location-pin" style="color:var(--tve-muted);"></i> {{ page.city }}, LA</span>{% endif %}
+          {% if page.category %}<span class="dot"></span><span>{{ page.category }}</span>{% endif %}
+          <span class="dot"></span><span style="color:var(--tve-muted);font-style:italic;">Unverified contact info</span>
+        </div>
       </div>
-      {% for vendor in related limit: 3 %}
-      <div class="col-lg-4 col-md-6 mb-30">
-        {% include vendor-card.html vendor=vendor %}
-      </div>
+    </div>
+
+    {% assign gallery_images = page.gallery %}
+    <div class="v-gallery ghost" style="position:relative;">
+      <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
+      {% for img in gallery_images limit: 4 %}
+      <div class="cell" style="background-image:url('{{ img }}');"></div>
       {% endfor %}
+      {% assign cells_filled = gallery_images | size %}
+      {% if cells_filled < 4 %}
+        {% assign remaining = 4 | minus: cells_filled %}
+        {% for i in (1..remaining) %}
+        <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></div>
+        {% endfor %}
+      {% endif %}
+      <div class="gallery-lock-overlay"></div>
     </div>
-    {% endif %}
 
   </div>
 </section>
+
+<div class="container-fluid px-4 px-lg-5">
+  <div class="v-body">
+    <main>
+
+      <section class="v-section">
+        <div class="v-sec-eyebrow">Limited public info</div>
+        <h2 class="v-sec-title">Based on <em>public</em> records.</h2>
+        <div class="stub">
+          <p>{{ page.title }} is listed as a{{ page.category | downcase | prepend: ' ' }} operating in the {{ page.city }} area. This page is a placeholder built from public directory information — the business has not yet claimed their profile on The Vendor Edit.</p>
+          <p style="color:var(--tve-muted);font-style:italic;">We verify every listing before it goes live. Gallery, packages, and inquiry form are hidden until the owner signs up.</p>
+        </div>
+      </section>
+
+      <section class="v-section">
+        <div class="v-sec-eyebrow">Packages &amp; pricing</div>
+        <div class="locked-section">
+          <i class="ti-lock lock-i"></i>
+          <h3>Pricing hidden until <em>claimed.</em></h3>
+          <p>Only verified, claimed listings can publish pricing on The Vendor Edit — this keeps couples from wasting time on stale rates.</p>
+          <a href="{{ '/list-your-business/' | relative_url }}" class="act-btn primary" style="background:var(--tve-ink);color:#fff;border-color:var(--tve-ink);">Claim to add pricing</a>
+        </div>
+      </section>
+
+      <section class="v-section">
+        <div class="v-sec-eyebrow">Reviews</div>
+        <div class="locked-section">
+          <i class="ti-comments lock-i"></i>
+          <h3>Reviews appear once <em>verified.</em></h3>
+          <p>Once a listing is claimed, verified couples who booked through The Vendor Edit can leave reviews.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <aside>
+      <div class="side-card side-card--claim">
+        <div class="lock-icon"><i class="ti-lock"></i></div>
+        <h4>This could be <em>your page.</em></h4>
+        <p>If you're {{ page.title }}, claim this listing to publish your gallery, set pricing, and receive inquiries.</p>
+        <div class="claim-price">From <em>{{ site.data.site.listed_price }}</em></div>
+        <a href="{{ '/list-your-business/' | relative_url }}" class="side-claim">Claim this listing →</a>
+        <div class="side-alt">Not the owner? <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">Browse verified {{ page.category | downcase }}</a></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% assign claimed_alternatives = site.vendors | where: "category_slug", page.category_slug | where: "is_subscribed", true | where_exp: "v", "v.url != page.url" %}
+{% if claimed_alternatives.size > 0 %}
+<section class="claimed-vendors">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Instead, try these</div>
+        <h3>{{ page.category }} who've<br><em>claimed</em> their page.</h3>
+        <p class="cv-lead">Verified, contactable, currently accepting bookings for Acadiana weddings.</p>
+      </div>
+      <div class="col-lg-7">
+        <div class="cv-grid">
+          {% for v in claimed_alternatives limit: 4 %}
+          <a class="c" href="{{ v.url | relative_url }}" style="background-image:url('{{ v.hero_image | default: '/assets/img/Unknown.avif' }}');"><span>{{ v.title }}</span></a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 
 {% endif %}

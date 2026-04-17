@@ -1,125 +1,215 @@
 ---
 layout: default
 ---
+<style>
+  /* ── Magazine cover ── */
+  .rw-cover { position: relative; height: 86vh; min-height: 700px; background: var(--tve-ink); overflow: hidden; }
+  .rw-cover .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .85; }
+  .rw-cover .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 80%, rgba(0,0,0,.75)); }
+  .rw-cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 40px 60px 70px; color: #fff; }
+  .rw-issue { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.75); display: flex; align-items: center; gap: 14px; }
+  .rw-issue::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.3); max-width: 300px; }
+  .rw-title { font-family: var(--tve-serif); font-weight: 400; line-height: 0.9; font-size: clamp(64px, 9vw, 140px); letter-spacing: -.02em; color: #fff; max-width: 1000px; }
+  .rw-title em { font-style: italic; }
+  .rw-deck { font-family: var(--tve-serif-alt); font-style: italic; font-size: 22px; color: rgba(255,255,255,.85); max-width: 640px; margin-top: 24px; line-height: 1.5; }
+  .rw-byline { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.7); display: flex; gap: 30px; flex-wrap: wrap; }
+  .rw-byline strong { color: #fff; font-weight: 500; }
 
-<!-- Hero -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="3"
-  data-background="{{ page.hero_image | default: '/assets/img/Unknown-3.avif' }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5>Real Wedding</h5>
-        <h1>{{ page.title }}</h1>
-        {% if page.location %}
-        <span style="color:#fff;font-family:'Barlow',sans-serif;font-size:14px;letter-spacing:2px;">
-          <i class="ti-location-pin"></i> {{ page.location }}
-          {% if page.venue %} &nbsp;|&nbsp; {{ page.venue }}{% endif %}
-        </span>
-        {% endif %}
-      </div>
+  /* ── Overlay nav (transparent when over cover) ── */
+  .rw-cover-nav.tve-nav { background: transparent !important; border-bottom: none !important; position: absolute !important; top: 0; left: 0; right: 0; width: 100%; z-index: 100; }
+  .rw-cover-nav .logo-img { filter: brightness(0) invert(1); }
+  .rw-cover-nav .tve-wordmark { color: #fff !important; }
+  .rw-cover-nav .tve-nav-link { color: rgba(255,255,255,.85) !important; }
+  .rw-cover-nav .tve-nav-link:hover { color: #fff !important; }
+  .rw-cover-nav .tve-pill { background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.4) !important; color: #fff !important; }
+  .rw-cover-nav .navbar-toggler { filter: invert(1); }
+
+  /* ── Opening dek quote ── */
+  .rw-dek { padding: 100px 0 80px; background: #fff; }
+  .rw-dek-quote { font-family: var(--tve-serif); font-style: italic; font-weight: 300; font-size: clamp(32px, 3.6vw, 52px); line-height: 1.25; color: var(--tve-ink); max-width: 900px; margin: 0 auto; text-align: center; letter-spacing: -.005em; }
+  .rw-dek-quote::before { content: '\201C'; color: var(--tve-accent); font-size: 1.3em; }
+  .rw-dek-quote::after { content: '\201D'; color: var(--tve-accent); font-size: 1.3em; }
+  .rw-dek-attr { font-family: var(--tve-sans); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--tve-muted); text-align: center; margin-top: 30px; }
+
+  /* ── Story body ── */
+  .rw-body { display: grid; grid-template-columns: 1fr 300px; gap: 100px; padding: 0 0 80px; }
+  .rw-story { max-width: 720px; }
+  .rw-story p { font-family: var(--tve-serif-alt); font-size: 19px; line-height: 1.7; color: var(--tve-ink); margin: 0 0 24px; }
+  .rw-story p:first-of-type::first-letter { font-family: var(--tve-serif); font-size: 110px; float: left; line-height: 0.9; padding: 4px 12px 0 0; color: var(--tve-accent); font-style: italic; }
+  .rw-story h3 { font-family: var(--tve-serif); font-weight: 400; font-style: italic; font-size: 38px; line-height: 1.2; margin: 50px 0 24px; }
+
+  /* ── Credits sidebar ── */
+  .rw-credits { position: sticky; top: 30px; align-self: start; }
+  .rw-credits h4 { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--tve-accent); margin: 0 0 24px; padding-bottom: 14px; border-bottom: 1px solid var(--tve-rule); font-weight: 600; }
+  .cred { padding: 16px 0; border-bottom: 1px solid var(--tve-rule); }
+  .cred .role { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--tve-muted); margin-bottom: 4px; }
+  .cred .name { font-family: var(--tve-serif); font-size: 19px; line-height: 1.2; color: var(--tve-ink); text-decoration: none; display: block; }
+  .cred .name em { font-style: italic; }
+  .cred a.name { border-bottom: 1px dashed var(--tve-accent); display: inline; }
+  .cred a.name:hover { color: var(--tve-accent); }
+
+  /* ── Image spreads ── */
+  .spread-full { margin: 60px 0; }
+  .spread-full img { width: 100%; display: block; }
+  .spread-full .cap { font-family: var(--tve-serif-alt); font-style: italic; font-size: 14px; color: var(--tve-muted); padding: 12px 20px 0; border-left: 1px solid var(--tve-rule); margin-top: 20px; }
+  .spread-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 60px 0; }
+  .spread-pair img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+  .spread-trio { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 12px; margin: 60px 0; align-items: center; }
+  .spread-trio img { width: 100%; display: block; }
+  .spread-trio img:nth-child(1), .spread-trio img:nth-child(3) { aspect-ratio: 4/5; object-fit: cover; }
+  .spread-trio img:nth-child(2) { aspect-ratio: 3/2; object-fit: cover; }
+
+  /* ── Pull quote ── */
+  .pull-quote { padding: 70px 40px; background: var(--tve-bg); text-align: center; margin: 60px 0; }
+  .pull-quote blockquote { font-family: var(--tve-serif); font-style: italic; font-weight: 300; font-size: clamp(28px, 3.2vw, 44px); line-height: 1.25; color: var(--tve-ink); margin: 0 auto; max-width: 800px; }
+  .pull-quote blockquote::before { content: '\201C'; color: var(--tve-accent); }
+  .pull-quote blockquote::after { content: '\201D'; color: var(--tve-accent); }
+
+  /* ── Related weddings ── */
+  .rw-related { background: var(--tve-bg); padding: 100px 0; margin-top: 40px; }
+  .rw-related h3 { font-family: var(--tve-serif); font-weight: 400; font-size: clamp(40px, 5vw, 68px); line-height: 1; margin: 0 0 12px; }
+  .rw-related h3 em { font-style: italic; }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+  .rel-card { text-decoration: none; color: inherit; display: block; }
+  .rel-card .img { aspect-ratio: 4/5; background-size: cover; background-position: center; margin-bottom: 16px; }
+  .rel-card .label { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-accent); }
+  .rel-card .couple { font-family: var(--tve-serif); font-size: 28px; line-height: 1.1; margin: 4px 0; }
+  .rel-card .couple em { font-style: italic; }
+  .rel-card .venue { font-family: var(--tve-serif-alt); font-style: italic; font-size: 14px; color: var(--tve-muted); }
+
+  /* ── Responsive ── */
+  @media (max-width: 991px) {
+    .rw-cover-content { padding: 30px 24px 50px; }
+    .rw-body { grid-template-columns: 1fr; gap: 50px; }
+    .rw-credits { position: static; }
+    .spread-pair, .spread-trio { grid-template-columns: 1fr; gap: 8px; }
+    .related-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 575px) {
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% raw %}<script>
+(function () {
+  var nav = document.querySelector('.tve-nav');
+  if (nav) nav.classList.add('rw-cover-nav');
+  window.addEventListener('scroll', function () {
+    var nav = document.querySelector('.tve-nav');
+    var cover = document.querySelector('.rw-cover');
+    if (!nav || !cover) return;
+    if (window.scrollY > cover.clientHeight - 80) {
+      nav.classList.remove('rw-cover-nav');
+    } else {
+      nav.classList.add('rw-cover-nav');
+    }
+  }, { passive: true });
+})();
+</script>{% endraw %}
+
+<!-- Magazine cover -->
+<section class="rw-cover">
+  <div class="bg" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+  <div class="grad"></div>
+  <div class="rw-cover-content">
+    <div class="rw-issue">A Real Wedding · {{ page.date | date: "%B %Y" }}</div>
+    <div>
+      <h1 class="rw-title">{{ page.title }},<br><em>at {{ page.venue }}.</em></h1>
+      {% if page.description %}<p class="rw-deck">{{ page.description }}</p>{% endif %}
     </div>
-  </div>
-</div>
-
-<!-- Wedding Content -->
-<section class="wedding-detail section-padding">
-  <div class="container">
-
-    <!-- Style Tags -->
-    {% if page.style_tags %}
-    <div class="row mb-40">
-      <div class="col-md-12 text-center">
-        {% for tag in page.style_tags %}
-        <span class="style-tag">{{ tag }}</span>
-        {% endfor %}
-      </div>
+    <div class="rw-byline">
+      {% if page.photographer %}<span>Photography · <strong>{{ page.photographer }}</strong></span>{% endif %}
+      {% if page.venue %}<span>Venue · <strong>{{ page.venue }}</strong></span>{% endif %}
+      {% if page.location %}<span>{{ page.location }}</strong></span>{% endif %}
     </div>
-    {% endif %}
-
-    <!-- Gallery -->
-    {% if page.gallery and page.gallery.size > 0 %}
-    <div class="row g-2 mb-60">
-      <div class="col-md-8">
-        <a href="{{ page.gallery[0] }}" class="img-zoom mfp-image">
-          <div class="img o-hidden">
-            <img src="{{ page.gallery[0] }}" alt="{{ page.title }}" class="img-fluid w-100" style="height:480px;object-fit:cover;">
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <div class="row g-2 h-100">
-          {% for image in page.gallery offset: 1 limit: 2 %}
-          <div class="col-12">
-            <a href="{{ image }}" class="img-zoom mfp-image">
-              <div class="img o-hidden">
-                <img src="{{ image }}" alt="{{ page.title }}" class="img-fluid w-100" style="height:232px;object-fit:cover;">
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% if page.gallery.size > 3 %}
-      {% for image in page.gallery offset: 3 limit: 3 %}
-      <div class="col-md-4">
-        <a href="{{ image }}" class="img-zoom mfp-image">
-          <div class="img o-hidden">
-            <img src="{{ image }}" alt="{{ page.title }}" class="img-fluid w-100" style="height:260px;object-fit:cover;">
-          </div>
-        </a>
-      </div>
-      {% endfor %}
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <div class="row">
-      <!-- Story -->
-      <div class="col-lg-8 col-md-12">
-        <div class="section-subtitle">The Story</div>
-        <div class="section-title">{{ page.title }}</div>
-        <div class="wedding-story">{{ content }}</div>
-      </div>
-
-      <!-- Vendors Sidebar -->
-      <div class="col-lg-4 col-md-12">
-        {% if page.vendors and page.vendors.size > 0 %}
-        <div class="sidebar-card">
-          <div class="sidebar-card-title">Vendors in this Wedding</div>
-          <ul class="vendor-list list-unstyled">
-            {% for vendor_name in page.vendors %}
-            {% assign matched = site.vendors | where: "title", vendor_name | first %}
-            <li>
-              {% if matched %}
-              <a href="{{ matched.url | relative_url }}">
-                <i class="ti-arrow-right"></i> {{ vendor_name }}
-              </a>
-              {% else %}
-              <span><i class="ti-arrow-right"></i> {{ vendor_name }}</span>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- More Real Weddings -->
-    {% assign more_weddings = site.categories["real-weddings"] | where_exp: "w", "w.url != page.url" %}
-    {% if more_weddings.size > 0 %}
-    <div class="row mt-60">
-      <div class="col-md-12 text-center mb-30">
-        <div class="section-subtitle">Keep Browsing</div>
-        <div class="section-title">More Real Weddings</div>
-      </div>
-      {% for wedding in more_weddings limit: 3 %}
-      <div class="col-lg-4 col-md-6 mb-30">
-        {% include wedding-card.html wedding=wedding %}
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
   </div>
 </section>
+
+<!-- Opening dek quote -->
+{% if page.dek or page.quote %}
+<section class="rw-dek">
+  <div class="container-fluid px-4 px-lg-5">
+    <p class="rw-dek-quote">{{ page.dek | default: page.quote }}</p>
+    {% if page.quote_attr %}<div class="rw-dek-attr">— {{ page.quote_attr }}</div>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Story + Credits -->
+<div class="container-fluid px-4 px-lg-5" style="padding-top:80px;">
+  <div class="rw-body">
+    <article class="rw-story">
+      {{ content }}
+    </article>
+
+    <aside class="rw-credits">
+      <h4>The Creative Team</h4>
+      {% for vendor_name in page.vendors %}
+        {% assign matched_v = site.vendors | where: "title", vendor_name | first %}
+        <div class="cred">
+          <div class="role">{% if matched_v %}{{ matched_v.category }}{% else %}Vendor{% endif %}</div>
+          {% if matched_v and matched_v.is_subscribed %}
+          <a href="{{ matched_v.url | relative_url }}" class="name">{{ vendor_name }}</a>
+          {% else %}
+          <span class="name">{{ vendor_name }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <div style="padding:30px 0 0;">
+        <button class="act-btn save-btn" style="border-color:var(--tve-rule);font-size:10px;padding:10px 16px;"
+          data-type="wedding" data-url="{{ page.url | relative_url }}"
+          data-title="{{ page.title }}" data-image="{{ page.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}"
+          data-meta="{{ page.venue }} &middot; {{ page.date | date: '%b %Y' }}" aria-label="Save this wedding">
+          <i class="ti-heart"></i> Save this wedding
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Image spreads from gallery -->
+  {% if page.gallery and page.gallery.size >= 2 %}
+  <div class="spread-pair" style="max-width:calc(100% - 380px);">
+    <img src="{{ page.gallery[0] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[1] | relative_url }}" alt="{{ page.title }}">
+  </div>
+  {% endif %}
+
+  {% if page.gallery and page.gallery.size >= 3 %}
+  <div class="spread-full" style="max-width:calc(100% - 380px);">
+    <img src="{{ page.gallery[2] | relative_url }}" alt="{{ page.title }}">
+    {% if page.gallery_caption %}<div class="cap">{{ page.gallery_caption }}</div>{% endif %}
+  </div>
+  {% endif %}
+
+  {% if page.gallery and page.gallery.size >= 6 %}
+  <div class="spread-trio" style="max-width:calc(100% - 380px);">
+    <img src="{{ page.gallery[3] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[4] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[5] | relative_url }}" alt="{{ page.title }}">
+  </div>
+  {% endif %}
+</div>
+
+<!-- Related weddings -->
+{% assign more_weddings = site.categories["real-weddings"] | where_exp: "w", "w.url != page.url" %}
+{% if more_weddings.size > 0 %}
+<section class="rw-related">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Keep Reading</div>
+    <h3>More <em>Real Weddings</em><br>from Acadiana.</h3>
+    <div class="related-grid">
+      {% for wedding in more_weddings limit: 3 %}
+      <a class="rel-card" href="{{ wedding.url | relative_url }}">
+        <div class="img" style="background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+        <div class="label">{{ wedding.date | date: "%B %Y" }}</div>
+        <div class="couple">{{ wedding.title }}</div>
+        <div class="venue">{{ wedding.venue }}{% if wedding.location %} &middot; {{ wedding.location }}{% endif %}</div>
+      </a>
+      {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:60px;">
+      <a href="{{ '/weddings/' | relative_url }}" class="tve-link">Browse all real weddings →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
