@@ -1,0 +1,76 @@
+---
+layout: default
+title: Login
+description: Sign in to your vendor account on The Event Edit.
+permalink: /login/
+---
+
+<section class="auth-page">
+  <div class="auth-split">
+
+    <!-- Left: branding panel -->
+    <div class="auth-brand">
+      <div class="auth-brand-inner">
+        <div class="tve-eyebrow mb-4" style="color:rgba(255,255,255,.6);">Vendor Portal</div>
+        <h2 class="auth-brand-title">Your listing,<br><em>your way.</em></h2>
+        <p class="auth-brand-sub">Manage your profile, update your gallery, track inquiries, and stay in front of engaged couples planning their Acadiana wedding.</p>
+        <div class="auth-brand-bullets">
+          <div class="auth-bullet"><i class="ti-check" style="color:var(--tve-accent);"></i> Full profile &amp; photo gallery</div>
+          <div class="auth-bullet"><i class="ti-check" style="color:var(--tve-accent);"></i> Direct inquiry form</div>
+          <div class="auth-bullet"><i class="ti-check" style="color:var(--tve-accent);"></i> Packages &amp; pricing display</div>
+          <div class="auth-bullet"><i class="ti-check" style="color:var(--tve-accent);"></i> Real Weddings vendor credits</div>
+        </div>
+        <a href="{{ '/pricing/' | relative_url }}" class="tve-link tve-link--light mt-5 d-inline-block">See all plans →</a>
+      </div>
+    </div>
+
+    <!-- Right: login form -->
+    <div class="auth-form-panel">
+      <div class="auth-form-inner">
+
+        <a href="{{ '/' | relative_url }}" class="auth-back tve-eyebrow">← Back to directory</a>
+
+        <h1 class="auth-form-title">Sign in</h1>
+        <p class="auth-form-sub">Don't have an account? <a href="{{ '/list-your-business/' | relative_url }}">List your business →</a></p>
+
+        <!-- Memberstack renders the form into this div -->
+        <div data-ms-form="login">
+          <div class="ms-field">
+            <label class="ms-label">Email</label>
+            <input type="email" data-ms-member="email" placeholder="you@yourbusiness.com" class="ms-input">
+          </div>
+          <div class="ms-field">
+            <label class="ms-label">Password</label>
+            <input type="password" data-ms-member="password" placeholder="••••••••" class="ms-input">
+          </div>
+          <div class="ms-actions">
+            <button type="submit" class="act-btn primary w-100" style="justify-content:center;">Sign In</button>
+          </div>
+          <div class="ms-field-row mt-3" style="text-align:center;">
+            <a href="#" data-ms-action="forgot-password" class="tve-eyebrow" style="font-size:11px;color:var(--tve-muted);text-decoration:none;letter-spacing:.18em;">Forgot password?</a>
+          </div>
+        </div>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <div style="text-align:center;">
+          <p class="tve-eyebrow mb-3" style="color:var(--tve-muted);">New to The Event Edit?</p>
+          <a href="{{ '/list-your-business/' | relative_url }}" class="act-btn w-100" style="justify-content:center;">Create a vendor account</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Redirect logged-in members to their account -->
+<script>
+window.$memberstackDom && window.$memberstackDom.onReady.then(function() {
+  window.$memberstackDom.getCurrentMember().then(function(result) {
+    if (result && result.data) {
+      window.location.href = '{{ "/account/" | relative_url }}';
+    }
+  });
+});
+</script>

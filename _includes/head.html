@@ -28,3 +28,8 @@
 <link rel="stylesheet" href="{{ '/assets/css/editorial.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/plugins/themify-icons.css' | relative_url }}" />
 {% seo %}
+
+<!-- Memberstack — member auth, gated content, and Stripe billing -->
+<script src="https://static.memberstack.com/scripts/v1/memberstack.js"
+  data-memberstack-app="{{ site.data.site.memberstack_app_id }}"
+  async></script>

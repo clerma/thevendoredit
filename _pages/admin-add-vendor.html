@@ -1,0 +1,207 @@
+---
+layout: default
+title: Admin — Add Vendor
+description: Internal tool to manually add or activate a vendor listing.
+permalink: /admin/add-vendor/
+sitemap: false
+robots: noindex
+---
+
+<!-- NOTE: This page has no server-side auth.
+     Protect it by restricting the /admin/ path in CloudCannon's publishing
+     settings, or add a simple password via Netlify password protection. -->
+
+<section class="acct-page">
+  <div class="container-fluid px-4 px-lg-5">
+
+    <div class="acct-header" style="margin-bottom:40px;">
+      <div>
+        <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Admin Tools</div>
+        <h1 class="acct-title">Add / Activate Vendor</h1>
+      </div>
+    </div>
+
+    <div style="max-width:760px;">
+
+      <!-- Info card -->
+      <div class="acct-card mb-4" style="background:rgba(162,120,58,.08);border:1px solid rgba(162,120,58,.2);">
+        <div style="font-family:var(--tve-sans);font-size:13px;line-height:1.7;color:var(--tve-ink);">
+          <strong>How this works:</strong> Filling this form commits a new or updated
+          <code>_vendors/[slug].md</code> file directly to the GitHub repo via the webhook function,
+          then triggers a CloudCannon rebuild. The vendor will be live within ~2 minutes.
+          <br><br>
+          To add someone <strong>without a subscription</strong>, leave "Subscribed?" checked — their
+          listing will be fully visible. To add an unclaimed placeholder, uncheck it.
+        </div>
+      </div>
+
+      <form id="admin-vendor-form" class="admin-form">
+
+        <div class="admin-form-section">
+          <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Business Info</div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label>Business Name *</label>
+              <input type="text" name="business-name" required>
+            </div>
+            <div class="admin-field">
+              <label>URL Slug *</label>
+              <input type="text" name="vendor-slug" required placeholder="e.g. bloom-floral-lafayette" id="admin-slug-input">
+              <div class="admin-hint">Auto-generated from name. Used as the page URL: /vendors/[slug]/</div>
+            </div>
+          </div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label>Category</label>
+              <input type="text" name="category" placeholder="e.g. Florists">
+            </div>
+            <div class="admin-field">
+              <label>Category Slug</label>
+              <input type="text" name="category-slug" placeholder="e.g. florists">
+            </div>
+          </div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label>City (primary)</label>
+              <input type="text" name="city" placeholder="e.g. Lafayette">
+            </div>
+            <div class="admin-field">
+              <label>Cities served (comma-separated)</label>
+              <input type="text" name="cities" placeholder="Lafayette, Baton Rouge, New Orleans">
+            </div>
+          </div>
+          <div class="admin-field">
+            <label>Tagline</label>
+            <input type="text" name="tagline" placeholder="Short one-liner about the business">
+          </div>
+        </div>
+
+        <div class="admin-form-section">
+          <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Contact</div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label>Website</label>
+              <input type="url" name="website" placeholder="https://...">
+            </div>
+            <div class="admin-field">
+              <label>Email</label>
+              <input type="email" name="email">
+            </div>
+          </div>
+          <div class="admin-row">
+            <div class="admin-field">
+              <label>Phone</label>
+              <input type="tel" name="phone">
+            </div>
+            <div class="admin-field">
+              <label>Instagram handle</label>
+              <input type="text" name="instagram" placeholder="@handle">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-form-section">
+          <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Profile</div>
+          <div class="admin-field">
+            <label>Hero image URL</label>
+            <input type="url" name="hero-image" placeholder="https://...">
+          </div>
+          <div class="admin-field">
+            <label>Bio / Description</label>
+            <textarea name="bio" rows="6" placeholder="Write the vendor bio here..."></textarea>
+          </div>
+        </div>
+
+        <div class="admin-form-section">
+          <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Subscription Status</div>
+          <div class="admin-checkbox-row">
+            <label class="admin-checkbox-label">
+              <input type="checkbox" name="is_subscribed" value="true" checked>
+              Subscribed (full profile visible)
+            </label>
+            <label class="admin-checkbox-label">
+              <input type="checkbox" name="is_featured" value="true">
+              Featured (priority placement)
+            </label>
+          </div>
+          <div class="admin-hint mt-2">Uncheck "Subscribed" to add as an unclaimed placeholder listing only.</div>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+          <button type="submit" class="act-btn primary" id="admin-submit-btn">
+            <i class="ti-upload"></i> Commit to GitHub &amp; Rebuild
+          </button>
+          <button type="reset" class="act-btn">Clear Form</button>
+        </div>
+
+        <div id="admin-result" style="display:none;margin-top:20px;" class="acct-card"></div>
+
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var WEBHOOK_URL = '{{ site.data.site.webhook_base_url }}?source=paperform';
+
+  // Auto-generate slug from business name
+  var nameInput = document.querySelector('[name="business-name"]');
+  var slugInput = document.getElementById('admin-slug-input');
+  var slugEdited = false;
+
+  slugInput.addEventListener('input', function () { slugEdited = true; });
+  nameInput && nameInput.addEventListener('input', function () {
+    if (slugEdited) return;
+    slugInput.value = nameInput.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    // Also fill category slug if category is set
+    var catInput = document.querySelector('[name="category"]');
+    var catSlugInput = document.querySelector('[name="category-slug"]');
+    if (catSlugInput && catInput && !catSlugInput.value) {
+      catSlugInput.value = catInput.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+  });
+
+  document.getElementById('admin-vendor-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('admin-submit-btn');
+    var resultEl = document.getElementById('admin-result');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    // Build Paperform-compatible payload
+    var formData = new FormData(e.target);
+    var data = [];
+    formData.forEach(function (value, key) {
+      if (value !== '') data.push({ key: key, value: value });
+    });
+    // Add is_subscribed / is_featured from checkboxes explicitly
+    data.push({ key: 'is_subscribed', value: e.target.querySelector('[name="is_subscribed"]').checked ? 'true' : 'false' });
+    data.push({ key: 'is_featured',   value: e.target.querySelector('[name="is_featured"]').checked ? 'true' : 'false' });
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: data })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (res) {
+      resultEl.style.display = 'block';
+      resultEl.style.background = '#e8f5e9';
+      resultEl.innerHTML = '<strong style="color:#2e7d32;">Done.</strong> Vendor file committed. CloudCannon will rebuild in ~60 seconds. '
+        + '<a href="/vendors/' + (formData.get('vendor-slug') || '') + '/" target="_blank">Preview listing →</a>';
+    })
+    .catch(function (err) {
+      resultEl.style.display = 'block';
+      resultEl.style.background = '#fce4ec';
+      resultEl.innerHTML = '<strong style="color:#c62828;">Error.</strong> ' + err.message
+        + '<br><small>Make sure WEBHOOK_BASE_URL is set in _data/site.yml and the Netlify function is deployed.</small>';
+    })
+    .finally(function () {
+      btn.textContent = 'Commit to GitHub & Rebuild';
+      btn.disabled = false;
+    });
+  });
+})();
+</script>

@@ -9,12 +9,24 @@ facebook: ""
 instagram: ""
 pinterest: ""
 
-# Stripe — replace with your live Payment Link URLs
-stripe_payment_link: "https://buy.stripe.com/your_listed_link"
+# ─── Memberstack ─────────────────────────────────────────────────────────────
+# Get your App ID from Memberstack dashboard → Settings → API & Webhooks
+memberstack_app_id: "app_YOUR_MEMBERSTACK_APP_ID"
+
+# Plan IDs from Memberstack dashboard → Plans
+# Create two plans in Memberstack, each connected to the corresponding Stripe price
+memberstack_listed_plan_id:   "pln_YOUR_LISTED_PLAN_ID"
+memberstack_featured_plan_id: "pln_YOUR_FEATURED_PLAN_ID"
+
+# ─── Stripe ──────────────────────────────────────────────────────────────────
+# Replace with your live Payment Link URLs from Stripe Dashboard → Payment Links
+# NOTE: append ?prefilled_email=EMAIL to pre-fill the form when coming from a
+# claim flow (e.g. https://buy.stripe.com/xxx?prefilled_email=...)
+stripe_listed_link:   "https://buy.stripe.com/your_listed_link"
 stripe_featured_link: "https://buy.stripe.com/your_featured_link"
 
-# Pricing tiers
-listed_price: "$29/month"
+# ─── Pricing display ─────────────────────────────────────────────────────────
+listed_price:   "$29/month"
 featured_price: "$59/month"
 
 listed_features:
@@ -32,8 +44,17 @@ featured_features:
   - Real wedding submission priority
   - Monthly social media feature
 
-# Paperform IDs — replace with your actual form slugs/IDs
-paperform_inquiry_id: "your-inquiry-form-id"
-paperform_contact_id: "your-contact-form-id"
-paperform_listing_id: "your-listing-form-id"
-paperform_wedding_id: "your-wedding-submission-form-id"
+# ─── Paperform ───────────────────────────────────────────────────────────────
+# Replace with your actual Paperform form slugs (the part after paperform.co/)
+paperform_inquiry_id:  "your-inquiry-form-id"    # Vendor contact form (on listed pages)
+paperform_contact_id:  "your-contact-form-id"    # General site contact page
+paperform_listing_id:  "your-listing-form-id"    # "List your business" intake
+paperform_wedding_id:  "your-wedding-form-id"    # Wedding submission
+paperform_profile_id:  "your-profile-form-id"    # Vendor profile update (feeds Jekyll via webhook)
+paperform_claim_id:    "your-claim-form-id"      # Unclaimed listing claim request
+
+# ─── Webhook / automation ────────────────────────────────────────────────────
+# URL of your deployed Netlify Function that handles incoming webhooks.
+# Set this after deploying the function (netlify/functions/webhooks.js).
+# Format: https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/webhooks
+webhook_base_url: "https://your-netlify-site.netlify.app/.netlify/functions/webhooks"

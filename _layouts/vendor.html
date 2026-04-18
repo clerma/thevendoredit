@@ -186,10 +186,10 @@ layout: default
     <i class="ti-info-alt banner-icon"></i>
     <div>
       <div class="t">This listing is <em>unclaimed.</em></div>
-      <div class="d">Are you the owner? Claim it to publish your gallery, packages, and inquiry form.</div>
+      <div class="d">Are you {{ page.title }}? Claim this page to publish your gallery, packages, and inquiry form.</div>
     </div>
   </div>
-  <a href="{{ '/list-your-business/' | relative_url }}" class="claim-btn">Claim this listing →</a>
+  <a href="{{ '/pricing/?claim=' | append: page.slug | relative_url }}" class="claim-btn">Claim this listing →</a>
 </div>
 
 <section class="v-hero">
@@ -277,7 +277,7 @@ layout: default
         <h4>This could be <em>your page.</em></h4>
         <p>If you're {{ page.title }}, claim this listing to publish your gallery, set pricing, and receive inquiries.</p>
         <div class="claim-price">From <em>{{ site.data.site.listed_price }}</em></div>
-        <a href="{{ '/list-your-business/' | relative_url }}" class="side-claim">Claim this listing →</a>
+        <a href="{{ '/pricing/?claim=' | append: page.slug | relative_url }}" class="side-claim">Claim this listing →</a>
         <div class="side-alt">Not the owner? <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">Browse verified {{ page.category | downcase }}</a></div>
       </div>
     </aside>
