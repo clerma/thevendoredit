@@ -597,11 +597,11 @@ body {
    LAYOUT: REAL WEDDING
    ═══════════════════════════════════════════════════════════ */
 
-/* Magazine cover */
-.rw-cover { position: relative; height: 86vh; min-height: 700px; background: var(--tve-ink); overflow: hidden; }
+/* Magazine cover — negative margin pulls section behind sticky nav so transparent overlay works */
+.rw-cover { position: relative; height: 86vh; min-height: 700px; background: var(--tve-ink); overflow: hidden; margin-top: -68px; }
 .rw-cover .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .85; }
 .rw-cover .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 80%, rgba(0,0,0,.75)); }
-.rw-cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 40px 60px 70px; color: #fff; }
+.rw-cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 108px 60px 70px; color: #fff; }
 .rw-issue { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.75); display: flex; align-items: center; gap: 14px; }
 .rw-issue::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.3); max-width: 300px; }
 .rw-title { font-family: var(--tve-serif); font-weight: 400; line-height: 0.9; font-size: clamp(64px, 9vw, 140px); letter-spacing: -.02em; color: #fff; max-width: 1000px; }
@@ -676,7 +676,7 @@ body {
 .rel-card .venue { font-family: var(--tve-serif-alt); font-style: italic; font-size: 14px; color: var(--tve-muted); }
 
 @media (max-width: 991px) {
-  .rw-cover-content { padding: 30px 24px 50px; }
+  .rw-cover-content { padding: 98px 24px 50px; }
   .rw-body { grid-template-columns: 1fr; gap: 50px; }
   .rw-credits { position: static; }
   .spread-pair, .spread-trio { grid-template-columns: 1fr; gap: 8px; }
@@ -690,11 +690,11 @@ body {
    LAYOUT: LOCATION
    ═══════════════════════════════════════════════════════════ */
 
-/* Location hero */
-.loc-hero { position: relative; min-height: 70vh; background: var(--tve-ink); overflow: hidden; }
+/* Location hero — negative margin pulls section behind sticky nav so transparent overlay works */
+.loc-hero { position: relative; min-height: 70vh; background: var(--tve-ink); overflow: hidden; margin-top: -68px; }
 .loc-hero .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .55; }
 .loc-hero .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.7)); }
-.loc-hero-content { position: relative; z-index: 2; padding: 100px 60px 70px; color: #fff; }
+.loc-hero-content { position: relative; z-index: 2; padding: 168px 60px 70px; color: #fff; }
 .loc-eyebrow { font-family: var(--tve-sans); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 30px; display: flex; align-items: center; gap: 14px; }
 .loc-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.3); max-width: 200px; }
 .loc-title { font-family: var(--tve-serif); font-weight: 400; line-height: .92; font-size: clamp(64px, 9vw, 144px); color: #fff; letter-spacing: -.02em; margin: 0; }
@@ -788,7 +788,7 @@ body {
 .p-low::after { width: 20%; }
 
 @media (max-width: 991px) {
-  .loc-hero-content { padding: 80px 24px 50px; }
+  .loc-hero-content { padding: 148px 24px 50px; }
   .loc-intro-grid { grid-template-columns: 1fr; gap: 40px; }
   .cats-grid { grid-template-columns: repeat(2, 1fr); }
   .venues-grid { grid-template-columns: 1fr; }
