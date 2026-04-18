@@ -59,27 +59,6 @@ layout: default
 </section>
 {% endif %}
 
-<!-- Filter bar + vendor grid -->
-<div class="container-fluid px-4 px-lg-5">
-
-  {% assign sorted_locs = site.locations | sort: "order" %}
-  <div class="cat-filter-bar">
-    <div class="count"><em id="cat-visible-count">{{ cat_vendors | size }}</em> {{ page.name | downcase }}</div>
-    <button id="btn-rw-filter" data-active="false">Featured in Real Weddings</button>
-    <select id="cat-city-filter">
-      <option value="">City · All Acadiana</option>
-      {% for loc in sorted_locs %}
-      <option value="{{ loc.slug }}">{{ loc.name }}</option>
-      {% endfor %}
-    </select>
-    <select id="cat-sort">
-      <option value="default">Sort · Editor's pick</option>
-      <option value="az">A–Z</option>
-    </select>
-  </div>
-
-</div>
-
 <!-- Featured vendor highlight -->
 {% if featured_vendor %}
 {% assign fv_rw_count = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains featured_vendor.title" | size %}
@@ -103,6 +82,27 @@ layout: default
 </section>
 {% endif %}
 
+<!-- Filter bar + vendor grid -->
+<div class="container-fluid px-4 px-lg-5">
+
+  {% assign sorted_locs = site.locations | sort: "order" %}
+  <div class="cat-filter-bar">
+    <div class="count"><em id="cat-visible-count">{{ cat_vendors | size }}</em> {{ page.name | downcase }}</div>
+    <button id="btn-rw-filter" data-active="false">Featured in Real Weddings</button>
+    <select id="cat-city-filter">
+      <option value="">City · All Acadiana</option>
+      {% for loc in sorted_locs %}
+      <option value="{{ loc.slug }}">{{ loc.name }}</option>
+      {% endfor %}
+    </select>
+    <select id="cat-sort">
+      <option value="default">Sort · Editor's pick</option>
+      <option value="az">A–Z</option>
+    </select>
+  </div>
+
+</div>
+
 <!-- Vendor grid -->
 <div class="container-fluid px-4 px-lg-5">
   <div class="cat-vendor-grid" id="cat-vendor-grid">
@@ -119,7 +119,7 @@ layout: default
         data-subscribed="{{ vendor.is_subscribed }}">
         <div class="img" style="background-image:url('{{ vendor.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');">
           {% if vendor.is_featured and vendor.is_subscribed %}
-          <span class="fl-badge">Featured</span>
+          <span class="fl-badge"><i class="ti-star"></i> Featured</span>
           {% endif %}
           <button class="fav-btn save-btn" data-type="vendor" data-url="{{ vendor.url | relative_url }}"
             data-title="{{ vendor.title }}" data-image="{{ vendor.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}"
