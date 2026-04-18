@@ -5,60 +5,45 @@ description: Get in touch with The Event Edit — a curated wedding vendor direc
 permalink: /contact/
 ---
 
-<!-- Header Banner -->
-<div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="5"
-  data-background="/assets/img/contact-southern-couture.jpg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-left">
-        <h5>Get in touch</h5>
-        <h1>Contact Us</h1>
-      </div>
-    </div>
+<!-- Hero -->
+<section style="background:var(--tve-bg);padding:90px 0 60px;border-bottom:1px solid var(--tve-rule);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Get in Touch</div>
+    <h1 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(52px,7vw,100px);line-height:.95;letter-spacing:-.015em;margin:0;">Let's <em style="font-style:italic;">connect.</em></h1>
   </div>
-</div>
+</section>
 
-<!-- Contact -->
-<section class="contact section-padding">
-  <div class="container">
-    <div class="row">
+<!-- Contact grid -->
+<section style="padding:80px 0 100px;background:var(--tve-bg);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;max-width:1100px;">
 
-      <div class="col-lg-5 col-md-12">
-        <h3>Let's Connect</h3>
-        <p>Have a question about listing your business, or want to know more about The Event Edit? We'd love to hear from you.</p>
-        <div class="reservations mb-30">
-          <div class="icon"><span class="ti-email"></span></div>
-          <div class="text">
-            <p>Email</p>
-            <a href="mailto:{{ site.data.site.email }}">{{ site.data.site.email }}</a>
-          </div>
+      <!-- Left: contact info -->
+      <div>
+        <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:18px;color:var(--tve-ink-soft);line-height:1.6;margin:0 0 48px;">Have a question about listing your business, or want to know more about The Event Edit? We'd love to hear from you.</p>
+
+        <div style="border-top:1px solid var(--tve-rule);padding-top:28px;margin-bottom:28px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--tve-muted);margin-bottom:8px;">Email</div>
+          <a href="mailto:{{ site.data.site.email }}" style="font-family:var(--tve-serif);font-size:20px;color:var(--tve-ink);text-decoration:none;">{{ site.data.site.email }}</a>
         </div>
-        <div class="reservations mb-30">
-          <div class="icon"><span class="ti-location-pin"></span></div>
-          <div class="text">
-            <p>Location</p>
-            Lafayette, Louisiana
-          </div>
+
+        <div style="border-top:1px solid var(--tve-rule);padding-top:28px;margin-bottom:28px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--tve-muted);margin-bottom:8px;">Location</div>
+          <span style="font-family:var(--tve-serif);font-size:20px;">Lafayette, Louisiana</span>
         </div>
-        <div class="reservations mb-30">
-          <div class="icon"><span class="ti-instagram"></span></div>
-          <div class="text">
-            <p>Follow Along</p>
-            <a href="{{ site.data.site.instagram | default: '#' }}">@thevendoredit</a>
-          </div>
+
+        {% if site.data.site.instagram %}
+        <div style="border-top:1px solid var(--tve-rule);padding-top:28px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--tve-muted);margin-bottom:8px;">Follow Along</div>
+          <a href="{{ site.data.site.instagram }}" target="_blank" rel="noopener noreferrer" style="font-family:var(--tve-serif);font-size:20px;color:var(--tve-ink);text-decoration:none;">@thevendoredit</a>
         </div>
+        {% endif %}
       </div>
 
-      <div class="col-lg-7 col-md-12">
-        <div class="booking-box">
-          <div class="head-box">
-            <h6>The Event Edit</h6>
-            <h4>Send a Message</h4>
-          </div>
-          <div class="booking-inner clearfix">
-            <div data-paperform-id="{{ site.data.site.paperform_contact_id }}"></div>
-          </div>
-        </div>
+      <!-- Right: Paperform -->
+      <div>
+        <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Message Us</div>
+        <div data-paperform-id="{{ site.data.site.paperform_contact_id }}"></div>
       </div>
 
     </div>

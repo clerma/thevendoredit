@@ -158,6 +158,53 @@
 </script>
 {% endif %}
 
+{% if page.layout == 'weddings' %}
+<!-- Weddings gallery: multi-group filter -->
+<script>
+(function () {
+  var grid = document.getElementById('weddingsGrid');
+  var noResults = document.getElementById('weddingsNoResults');
+  if (!grid) return;
+
+  var active = { style: 'all', season: 'all', venue: 'all' };
+
+  function apply() {
+    var cards = Array.from(grid.querySelectorAll('.w-card-wrap'));
+    var visible = 0;
+    cards.forEach(function (c) {
+      var show = true;
+      if (active.style !== 'all' && (c.dataset.style || '').indexOf(active.style.toLowerCase()) === -1) show = false;
+      if (active.season !== 'all' && (c.dataset.season || '') !== active.season) show = false;
+      if (active.venue !== 'all' && (c.dataset.venue || '') !== active.venue) show = false;
+      c.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('.w-filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var group = btn.dataset.group;
+      var val   = btn.dataset.val;
+      active[group] = val;
+      document.querySelectorAll('.w-filter-btn[data-group="' + group + '"]').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      apply();
+    });
+  });
+
+  window.resetWeddingFilters = function () {
+    active = { style: 'all', season: 'all', venue: 'all' };
+    document.querySelectorAll('.w-filter-btn').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.val === 'all');
+    });
+    apply();
+  };
+})();
+</script>
+{% endif %}
+
 {% if page.layout == 'category' %}
 <!-- Category page: client-side filter + sort for the vendor grid -->
 <script>

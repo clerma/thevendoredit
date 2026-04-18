@@ -24,7 +24,6 @@ colors:
   - ivory
   - gold
 venue_type: ballroom
-  - Classic
 vendors:
   - Southern Lens Photography
   - Petal & Stem

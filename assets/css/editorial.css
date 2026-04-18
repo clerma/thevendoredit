@@ -342,6 +342,7 @@ body {
 .tve-masonry > * { break-inside: avoid; margin-bottom: 12px; display: block; }
 @media (max-width: 1100px) { .tve-masonry { column-count: 3; } }
 @media (max-width: 780px) { .tve-masonry { column-count: 2; } }
+@media (max-width: 480px) { .tve-masonry { column-count: 1; } }
 
 /* Hero split */
 .tve-hero-split {
@@ -863,6 +864,30 @@ body {
 .advice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .advice-col { border-top: 1px solid var(--tve-ink); padding-top: 24px; }
 .advice-col .num { font-family: var(--tve-serif); font-style: italic; font-size: 28px; color: var(--tve-accent); }
+
+/* ═══════════════════════════════════════════════════════════
+   Real-Wedding Gallery (weddings layout)
+   ═══════════════════════════════════════════════════════════ */
+
+.w-filter-bar { padding: 28px 0; border-top: 1px solid var(--tve-rule); border-bottom: 1px solid var(--tve-rule); display: flex; flex-direction: column; gap: 16px; }
+.w-filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.w-filter-label { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--tve-muted); min-width: 56px; }
+.w-filter-btn { background: transparent; border: 1px solid var(--tve-rule); font-family: var(--tve-sans); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 8px 14px; color: var(--tve-ink-soft); cursor: pointer; transition: .15s; }
+.w-filter-btn:hover { border-color: var(--tve-ink); color: var(--tve-ink); }
+.w-filter-btn.active { background: var(--tve-ink); color: #fff; border-color: var(--tve-ink); }
+.w-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.w-card-img { aspect-ratio: 4/5; background-size: cover; background-position: center; display: block; }
+.w-card-wrap { }
+.w-card-wrap.hidden { display: none; }
+
+/* Blog layout */
+@media (max-width: 640px) {
+  .w-card-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (max-width: 480px) {
+  .w-card-grid { grid-template-columns: 1fr; }
+}
+
 .advice-col h4 { font-family: var(--tve-serif); font-weight: 400; font-size: 24px; line-height: 1.2; margin: 10px 0 14px; }
 .advice-col p { font-family: var(--tve-sans); font-size: 14px; line-height: 1.65; color: var(--tve-ink-soft); }
 

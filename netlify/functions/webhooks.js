@@ -310,6 +310,13 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  // Validate required env vars before doing any work
+  const missing = ['GITHUB_TOKEN', 'GITHUB_OWNER', 'GITHUB_REPO'].filter(k => !process.env[k]);
+  if (missing.length > 0) {
+    console.error('[webhook] Missing env vars:', missing.join(', '));
+    return { statusCode: 500, body: JSON.stringify({ error: `Missing environment variables: ${missing.join(', ')}` }) };
+  }
+
   const source = (event.queryStringParameters || {}).source;
 
   try {
