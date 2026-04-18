@@ -126,7 +126,7 @@ layout: default
 
       <!-- Testimonials / Reviews -->
       {% if page.testimonials and page.testimonials.size > 0 %}
-      <section class="v-section" id="inquire">
+      <section class="v-section">
         <div class="v-sec-eyebrow">Reviews</div>
         <h2 class="v-sec-title">What <em>couples</em> say.</h2>
         {% for t in page.testimonials %}
@@ -136,9 +136,15 @@ layout: default
         </blockquote>
         {% endfor %}
       </section>
-      {% else %}
-      <div id="inquire"></div>
       {% endif %}
+
+      <!-- Inquiry form — always shown for subscribed vendors -->
+      <section id="inquire" class="v-section" style="padding-top:60px;">
+        <div class="v-sec-eyebrow">Get in touch</div>
+        <h2 class="v-sec-title">Send an <em>inquiry.</em></h2>
+        <div data-paperform-id="{{ site.data.site.paperform_inquiry_id }}"
+          data-prefill="vendor_name={{ page.title | url_encode }}&vendor_slug={{ page.slug }}{% if page.email %}&vendor_email={{ page.email | url_encode }}{% endif %}"></div>
+      </section>
 
     </main>
 
@@ -156,15 +162,11 @@ layout: default
         <div class="side-price" style="font-size:32px;">{{ page.price_range }}</div>
         {% endif %}
 
-        <form style="margin-top:30px;" action="mailto:{{ page.email }}" method="get" enctype="text/plain">
-          <div class="side-field"><label>Your name</label><input type="text" name="name" placeholder="Your name"></div>
-          <div class="side-field"><label>Email</label><input type="email" name="email" placeholder="you@email.com"></div>
-          <div class="side-field"><label>Wedding date</label><input type="date" name="date"></div>
-          <div class="side-field"><label>Message</label><textarea name="message" placeholder="Tell us about your day…"></textarea></div>
-          <button type="submit" class="act-btn primary" style="width:100%;justify-content:center;margin-top:6px;">Send inquiry →</button>
-        </form>
+        <a href="#inquire" class="act-btn primary" style="width:100%;justify-content:center;text-align:center;display:block;margin-top:20px;">
+          <i class="ti-email"></i> Send Inquiry
+        </a>
 
-        <div class="side-info">
+        <div class="side-info" style="margin-top:24px;">
           {% if page.website %}<div><i class="ti-world"></i><a href="{{ page.website }}" target="_blank" rel="noopener noreferrer">{{ page.website | remove: 'https://' | remove: 'http://' | remove: 'www.' | split: '/' | first }}</a></div>{% endif %}
           {% if page.phone %}<div><i class="ti-mobile"></i><a href="tel:{{ page.phone }}">{{ page.phone }}</a></div>{% endif %}
           {% if page.instagram %}<div><i class="ti-instagram"></i><a href="{{ page.instagram }}" target="_blank" rel="noopener noreferrer">Instagram</a></div>{% endif %}

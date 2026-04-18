@@ -74,6 +74,90 @@
 </script>
 {% endif %}
 
+{% if page.url == '/favorites/' %}
+<!-- Favorites page: render saved items from localStorage -->
+<script>
+(function () {
+  var STORAGE_KEY = 'tee_favorites';
+
+  function getFavorites() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch (e) { return []; }
+  }
+
+  function renderCard(item) {
+    return '<div style="position:relative;">' +
+      '<a href="' + item.url + '" style="display:block;aspect-ratio:4/3;overflow:hidden;margin-bottom:14px;">' +
+        '<img src="' + item.image + '" alt="' + item.title + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;">' +
+      '</a>' +
+      '<button class="fav-remove-btn" data-url="' + item.url + '" aria-label="Remove ' + item.title + '" ' +
+        'style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);border:none;' +
+        'width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
+        '<i class="ti-heart" style="color:var(--tve-accent);font-size:14px;"></i>' +
+      '</button>' +
+      '<div style="font-family:var(--tve-serif);font-size:20px;font-weight:400;margin-bottom:4px;">' +
+        '<a href="' + item.url + '" style="color:var(--tve-ink);text-decoration:none;">' + item.title + '</a>' +
+      '</div>' +
+      (item.meta ? '<div style="font-family:var(--tve-sans);font-size:12px;letter-spacing:.08em;color:var(--tve-muted);text-transform:uppercase;">' + item.meta + '</div>' : '') +
+    '</div>';
+  }
+
+  function render() {
+    var favorites = getFavorites();
+    var vendors   = favorites.filter(function (f) { return f.type === 'vendor'; });
+    var weddings  = favorites.filter(function (f) { return f.type === 'wedding'; });
+
+    if (favorites.length === 0) {
+      document.getElementById('favoritesEmpty').style.display = '';
+      document.getElementById('savedVendors').style.display = 'none';
+      document.getElementById('savedWeddings').style.display = 'none';
+      document.getElementById('favoritesClearRow').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('favoritesEmpty').style.display = 'none';
+    document.getElementById('favoritesClearRow').style.display = '';
+
+    var vendorEl = document.getElementById('savedVendors');
+    var weddingEl = document.getElementById('savedWeddings');
+
+    if (vendors.length > 0) {
+      vendorEl.style.display = '';
+      document.getElementById('savedVendorGrid').innerHTML = vendors.map(renderCard).join('');
+    } else {
+      vendorEl.style.display = 'none';
+    }
+
+    if (weddings.length > 0) {
+      weddingEl.style.display = '';
+      document.getElementById('savedWeddingGrid').innerHTML = weddings.map(renderCard).join('');
+    } else {
+      weddingEl.style.display = 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    render();
+
+    document.getElementById('clearFavorites').addEventListener('click', function () {
+      localStorage.removeItem(STORAGE_KEY);
+      render();
+    });
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.fav-remove-btn');
+      if (!btn) return;
+      var url = btn.getAttribute('data-url');
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(
+        getFavorites().filter(function (f) { return f.url !== url; })
+      ));
+      render();
+    });
+  });
+})();
+</script>
+{% endif %}
+
 {% if page.layout == 'category' %}
 <!-- Category page: client-side filter + sort for the vendor grid -->
 <script>

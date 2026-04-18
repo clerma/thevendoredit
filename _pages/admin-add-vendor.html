@@ -171,12 +171,13 @@ robots: noindex
     btn.disabled = true;
 
     // Build Paperform-compatible payload
+    // Checkboxes are excluded from FormData when unchecked, so handle them explicitly
     var formData = new FormData(e.target);
     var data = [];
     formData.forEach(function (value, key) {
+      if (key === 'is_subscribed' || key === 'is_featured') return; // handled below
       if (value !== '') data.push({ key: key, value: value });
     });
-    // Add is_subscribed / is_featured from checkboxes explicitly
     data.push({ key: 'is_subscribed', value: e.target.querySelector('[name="is_subscribed"]').checked ? 'true' : 'false' });
     data.push({ key: 'is_featured',   value: e.target.querySelector('[name="is_featured"]').checked ? 'true' : 'false' });
 

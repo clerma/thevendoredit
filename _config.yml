@@ -5,6 +5,18 @@ baseurl: ""
 lang: en_us
 timezone: America/Chicago
 
+# jekyll-seo-tag settings
+author:
+  name: The Event Edit
+  url: https://thevendoredit.com
+twitter:
+  username: thevendoredit
+  card: summary_large_image
+logo: /assets/img/logo.svg
+social:
+  name: The Event Edit
+  links: []
+
 # Collections
 collections:
   vendors:
