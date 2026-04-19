@@ -439,7 +439,7 @@ body {
   text-decoration: none;
   transition: .2s;
 }
-.tve-city-chip:hover { border-color: var(--tve-ink); color: var(--tve-ink); }
+.tve-city-chip:hover { border-color: var(--tve-ink); color: var(--tve-ink);display: inline-flex; }
 .tve-city-chip .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--tve-accent); }
 
 /* Page head — vendor/category/location listing pages */
@@ -753,7 +753,7 @@ body {
 .cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .cat-tile { position: relative; aspect-ratio: 3/4; background-size: cover; background-position: center; text-decoration: none; color: #fff; overflow: hidden; }
 .cat-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.8)); transition: .3s; }
-.cat-tile:hover::after { background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,.9)); }
+.cat-tile:hover::after { background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,.9));color: #f7f3ec !important }
 .cat-tile .inner { position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 2; }
 .cat-tile .ct { font-family: var(--tve-sans); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.8); }
 .cat-tile .nm { font-family: var(--tve-serif); font-size: 28px; line-height: 1.05; margin-top: 4px; }
