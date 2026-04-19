@@ -5,10 +5,7 @@ description: Find the best wedding vendors in Lafayette and the Acadiana region 
 permalink: /
 ---
 <style>
-.tve-feed-item:nth-child(4n+1) img { aspect-ratio: 5/7; }
-.tve-feed-item:nth-child(4n+2) img { aspect-ratio: 3/4; }
-.tve-feed-item:nth-child(4n+3) img { aspect-ratio: 4/5; }
-.tve-feed-item:nth-child(4n)   img { aspect-ratio: 7/9; }
+.tve-feed-item img { aspect-ratio: 4/5; }
 </style>
 
 <!-- HERO -->
@@ -17,7 +14,7 @@ permalink: /
 
     <div class="row">
       <div class="col-lg-9">
-        <div class="tve-hero-eyebrow">Vol. III · The Acadiana Edit</div>
+        <div class="tve-hero-eyebrow">The Acadiana Edit</div>
         <h1 class="tve-hero-headline">The best of<br>Lafayette <em>weddings,</em><br>curated by hand.</h1>
       </div>
     </div>
@@ -46,7 +43,7 @@ permalink: /
             onkeydown="if(event.key==='Enter'){window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(this.value)}">
           <span style="width:1px;height:20px;background:var(--tve-rule);flex-shrink:0;"></span>
           <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);white-space:nowrap;">Lafayette, LA</span>
-          <button class="tve-search-btn" onclick="window.location='{{ '/vendors/' | relative_url }}'">Find</button>
+          <button class="tve-search-btn" onclick="window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(document.getElementById('hero-search').value)">Find</button>
         </div>
       </div>
       <div class="col-lg-5 d-flex align-items-center gap-2 flex-wrap mt-3 mt-lg-0">

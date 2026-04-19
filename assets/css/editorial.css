@@ -838,7 +838,8 @@ body {
 .cat-filter-bar { display: flex; gap: 12px; padding: 24px 0; border-top: 1px solid var(--tve-rule); border-bottom: 1px solid var(--tve-rule); align-items: center; flex-wrap: wrap; }
 .cat-filter-bar .count { font-family: var(--tve-serif); font-size: 28px; margin-right: auto; white-space: nowrap; }
 .cat-filter-bar .count em { font-style: italic; color: var(--tve-accent); }
-.cat-filter-bar select, .cat-filter-bar button { background: transparent; border: 1px solid var(--tve-rule); font-family: var(--tve-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 18px; color: var(--tve-ink); cursor: pointer; transition: .15s; }
+.cat-filter-bar select, .cat-filter-bar button { background: transparent; border: 1px solid var(--tve-rule); font-family: var(--tve-sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 12px 18px; color: var(--tve-ink); cursor: pointer; transition: .15s; line-height: 1; box-sizing: border-box; }
+.cat-filter-bar select { -webkit-appearance: none; appearance: none; padding-right: 32px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5148'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
 .cat-filter-bar select:hover, .cat-filter-bar button:hover { border-color: var(--tve-ink); }
 .cat-filter-bar button.active { background: var(--tve-ink); color: #fff; border-color: var(--tve-ink); }
 
@@ -962,7 +963,7 @@ body {
 .pricing-sub { font-family: var(--tve-serif-alt); font-style: italic; font-size: 20px; color: var(--tve-ink-soft); }
 
 .pricing-plans { padding: 80px 0; background: #fff; }
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 900px; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 900px; margin: 0 auto; }
 
 .pricing-card { border: 1px solid var(--tve-rule); padding: 48px; position: relative; display: flex; flex-direction: column; gap: 18px; }
 .pricing-card--featured { background: var(--tve-ink); color: #fff; border-color: var(--tve-ink); }
@@ -989,14 +990,14 @@ body {
 .ps p { font-family: var(--tve-sans); font-size: 14px; line-height: 1.65; color: var(--tve-ink-soft); }
 
 .pricing-faq { padding: 80px 0; background: var(--tve-bg); }
-.pricing-faq-inner { max-width: 900px; }
+.pricing-faq-inner { }
 .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; margin-top: 20px; }
 .faq-item h5 { font-family: var(--tve-serif); font-weight: 400; font-size: 22px; margin: 0 0 8px; }
 .faq-item p { font-family: var(--tve-sans); font-size: 14px; line-height: 1.65; color: var(--tve-ink-soft); margin: 0; }
 .faq-item p a { color: var(--tve-ink); }
 
 .pricing-cta { background: var(--tve-ink); color: #fff; padding: 90px 0; text-align: center; }
-.pricing-cta h2 { font-family: var(--tve-serif); font-weight: 400; font-size: clamp(36px, 4vw, 56px); margin: 0 0 16px; }
+.pricing-cta h2 { font-family: var(--tve-serif); font-weight: 400; font-size: clamp(36px, 4vw, 56px); margin: 0 0 16px; color: #fff; }
 .pricing-cta p { font-family: var(--tve-serif-alt); font-style: italic; font-size: 20px; color: rgba(255,255,255,.75); margin-bottom: 40px; }
 
 @media (max-width: 767px) {
