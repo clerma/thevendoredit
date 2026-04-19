@@ -21,6 +21,7 @@ body {
   color: var(--tve-ink);
   background: #fff;
   -webkit-font-smoothing: antialiased;
+  padding-top: 68px;
 }
 
 /* Editorial eyebrow — replaces .section-subtitle tight caps */
@@ -72,20 +73,23 @@ body {
   background: #fff;
   border-bottom: 1px solid var(--tve-rule);
   padding: 18px 0;
-  /* Override old theme's fixed 100px height */
   height: auto !important;
-  /* Sticky header — replaces the old theme's janky fixed/scroll-jump behavior */
-  position: sticky !important;
+  position: fixed !important;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 200;
 }
 
 /* Old theme sets .nav-scroll { position: fixed; top: -100px; transform: translateY(100px) }
-   which removes the nav from document flow and causes content to jump.
-   We keep sticky instead — same visual result, no layout shift. */
+   — we keep fixed with no transform instead. */
 .tve-nav.nav-scroll {
-  position: sticky !important;
+  position: fixed !important;
   top: 0 !important;
+  left: 0;
+  right: 0;
+  width: 100%;
   transform: none !important;
   height: auto !important;
   padding: 18px 0 !important;
@@ -598,7 +602,7 @@ body {
    LAYOUT: REAL WEDDING
    ═══════════════════════════════════════════════════════════ */
 
-/* Magazine cover — negative margin pulls section behind sticky nav so transparent overlay works */
+/* Magazine cover */
 .rw-cover { position: relative; height: 86vh; min-height: 700px; background: var(--tve-ink); overflow: hidden; margin-top: -68px; }
 .rw-cover .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .85; }
 .rw-cover .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 80%, rgba(0,0,0,.75)); }
@@ -691,7 +695,7 @@ body {
    LAYOUT: LOCATION
    ═══════════════════════════════════════════════════════════ */
 
-/* Location hero — negative margin pulls section behind sticky nav so transparent overlay works */
+/* Location hero */
 .loc-hero { position: relative; min-height: 70vh; background: var(--tve-ink); overflow: hidden; margin-top: -68px; }
 .loc-hero .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .55; }
 .loc-hero .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.7)); }
