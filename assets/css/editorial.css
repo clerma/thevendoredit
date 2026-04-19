@@ -468,16 +468,38 @@ body {
    ═══════════════════════════════════════════════════════════ */
 
 /* Vendor hero */
-.v-hero { padding: 50px 0 30px; background: var(--tve-bg); }
+.v-hero { position: relative; padding: 50px 0 30px; background: var(--tve-bg); }
+.v-hero--claimed {
+  background: var(--tve-ink);
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0 70px;
+}
+.v-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,.65) 100%); pointer-events: none; }
+.v-hero--claimed > .container-fluid { position: relative; z-index: 1; }
 .v-breadcrumb { font-family: var(--tve-sans); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--tve-muted); margin-bottom: 30px; }
 .v-breadcrumb a { color: var(--tve-muted); text-decoration: none; }
 .v-breadcrumb a:hover { color: var(--tve-ink); }
+.v-hero--claimed .v-breadcrumb,
+.v-hero--claimed .v-breadcrumb a { color: rgba(255,255,255,.6); }
+.v-hero--claimed .v-breadcrumb a:hover,
+.v-hero--claimed .v-breadcrumb span { color: rgba(255,255,255,.9); }
 .v-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 40px; }
 .v-title { font-family: var(--tve-serif); font-weight: 400; line-height: .96; font-size: clamp(48px, 5.5vw, 78px); letter-spacing: -.01em; margin: 0 0 14px; }
 .v-title em { font-style: italic; }
+.v-hero--claimed .v-title { color: #fff; }
 .v-sub { font-family: var(--tve-serif-alt); font-style: italic; font-size: 20px; color: var(--tve-ink-soft); line-height: 1.5; }
+.v-hero--claimed .v-sub { color: rgba(255,255,255,.82); }
 .v-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-family: var(--tve-sans); font-size: 13px; color: var(--tve-ink-soft); margin-top: 18px; }
 .v-meta .dot { width: 3px; height: 3px; background: var(--tve-muted); border-radius: 50%; display: inline-block; }
+.v-hero--claimed .v-meta { color: rgba(255,255,255,.75); }
+.v-hero--claimed .v-meta .dot { background: rgba(255,255,255,.4); }
+.v-hero--claimed .v-meta i { color: rgba(255,255,255,.6) !important; }
+.v-hero--claimed .badge-featured { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+.v-hero--claimed .act-btn { border-color: rgba(255,255,255,.5); color: #fff; background: transparent; }
+.v-hero--claimed .act-btn:hover { background: #fff; color: var(--tve-ink); border-color: #fff; }
+.v-hero--claimed .act-btn.primary { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.5); color: #fff; }
+.v-hero--claimed .act-btn.primary:hover { background: #fff; color: var(--tve-ink); border-color: #fff; }
 .v-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
 .act-btn { font-family: var(--tve-sans); font-size: 11px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; padding: 14px 22px; background: transparent; border: 1px solid var(--tve-ink); color: var(--tve-ink); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: .2s; }
 .act-btn:hover { background: var(--tve-ink); color: #fff; }
