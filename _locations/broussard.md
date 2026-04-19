@@ -7,4 +7,3 @@ description: Southern Louisiana hospitality at its finest.
 featured: true
 order: 3
 ---
-image: /assets/img/Unknown-3.avif

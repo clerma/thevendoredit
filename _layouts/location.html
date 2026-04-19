@@ -63,10 +63,6 @@ layout: default
           <span class="k">Peak season</span>
           <span class="v">Oct–Nov</span>
         </div>
-        <div class="loc-stat">
-          <span class="k">Off-season value</span>
-          <span class="v">Jun–Aug</span>
-        </div>
       </div>
     </div>
   </div>
@@ -88,7 +84,7 @@ layout: default
         <a class="cat-tile" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
           style="background-image:url('{{ sample_vendor.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');">
           <div class="inner">
-            <div class="ct">{{ cat_vendors | size }} {{ cat_vendors | size | pluralize: 'Vendor', 'Vendors' }}</div>
+            {% assign cv_size = cat_vendors | size %}<div class="ct">{{ cv_size }} {% if cv_size == 1 %}Vendor{% else %}Vendors{% endif %}</div>
             <div class="nm"><em>{{ cat.name }}</em></div>
           </div>
         </a>

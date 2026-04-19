@@ -20,19 +20,17 @@ layout: default
     </div>
 
     <div class="v-header">
-      <div>
-        {% if page.is_featured %}
-        <span class="badge-featured"><i class="ti-star"></i> Featured · Top of Category</span>
-        {% endif %}
-        <h1 class="v-title" style="margin-top:{% if page.is_featured %}16px{% else %}0{% endif %};">{{ page.title }}{% if page.tagline %}<br><em>{{ page.tagline }}</em>{% endif %}</h1>
-        {% if page.tagline == blank %}
-        <p class="v-sub">{{ content | strip_html | truncatewords: 30 }}</p>
-        {% endif %}
-        <div class="v-meta">
-          {% if page.city %}<span><i class="ti-location-pin" style="color:var(--tve-accent);"></i> {{ page.city }}, LA</span>{% endif %}
-          {% if page.service_area %}<span class="dot"></span><span>Serves {{ page.service_area }}</span>{% endif %}
-          {% if rw_count > 0 %}<span class="dot"></span><span>{{ rw_count }} wedding{% if rw_count != 1 %}s{% endif %} featured</span>{% endif %}
-        </div>
+      {% if page.is_featured %}
+      <span class="badge-featured"><i class="ti-star"></i> Featured · Top of Category</span>
+      {% endif %}
+      <h1 class="v-title" style="margin-top:{% if page.is_featured %}16px{% else %}0{% endif %};">{{ page.title }}{% if page.tagline %}<br><em>{{ page.tagline }}</em>{% endif %}</h1>
+      {% if page.tagline == blank %}
+      <p class="v-sub">{{ content | strip_html | truncatewords: 30 }}</p>
+      {% endif %}
+      <div class="v-meta">
+        {% if page.city %}<span><i class="ti-location-pin" style="color:var(--tve-accent);"></i> {{ page.city }}, LA</span>{% endif %}
+        {% if page.service_area %}<span class="dot"></span><span>Serves {{ page.service_area }}</span>{% endif %}
+        {% if rw_count > 0 %}<span class="dot"></span><span>{{ rw_count }} wedding{% if rw_count != 1 %}s{% endif %} featured</span>{% endif %}
       </div>
       <div class="v-actions">
         <button class="act-btn save-btn" data-type="vendor" data-url="{{ page.url | relative_url }}"
@@ -49,20 +47,20 @@ layout: default
 
     {% assign gallery_images = page.gallery %}
     <div class="v-gallery">
-      <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
+      <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></a>
       {% for img in gallery_images limit: 4 %}
-      <div class="cell" style="background-image:url('{{ img }}');">
+      <a class="cell" href="{{ img }}" style="background-image:url('{{ img }}');">
         {% if forloop.last and gallery_images.size > 4 %}
         {% assign extra = gallery_images.size | minus: 4 %}
         <span class="more">+ {{ extra }} photos</span>
         {% endif %}
-      </div>
+      </a>
       {% endfor %}
       {% assign cells_filled = gallery_images | size %}
       {% if cells_filled < 4 %}
         {% assign remaining = 4 | minus: cells_filled %}
         {% for i in (1..remaining) %}
-        <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></div>
+        <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></a>
         {% endfor %}
       {% endif %}
     </div>
@@ -129,12 +127,16 @@ layout: default
       <section class="v-section">
         <div class="v-sec-eyebrow">Reviews</div>
         <h2 class="v-sec-title">What <em>couples</em> say.</h2>
+        <div class="testimonial-grid">
         {% for t in page.testimonials %}
-        <blockquote style="font-family:var(--tve-serif-alt);font-style:italic;font-size:24px;line-height:1.5;color:var(--tve-ink);border-left:2px solid var(--tve-accent);padding:8px 0 8px 30px;margin:0 0 40px;">
-          "{{ t.text }}"
-          <footer style="font-family:var(--tve-sans);font-style:normal;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--tve-muted);margin-top:20px;">— {{ t.author }}{% if t.date %} &middot; {{ t.date }}{% endif %}</footer>
-        </blockquote>
+        <div class="testimonial-card">
+          <blockquote style="font-family:var(--tve-serif-alt);font-style:italic;font-size:20px;line-height:1.5;color:var(--tve-ink);margin:0 0 16px;">
+            "{{ t.text }}"
+          </blockquote>
+          <footer style="font-family:var(--tve-sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--tve-muted);">— {{ t.author }}{% if t.date %} &middot; {{ t.date }}{% endif %}</footer>
+        </div>
         {% endfor %}
+        </div>
       </section>
       {% endif %}
 

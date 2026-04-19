@@ -40,7 +40,7 @@ layout: default
 </section>
 
 <!-- Editorial intro -->
-{% if page.editor_intro or content != "" %}
+{% if page.editor_intro %}
 <section class="cat-intro">
   <div class="container-fluid px-4 px-lg-5">
     <div class="cat-intro-grid">
@@ -48,11 +48,7 @@ layout: default
         <div class="cat-intro-eyebrow">Editor's Note</div>
       </div>
       <div>
-        {% if content != "" %}
-        {{ content }}
-        {% elsif page.editor_intro %}
         <p>{{ page.editor_intro }}</p>
-        {% endif %}
       </div>
     </div>
   </div>

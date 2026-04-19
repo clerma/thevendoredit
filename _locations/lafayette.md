@@ -7,4 +7,3 @@ description: The heart of Acadiana, a city built on celebration, culture, and jo
 featured: true
 order: 1
 ---
-image: /assets/img/rotator/Photo-Oct-23-2022-9-48-07-AM-copy-scaled-1500x700.jpg

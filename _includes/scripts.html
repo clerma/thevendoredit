@@ -19,6 +19,20 @@
 <!-- Custom -->
 <script src="{{ '/assets/js/custom.js' | relative_url }}"></script>
 
+{% if page.layout == 'vendor' %}
+<!-- Vendor gallery lightbox -->
+<script>
+$(document).ready(function () {
+  $('.v-gallery').magnificPopup({
+    delegate: 'a.cell',
+    type: 'image',
+    gallery: { enabled: true, navigateByImgClick: true },
+    image: { titleSrc: '' }
+  });
+});
+</script>
+{% endif %}
+
 <!-- Paperform widget (handles all embeds and popups) -->
 <script>
   (function() {
