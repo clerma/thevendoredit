@@ -10,14 +10,13 @@ layout: default
      SUBSCRIBED — Full profile
      ════════════════════════════════════════════════════ -->
 
-<section class="v-hero v-hero--claimed" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');">
-  <div class="v-hero-overlay"></div>
+<section class="v-hero">
   <div class="container-fluid px-4 px-lg-5">
 
     <div class="v-breadcrumb">
       <a href="{{ '/vendors/' | relative_url }}">Vendors</a>
       {% if page.category %} / <a href="{{ '/' | append: page.category_slug | append: '/' | relative_url }}">{{ page.category }}</a>{% endif %}
-       / <span>{{ page.title }}</span>
+       / <span style="color:var(--tve-ink);">{{ page.title }}</span>
     </div>
 
     <div class="v-header">
@@ -30,7 +29,7 @@ layout: default
         <p class="v-sub">{{ content | strip_html | truncatewords: 30 }}</p>
         {% endif %}
         <div class="v-meta">
-          {% if page.city %}<span><i class="ti-location-pin"></i> {{ page.city }}, LA</span>{% endif %}
+          {% if page.city %}<span><i class="ti-location-pin" style="color:var(--tve-accent);"></i> {{ page.city }}, LA</span>{% endif %}
           {% if page.service_area %}<span class="dot"></span><span>Serves {{ page.service_area }}</span>{% endif %}
           {% if rw_count > 0 %}<span class="dot"></span><span>{{ rw_count }} wedding{% if rw_count != 1 %}s{% endif %} featured</span>{% endif %}
         </div>
@@ -48,31 +47,28 @@ layout: default
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- Gallery (below dark hero) -->
-<div class="container-fluid px-4 px-lg-5">
-  {% assign gallery_images = page.gallery %}
-  <div class="v-gallery">
-    <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
-    {% for img in gallery_images limit: 4 %}
-    <div class="cell" style="background-image:url('{{ img }}');">
-      {% if forloop.last and gallery_images.size > 4 %}
-      {% assign extra = gallery_images.size | minus: 4 %}
-      <span class="more">+ {{ extra }} photos</span>
+    {% assign gallery_images = page.gallery %}
+    <div class="v-gallery">
+      <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></div>
+      {% for img in gallery_images limit: 4 %}
+      <div class="cell" style="background-image:url('{{ img }}');">
+        {% if forloop.last and gallery_images.size > 4 %}
+        {% assign extra = gallery_images.size | minus: 4 %}
+        <span class="more">+ {{ extra }} photos</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+      {% assign cells_filled = gallery_images | size %}
+      {% if cells_filled < 4 %}
+        {% assign remaining = 4 | minus: cells_filled %}
+        {% for i in (1..remaining) %}
+        <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></div>
+        {% endfor %}
       {% endif %}
     </div>
-    {% endfor %}
-    {% assign cells_filled = gallery_images | size %}
-    {% if cells_filled < 4 %}
-      {% assign remaining = 4 | minus: cells_filled %}
-      {% for i in (1..remaining) %}
-      <div class="cell" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></div>
-      {% endfor %}
-    {% endif %}
+
   </div>
-</div>
+</section>
 
 <div class="container-fluid px-4 px-lg-5">
   <div class="v-body">
