@@ -32,8 +32,19 @@
   })();
 </script>
 
+<!-- Nav shadow: add nav-scrolled class immediately on any scroll -->
+<script>
+(function () {
+  var nav = document.querySelector('.tve-nav');
+  if (!nav) return;
+  function update() { nav.classList.toggle('nav-scrolled', window.scrollY > 0); }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
 {% if page.layout == 'real-wedding' %}
-<!-- Overlay nav: absolute over cover, switches to sticky after scrolling past -->
+<!-- Overlay nav: transparent over magazine cover, switches to white on scroll past -->
 <script>
 (function () {
   var nav = document.querySelector('.tve-nav');
@@ -49,28 +60,6 @@
 
   document.body.classList.add('overlay-hero');
   nav.classList.add('rw-cover-nav');
-  window.addEventListener('scroll', update, { passive: true });
-})();
-</script>
-{% endif %}
-
-{% if page.layout == 'location' %}
-<!-- Overlay nav: absolute over hero, switches to sticky after scrolling past -->
-<script>
-(function () {
-  var nav = document.querySelector('.tve-nav');
-  var hero = document.querySelector('.loc-hero');
-  if (!nav || !hero) return;
-
-  function update() {
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    var inHero = heroBottom > nav.offsetHeight + 20;
-    document.body.classList.toggle('overlay-hero', inHero);
-    nav.classList.toggle('loc-cover-nav', inHero);
-  }
-
-  document.body.classList.add('overlay-hero');
-  nav.classList.add('loc-cover-nav');
   window.addEventListener('scroll', update, { passive: true });
 })();
 </script>

@@ -96,6 +96,10 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
 
+.tve-nav.nav-scrolled {
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
 /* Old theme's .logo-img has padding:20px 0 and width:16em !important
    which bloats the nav height and overrides the image width. */
 .tve-nav .logo-img {
