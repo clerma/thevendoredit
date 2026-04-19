@@ -33,43 +33,45 @@
 </script>
 
 {% if page.layout == 'real-wedding' %}
-<!-- Overlay nav: transparent while the magazine cover is on-screen -->
+<!-- Overlay nav: absolute over cover, switches to sticky after scrolling past -->
 <script>
 (function () {
   var nav = document.querySelector('.tve-nav');
-  if (nav) nav.classList.add('rw-cover-nav');
-  window.addEventListener('scroll', function () {
-    var nav = document.querySelector('.tve-nav');
-    var cover = document.querySelector('.rw-cover');
-    if (!nav || !cover) return;
+  var cover = document.querySelector('.rw-cover');
+  if (!nav || !cover) return;
+
+  function update() {
     var coverBottom = cover.getBoundingClientRect().bottom;
-    if (coverBottom < nav.clientHeight + 20) {
-      nav.classList.remove('rw-cover-nav');
-    } else {
-      nav.classList.add('rw-cover-nav');
-    }
-  }, { passive: true });
+    var inHero = coverBottom > nav.offsetHeight + 20;
+    document.body.classList.toggle('overlay-hero', inHero);
+    nav.classList.toggle('rw-cover-nav', inHero);
+  }
+
+  document.body.classList.add('overlay-hero');
+  nav.classList.add('rw-cover-nav');
+  window.addEventListener('scroll', update, { passive: true });
 })();
 </script>
 {% endif %}
 
 {% if page.layout == 'location' %}
-<!-- Overlay nav: transparent while the dark location hero is on-screen -->
+<!-- Overlay nav: absolute over hero, switches to sticky after scrolling past -->
 <script>
 (function () {
   var nav = document.querySelector('.tve-nav');
-  if (nav) nav.classList.add('loc-cover-nav');
-  window.addEventListener('scroll', function () {
-    var nav = document.querySelector('.tve-nav');
-    var hero = document.querySelector('.loc-hero');
-    if (!nav || !hero) return;
+  var hero = document.querySelector('.loc-hero');
+  if (!nav || !hero) return;
+
+  function update() {
     var heroBottom = hero.getBoundingClientRect().bottom;
-    if (heroBottom < nav.clientHeight + 20) {
-      nav.classList.remove('loc-cover-nav');
-    } else {
-      nav.classList.add('loc-cover-nav');
-    }
-  }, { passive: true });
+    var inHero = heroBottom > nav.offsetHeight + 20;
+    document.body.classList.toggle('overlay-hero', inHero);
+    nav.classList.toggle('loc-cover-nav', inHero);
+  }
+
+  document.body.classList.add('overlay-hero');
+  nav.classList.add('loc-cover-nav');
+  window.addEventListener('scroll', update, { passive: true });
 })();
 </script>
 {% endif %}
