@@ -11,7 +11,7 @@ pinterest: ""
 
 # ─── Memberstack ─────────────────────────────────────────────────────────────
 # Get your App ID from Memberstack dashboard → Settings → API & Webhooks
-memberstack_app_id: "app_YOUR_MEMBERSTACK_APP_ID"
+memberstack_app_id: "app_cmo6jyo3a00980sz39npn4phy"
 
 # Plan IDs from Memberstack dashboard → Plans
 # Create two plans in Memberstack, each connected to the corresponding Stripe price
