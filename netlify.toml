@@ -11,6 +11,7 @@
 #   CLOUDCANNON_WEBHOOK       CloudCannon build trigger URL
 #   PAPERFORM_SECRET          Paperform webhook secret (optional, for verification)
 #   MEMBERSTACK_SECRET        Memberstack webhook secret (optional, for verification)
+#   MEMBERSTACK_API_KEY       Memberstack Admin API key (Dashboard → API → Secret key)
 #   MEMBERSTACK_FEATURED_PLAN_ID  Memberstack plan ID for the Featured tier
 
 [build]

@@ -6,13 +6,15 @@
  *   POST /webhooks?source=memberstack — Membership event from Memberstack
  *
  * Required environment variables (set in Netlify dashboard → Site settings → Env vars):
- *   GITHUB_TOKEN          Personal Access Token with repo scope
- *   GITHUB_OWNER          GitHub username or org (e.g. "clerma")
- *   GITHUB_REPO           Repository name (e.g. "thevendoredit")
- *   GITHUB_BRANCH         Branch to commit to (e.g. "main")
- *   CLOUDCANNON_WEBHOOK   CloudCannon build webhook URL (triggers rebuild after commit)
- *   PAPERFORM_SECRET      Paperform webhook secret (for signature verification)
- *   MEMBERSTACK_SECRET    Memberstack webhook secret
+ *   GITHUB_TOKEN              Personal Access Token with repo scope
+ *   GITHUB_OWNER              GitHub username or org (e.g. "clerma")
+ *   GITHUB_REPO               Repository name (e.g. "thevendoredit")
+ *   GITHUB_BRANCH             Branch to commit to (e.g. "main")
+ *   CLOUDCANNON_WEBHOOK       CloudCannon build webhook URL (triggers rebuild after commit)
+ *   PAPERFORM_SECRET          Paperform webhook secret (for signature verification)
+ *   MEMBERSTACK_SECRET        Memberstack webhook secret
+ *   MEMBERSTACK_API_KEY       Memberstack Admin API key (for writing vendor-slug to member)
+ *   MEMBERSTACK_FEATURED_PLAN_ID  Plan ID for the Featured tier
  */
 
 const https = require('https');
@@ -95,6 +97,68 @@ async function triggerRebuild() {
     req.write('{}');
     req.end();
   });
+}
+
+// ─── Memberstack Admin API helper ────────────────────────────────────────────
+
+async function memberstackRequest(method, path, body) {
+  return new Promise((resolve, reject) => {
+    const data = body ? JSON.stringify(body) : null;
+    const options = {
+      hostname: 'admin.memberstack.com',
+      path,
+      method,
+      headers: {
+        'X-Api-Key': process.env.MEMBERSTACK_API_KEY,
+        'Content-Type': 'application/json',
+        ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {}),
+      },
+    };
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, data: JSON.parse(body) }); }
+        catch (e) { resolve({ status: res.statusCode, data: body }); }
+      });
+    });
+    req.on('error', reject);
+    if (data) req.write(data);
+    req.end();
+  });
+}
+
+/** Find a Memberstack member by email. Returns member object or null. */
+async function findMemberByEmail(email) {
+  if (!process.env.MEMBERSTACK_API_KEY || !email) return null;
+  const res = await memberstackRequest('GET', `/members?email=${encodeURIComponent(email)}`);
+  if (res.status !== 200) return null;
+  const members = Array.isArray(res.data.data) ? res.data.data : (res.data.data ? [res.data.data] : []);
+  return members.length > 0 ? members[0] : null;
+}
+
+/** Write vendor-slug into a Memberstack member's custom fields. */
+async function setMemberVendorSlug(memberId, vendorSlug) {
+  if (!process.env.MEMBERSTACK_API_KEY || !memberId) return;
+  await memberstackRequest('PATCH', `/members/${memberId}`, {
+    customFields: { 'vendor-slug': vendorSlug },
+  });
+}
+
+/**
+ * Fallback: search GitHub repo content for a vendor file containing the email.
+ * Used when Memberstack fires before handlePaperform has stamped vendor-slug.
+ */
+async function findVendorSlugByEmail(email) {
+  if (!email) return null;
+  const owner  = process.env.GITHUB_OWNER;
+  const repo   = process.env.GITHUB_REPO;
+  const q = encodeURIComponent(`${email} in:file repo:${owner}/${repo} path:_vendors`);
+  const res = await githubRequest('GET', `/search/code?q=${q}`);
+  if (res.status === 200 && res.data.items && res.data.items.length > 0) {
+    return res.data.items[0].name.replace(/\.md$/, '');
+  }
+  return null;
 }
 
 // ─── Vendor front-matter builder ─────────────────────────────────────────────
@@ -203,6 +267,17 @@ async function handlePaperform(body) {
   }
 
   await triggerRebuild();
+
+  // Stamp vendor-slug onto the Memberstack member so subscription webhooks can find this file.
+  // Best-effort: if the member doesn't exist yet (hasn't paid), this is a no-op.
+  const email = fields['email'];
+  if (email) {
+    const member = await findMemberByEmail(email);
+    if (member && !member.customFields?.['vendor-slug']) {
+      await setMemberVendorSlug(member.id, vendorSlug);
+    }
+  }
+
   return { message: 'Profile updated', vendor: vendorSlug };
 }
 
@@ -216,11 +291,22 @@ async function handleMemberstack(body) {
   if (!member) throw new Error('No member data in Memberstack event');
 
   const cf = member.customFields || {};
-  const vendorSlug = cf['vendor-slug'];
+  let vendorSlug = cf['vendor-slug'];
+
+  // Fallback: if vendor-slug not yet on member (paid before filling the form),
+  // search GitHub for a vendor file matching this member's email.
+  if (!vendorSlug) {
+    const email = member.auth && member.auth.email;
+    vendorSlug = await findVendorSlugByEmail(email);
+    if (vendorSlug) {
+      // Stamp it so future webhooks don't need the search fallback.
+      await setMemberVendorSlug(member.id, vendorSlug);
+    }
+  }
 
   if (!vendorSlug) {
-    // Member without a vendor slug — nothing to sync to Jekyll
-    return { message: 'No vendor-slug on member; skipping', type };
+    // Member without a vendor slug and no matching file — nothing to sync.
+    return { message: 'No vendor-slug on member and no matching file; skipping', type };
   }
 
   const filePath = `_vendors/${vendorSlug}.md`;
