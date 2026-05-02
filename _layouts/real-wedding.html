@@ -65,23 +65,23 @@ layout: default
   <!-- Image spreads from gallery -->
   {% if page.gallery and page.gallery.size >= 2 %}
   <div class="spread-pair" style="max-width:calc(100% - 380px);">
-    <img src="{{ page.gallery[0] | relative_url }}" alt="{{ page.title }}">
-    <img src="{{ page.gallery[1] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[0] | relative_url }}" alt="{{ page.title }} wedding at {{ page.venue }}">
+    <img src="{{ page.gallery[1] | relative_url }}" alt="{{ page.title }} wedding at {{ page.venue }}">
   </div>
   {% endif %}
 
   {% if page.gallery and page.gallery.size >= 3 %}
   <div class="spread-full" style="max-width:calc(100% - 380px);">
-    <img src="{{ page.gallery[2] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[2] | relative_url }}" alt="{{ page.title }} wedding photography{% if page.photographer %} by {{ page.photographer }}{% endif %}">
     {% if page.gallery_caption %}<div class="cap">{{ page.gallery_caption }}</div>{% endif %}
   </div>
   {% endif %}
 
   {% if page.gallery and page.gallery.size >= 6 %}
   <div class="spread-trio" style="max-width:calc(100% - 380px);">
-    <img src="{{ page.gallery[3] | relative_url }}" alt="{{ page.title }}">
-    <img src="{{ page.gallery[4] | relative_url }}" alt="{{ page.title }}">
-    <img src="{{ page.gallery[5] | relative_url }}" alt="{{ page.title }}">
+    <img src="{{ page.gallery[3] | relative_url }}" alt="{{ page.title }} wedding details at {{ page.venue }}">
+    <img src="{{ page.gallery[4] | relative_url }}" alt="{{ page.title }} wedding details at {{ page.venue }}">
+    <img src="{{ page.gallery[5] | relative_url }}" alt="{{ page.title }} wedding details at {{ page.venue }}">
   </div>
   {% endif %}
 </div>

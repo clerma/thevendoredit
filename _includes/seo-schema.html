@@ -1,17 +1,12 @@
 {% comment %}
-  SEO Schema — JSON-LD structured data + supplemental og:image meta.
-  Included in head.html after {% seo %}.
+  SEO Schema — JSON-LD structured data.
+  Included in head.html. og:image/twitter:image are handled in seo.html.
 {% endcomment %}
 {% assign page_url = page.url | absolute_url %}
-{% comment %} og:image from hero_image when page.image is not set {% endcomment %}
-{% if page.hero_image and page.image == nil %}
-<meta property="og:image" content="{{ page.hero_image | absolute_url }}">
-<meta name="twitter:image" content="{{ page.hero_image | absolute_url }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-{% endif %}
-{% comment %} Additional wedding-specific keywords for category/location pages {% endcomment %}
-{% if page.layout == 'category' or page.layout == 'location' %}
+{% comment %} Keywords — vendor, category, and location pages {% endcomment %}
+{% if page.layout == 'vendor' %}
+<meta name="keywords" content="{{ page.title }}, {{ page.category }}{% if page.city %}, {{ page.city }} wedding vendor{% endif %}, Lafayette Louisiana wedding, Acadiana wedding vendors, South Louisiana wedding">
+{% elsif page.layout == 'category' or page.layout == 'location' %}
 <meta name="keywords" content="{{ page.title }}, Acadiana wedding, Lafayette Louisiana wedding, wedding vendors Louisiana, South Louisiana wedding">
 {% endif %}
 {% comment %} === Vendor (LocalBusiness) === {% endcomment %}
@@ -138,6 +133,23 @@
       ]
     }
   ]
+}
+</script>
+{% comment %} === Blog Post (Article) === {% endcomment %}
+{% elsif page.layout == 'post' %}
+{% if page.date %}<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "{{ page_url }}#article",
+  "headline": {{ page.title | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}"
+  {% if page.description %},"description": {{ page.description | jsonify }}{% endif %}
+  {% if page.image %},"image": {"@type":"ImageObject","url":"{{ page.image | absolute_url }}","width":1200,"height":630}{% endif %}
+  ,"author": {"@type":"Organization","name":{{ site.title | jsonify }},"url":"{{ site.url }}"}
+  ,"publisher": {"@type":"Organization","name":{{ site.title | jsonify }},"url":"{{ site.url }}"}
+  ,"mainEntityOfPage": {"@type":"WebPage","@id":"{{ page_url }}"}
 }
 </script>
 {% comment %} === Default WebPage === {% endcomment %}

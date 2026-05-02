@@ -47,9 +47,9 @@ layout: default
 
     {% assign gallery_images = page.gallery %}
     <div class="v-gallery">
-      <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');"></a>
+      <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');" aria-label="{{ page.title }} — main photo"></a>
       {% for img in gallery_images limit: 4 %}
-      <a class="cell" href="{{ img }}" style="background-image:url('{{ img }}');">
+      <a class="cell" href="{{ img }}" style="background-image:url('{{ img }}');" aria-label="{{ page.title }} — gallery photo {{ forloop.index }}">
         {% if forloop.last and gallery_images.size > 4 %}
         {% assign extra = gallery_images.size | minus: 4 %}
         <span class="more">+ {{ extra }} photos</span>
@@ -60,7 +60,7 @@ layout: default
       {% if cells_filled < 4 %}
         {% assign remaining = 4 | minus: cells_filled %}
         {% for i in (1..remaining) %}
-        <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);"></a>
+        <a class="cell" href="{{ page.hero_image | default: '/assets/img/Unknown.avif' }}" style="background-image:url('{{ page.hero_image | default: '/assets/img/Unknown.avif' }}');filter:brightness(.7);" aria-label="{{ page.title }} — additional photo"></a>
         {% endfor %}
       {% endif %}
     </div>
