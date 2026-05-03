@@ -5,14 +5,17 @@ collections_config:
     name: Vendors
     singular_name: Vendor
     icon: storefront
-  weddings:
-    path: _weddings
+    add_options:
+      - name: Add Vendor
+        schema: default
+  posts:
+    path: _posts
     output: true
-    name: Real Weddings
-    singular_name: Wedding
-    icon: favorite
-  categories:
-    path: _categories
+    name: Blog & Real Weddings
+    singular_name: Post
+    icon: article
+  listing_categories:
+    path: _listing_categories
     output: true
     name: Categories
     singular_name: Category
@@ -23,12 +26,6 @@ collections_config:
     name: Locations
     singular_name: Location
     icon: location_on
-  posts:
-    path: _posts
-    output: true
-    name: Blog Posts
-    singular_name: Blog Post
-    icon: article
 
 data_config:
   nav:
@@ -37,23 +34,142 @@ data_config:
     path: _data/site.yml
 
 _inputs:
+  # --- Common ---
   title:
     type: text
+    label: Title / Business Name
+  tagline:
+    type: text
+    label: Tagline
+  description:
+    type: textarea
+    label: Description
   hero_image:
     type: image
+    label: Hero Image
+  image:
+    type: image
+    label: Card Image
   gallery:
     type: array
+    label: Gallery Images
   featured:
     type: switch
+    label: Featured
+    comment: Show this vendor in featured sections on the homepage
+
+  # --- Subscription ---
+  is_subscribed:
+    type: switch
+    label: Subscribed
+    comment: "Subscribed vendors show full profile: gallery, contact info, and inquiry form"
+  paperform_id:
+    type: text
+    label: Paperform ID (override)
+    comment: Optional — leave blank to use the site-level inquiry form
+
+  # --- Vendor fields ---
+  category:
+    type: text
+    label: Category (display name)
   category_slug:
     type: select
+    label: Category
     options:
-      values: collections.categories
+      values: collections.listing_categories
       value_key: slug
       label_key: name
+  city:
+    type: text
+    label: Primary City
   cities:
     type: multiselect
+    label: Cities Served
     options:
       values: collections.locations
       value_key: slug
       label_key: name
+  categories_tags:
+    type: multiselect
+    label: Category Tags
+    options:
+      values: collections.listing_categories
+      value_key: slug
+      label_key: name
+  website:
+    type: url
+    label: Website
+  phone:
+    type: text
+    label: Phone
+  email:
+    type: email
+    label: Email
+  instagram:
+    type: url
+    label: Instagram URL
+  price_range:
+    type: text
+    label: Price Range
+  years_experience:
+    type: number
+    label: Years of Experience
+  service_area:
+    type: text
+    label: Service Area
+
+  # --- Real Wedding / Blog post fields ---
+  date:
+    type: date
+    label: Date
+  categories:
+    type: multiselect
+    label: Categories
+    options:
+      values:
+        - real-weddings
+        - planning
+        - inspiration
+        - vendors
+  location:
+    type: text
+    label: Location
+  venue:
+    type: text
+    label: Venue
+  style_tags:
+    type: multiselect
+    label: Style Tags
+    options:
+      values:
+        - Romantic
+        - Boho
+        - Classic
+        - Garden
+        - Outdoor
+        - Modern
+        - Rustic
+        - Glamorous
+  vendors:
+    type: array
+    label: Vendors Featured
+  photographer:
+    type: text
+    label: Photographer Credit
+
+  # --- Site data fields ---
+  stripe_payment_link:
+    type: url
+    label: Stripe Payment Link
+  subscription_price:
+    type: text
+    label: Subscription Price (display)
+  paperform_inquiry_id:
+    type: text
+    label: Paperform — Vendor Inquiry Form ID
+  paperform_contact_id:
+    type: text
+    label: Paperform — Contact Page Form ID
+  paperform_listing_id:
+    type: text
+    label: Paperform — List Your Business Form ID

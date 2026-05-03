@@ -1,0 +1,33 @@
+# netlify.toml
+# This file configures the Netlify deployment used ONLY for serverless functions.
+# The Jekyll site itself is hosted/built on CloudCannon.
+# Deploy this repo to Netlify just to get the /.netlify/functions/ endpoint.
+#
+# Required environment variables in Netlify dashboard:
+#   GITHUB_TOKEN              GitHub Personal Access Token (repo scope)
+#   GITHUB_OWNER              GitHub username or org (e.g. clerma)
+#   GITHUB_REPO               Repository name (e.g. thevendoredit)
+#   GITHUB_BRANCH             Branch to commit to (e.g. main or claude/...)
+#   CLOUDCANNON_WEBHOOK       CloudCannon build trigger URL
+#   PAPERFORM_SECRET          Paperform webhook secret (optional, for verification)
+#   MEMBERSTACK_SECRET        Memberstack webhook secret (optional, for verification)
+#   MEMBERSTACK_API_KEY       Memberstack Admin API key (Dashboard → API → Secret key)
+#   MEMBERSTACK_FEATURED_PLAN_ID  Memberstack plan ID for the Featured tier
+
+[build]
+  # No build command needed — we're only here for the functions.
+  # If you ever want Netlify to host the site too, set command to:
+  # command = "bundle exec jekyll build"
+  # publish = "_site"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# CORS headers for the webhook endpoint
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, X-Paperform-Signature, X-Memberstack-Signature"

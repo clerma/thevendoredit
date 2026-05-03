@@ -292,6 +292,129 @@
     });
   }
 
+  /* ---- Wedding multi-group filtering ----------------------- */
+  function initWeddingFilter() {
+    // Track active filter per group
+    var activeFilters = {};
+
+    $(document).on("click", ".wedding-filter-btn", function () {
+      var $btn       = $(this);
+      var group      = $btn.data("filter-group");
+      var filter     = ($btn.data("filter") || "").toString().toLowerCase();
+
+      // Update active state within this group only
+      $btn.closest(".filter-group").find(".wedding-filter-btn").removeClass("active");
+      $btn.addClass("active");
+
+      // Store active filter for this group
+      activeFilters[group] = filter;
+
+      applyWeddingFilters();
+    });
+
+    function applyWeddingFilters() {
+      var $wrappers = $(".wedding-card-wrapper");
+      if (!$wrappers.length) return;
+
+      $wrappers.each(function () {
+        var $card  = $(this);
+        var passes = true;
+
+        $.each(activeFilters, function (group, filter) {
+          if (filter === "all" || filter === "") return true; // skip group
+
+          var val = "";
+          if (group === "style")  val = ($card.data("style")  || "").toLowerCase();
+          if (group === "season") val = ($card.data("season") || "").toLowerCase();
+          if (group === "color")  val = ($card.data("colors") || "").toLowerCase();
+          if (group === "venue")  val = ($card.data("venue")  || "").toLowerCase();
+
+          if (val.indexOf(filter) === -1) { passes = false; return false; }
+        });
+
+        if (passes) { $card.fadeIn(300); }
+        else        { $card.fadeOut(200); }
+      });
+    }
+  }
+
+  /* ---- Save / Favorites ------------------------------------ */
+  function initSaveFavorites() {
+    var STORAGE_KEY = "tee_favorites";
+
+    function getFavorites() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch(e) { return []; }
+    }
+
+    function saveFavorites(arr) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function isSaved(url) {
+      return getFavorites().some(function(f) { return f.url === url; });
+    }
+
+    function updateNavCounter() {
+      var count = getFavorites().length;
+      var $badge = $(".nav-favorites-count");
+      if (count > 0) {
+        $badge.text(count).css("display", "inline-flex");
+      } else {
+        $badge.hide();
+      }
+    }
+
+    // Mark already-saved buttons on page load
+    function markSavedButtons() {
+      $(".save-btn[data-url]").each(function() {
+        var url = $(this).data("url");
+        if (isSaved(url)) {
+          $(this).addClass("is-saved").attr("aria-label",
+            $(this).attr("aria-label").replace(/^Save /, "Unsave "));
+        }
+      });
+    }
+
+    // Toggle save on click
+    $(document).on("click", ".save-btn[data-url]", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var $btn  = $(this);
+      var url   = $btn.data("url");
+      var favorites = getFavorites();
+
+      if (isSaved(url)) {
+        // Remove
+        saveFavorites(favorites.filter(function(f) { return f.url !== url; }));
+        $btn.removeClass("is-saved");
+        $btn.attr("aria-label", $btn.attr("aria-label").replace(/^Unsave /, "Save "));
+      } else {
+        // Add
+        favorites.push({
+          type:  $btn.data("type")  || "vendor",
+          url:   url,
+          title: $btn.data("title") || "",
+          image: $btn.data("image") || "",
+          meta:  $btn.data("meta")  || ""
+        });
+        saveFavorites(favorites);
+        $btn.addClass("is-saved");
+        $btn.attr("aria-label", $btn.attr("aria-label").replace(/^Save /, "Unsave "));
+
+        // Brief pulse animation
+        $btn.addClass("pulse");
+        setTimeout(function() { $btn.removeClass("pulse"); }, 400);
+      }
+
+      updateNavCounter();
+    });
+
+    markSavedButtons();
+    updateNavCounter();
+  }
+
   /* ---- Init all -------------------------------------------- */
   $(document).ready(function () {
     initBgImages();
@@ -308,6 +431,8 @@
     initActiveNav();
     initDropdownHover();
     initVendorFilter();
+    initWeddingFilter();
+    initSaveFavorites();
   });
 
 })(jQuery);
