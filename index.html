@@ -1,3 +1,81 @@
+<<<<<<< HEAD
+---
+layout: default
+title: The Event Edit — Curated Wedding Vendors in Acadiana
+description: Find the best wedding vendors in Lafayette and the Acadiana region of Louisiana. Venues, photographers, florists, DJs, photo booths, and more.
+permalink: /
+---
+<style>
+.tve-feed-item img { aspect-ratio: 4/5; }
+</style>
+
+<!-- HERO -->
+<section class="tve-hero-full">
+  <div class="container-fluid px-4 px-lg-5">
+
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="tve-hero-eyebrow">The Acadiana Edit</div>
+        <h1 class="tve-hero-headline">The best of<br>Lafayette <em>weddings,</em><br>curated by hand.</h1>
+      </div>
+    </div>
+
+    <div class="row align-items-end mt-4">
+      <div class="col-lg-6">
+        <p style="font-family:var(--tve-serif-alt);font-size:20px;line-height:1.5;color:var(--tve-ink-soft);max-width:520px;">
+          A private directory of the photographers, planners, florists and venues we trust
+          across Lafayette, Youngsville, Broussard, Carencro and Opelousas.
+        </p>
+      </div>
+      <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+        <div class="d-flex gap-4 justify-content-lg-end align-items-center flex-wrap">
+          <a href="{{ '/vendors/' | relative_url }}" class="tve-link">Browse Vendors</a>
+          <a href="{{ '/weddings/' | relative_url }}" class="tve-link">View Real Weddings</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="row mt-5 pt-4">
+      <div class="col-lg-7">
+        <div class="tve-search">
+          <i class="ti-search" style="color:var(--tve-muted)"></i>
+          <input placeholder="Search photographers, venues, florists…" id="hero-search"
+            onkeydown="if(event.key==='Enter'){window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(this.value)}">
+          <span style="width:1px;height:20px;background:var(--tve-rule);flex-shrink:0;"></span>
+          <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);white-space:nowrap;">Lafayette, LA</span>
+          <button class="tve-search-btn" onclick="window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(document.getElementById('hero-search').value)">Find</button>
+        </div>
+      </div>
+      <div class="col-lg-5 d-flex align-items-center gap-2 flex-wrap mt-3 mt-lg-0">
+        <span style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Popular</span>
+        {% assign popular_cats = site.listing_categories | where: "phase", 1 | sort: "order" | limit: 3 %}
+        {% for cat in popular_cats %}
+        <a class="tve-city-chip" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">
+          <span class="dot"></span>{{ cat.name }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- THE FEED -->
+<section style="padding:88px 0 60px;">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-rule-label mb-5">The Feed · Fresh This Week</div>
+    <div class="tve-masonry">
+      {% assign feed_vendors = site.vendors | limit: 12 %}
+      {% for vendor in feed_vendors %}
+      <a href="{{ vendor.url | relative_url }}" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="{{ vendor.hero_image | default: '/assets/img/Unknown.avif' }}"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="{{ vendor.title }}">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">{{ vendor.category }}</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">{{ vendor.title }}</div>
+=======
 <!DOCTYPE html>
 <html lang="en_us">
 <head>
@@ -359,8 +437,10 @@
         <div class="d-flex gap-4 justify-content-lg-end align-items-center flex-wrap">
           <a href="/vendors/" class="tve-link">Browse Vendors</a>
           <a href="/weddings/" class="tve-link">View Real Weddings</a>
+>>>>>>> main
         </div>
-      </div>
+      </a>
+      {% endfor %}
     </div>
 
     <!-- Search bar -->
@@ -547,6 +627,28 @@
   <div class="container-fluid px-4 px-lg-5">
     <div class="row align-items-end mb-5">
       <div class="col-lg-6">
+<<<<<<< HEAD
+        <div class="tve-eyebrow mb-2">Editor's Picks · {{ 'now' | date: "%B %Y" }}</div>
+        <h2 class="tve-display tve-display--lg">Three vendors we're<br>recommending <em>this month.</em></h2>
+      </div>
+      <div class="col-lg-6 text-lg-end">
+        <a href="{{ '/vendors/' | relative_url }}" class="tve-link">See All Featured</a>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
+      {% if featured_vendors.size > 0 %}
+        {% for vendor in featured_vendors %}
+        <div class="col-lg-4 col-md-6">
+          {% include vendor-card.html vendor=vendor %}
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col-12 text-center py-5">
+        <p style="color:var(--tve-muted);">Featured vendor listings coming soon.</p>
+      </div>
+      {% endif %}
+=======
         <div class="tve-eyebrow mb-2">Editor's Picks · May 2026</div>
         <h2 class="tve-display tve-display--lg">Three vendors we're<br>recommending <em>this month.</em></h2>
       </div>
@@ -597,6 +699,7 @@
         </div>
         
       
+>>>>>>> main
     </div>
   </div>
 </section>
@@ -611,6 +714,32 @@
       </div>
     </div>
     <div class="row g-4">
+<<<<<<< HEAD
+      {% assign recent_weddings = site.categories["real-weddings"] %}
+      {% if recent_weddings.size > 0 %}
+        {% for wedding in recent_weddings limit: 3 %}
+        <div class="col-lg-4 col-md-6">
+          <a href="{{ wedding.url | relative_url }}" style="text-decoration:none;">
+            <div style="aspect-ratio:4/5;overflow:hidden;">
+              <img src="{{ wedding.hero_image | default: '/assets/img/Unknown.avif' }}"
+                style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"
+                alt="{{ wedding.title }}">
+            </div>
+            <div style="padding-top:18px;">
+              <div class="tve-eyebrow mb-2">
+                {{ wedding.season | capitalize }}{% if wedding.colors %} · {{ wedding.colors | first | capitalize }}{% endif %}
+              </div>
+              <div style="font-family:var(--tve-serif);font-size:24px;line-height:1.15;color:var(--tve-ink);">{{ wedding.title }}</div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="col-12 text-center py-5">
+        <p style="color:var(--tve-muted);">Real weddings coming soon.</p>
+      </div>
+      {% endif %}
+=======
       
       
         
@@ -631,6 +760,7 @@
         </div>
         
       
+>>>>>>> main
     </div>
   </div>
 </section>
@@ -640,6 +770,16 @@
   <div class="container-fluid px-4 px-lg-5">
     <div class="tve-rule-label mb-5">Browse by City</div>
     <div class="row">
+<<<<<<< HEAD
+      {% assign sorted_locations = site.locations | sort: "order" %}
+      {% for location in sorted_locations %}
+      {% assign loc_count = site.vendors | where_exp: "v", "v.cities contains location.slug" | size %}
+      <div class="col-lg col-md-4 col-6 mb-3">
+        <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}"
+          style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">{{ location.name }}</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">{{ loc_count }} vendors</div>
+=======
       
       
       
@@ -648,6 +788,7 @@
           style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
           <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Lafayette</div>
           <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">11 vendors</div>
+>>>>>>> main
         </a>
       </div>
       
@@ -699,6 +840,9 @@
     <p style="font-family:var(--tve-serif-alt);font-size:19px;color:rgba(255,255,255,.75);max-width:560px;margin:22px auto 36px;">
       A curated directory, not a crowded one. Listed vendors start at $29/month.
     </p>
+<<<<<<< HEAD
+    <a href="{{ '/list-your-business/' | relative_url }}" class="tve-link tve-link--light">Apply for a Listing</a>
+=======
     <a href="/list-your-business/" class="tve-link tve-link--light">Apply for a Listing</a>
   </div>
 </section>
@@ -712,6 +856,7 @@
     <div style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-muted);letter-spacing:.08em;">
       &copy; 2026 &middot; Lafayette, Louisiana &middot; hello@thevendoredit.com
     </div>
+>>>>>>> main
   </div>
 </footer>
 
