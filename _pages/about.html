@@ -1,0 +1,69 @@
+---
+layout: default
+title: About The Event Edit
+description: Learn about The Event Edit, a curated wedding vendor directory for Lafayette and Acadiana, Louisiana.
+permalink: /about/
+---
+
+<!-- Hero -->
+<section style="background:var(--tve-bg);padding:90px 0 60px;border-bottom:1px solid var(--tve-rule);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Our Story</div>
+    <h1 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(52px,7vw,100px);line-height:.95;letter-spacing:-.015em;margin:0 0 24px;">Curated for<br><em style="font-style:italic;">Acadiana.</em></h1>
+    <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:20px;color:var(--tve-ink-soft);max-width:600px;line-height:1.55;margin:0;">The wedding vendor directory built for Lafayette and the surrounding region.</p>
+  </div>
+</section>
+
+<!-- Mission -->
+<section style="padding:80px 0;background:#fff;border-bottom:1px solid var(--tve-rule);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:80px;max-width:1100px;">
+      <div>
+        <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Who We Are</div>
+        <h2 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(32px,3vw,48px);line-height:1.05;margin:0;">Why we built<br><em style="font-style:italic;">The Event Edit.</em></h2>
+      </div>
+      <div>
+        <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:19px;color:var(--tve-ink-soft);line-height:1.65;margin:0 0 24px;">The Event Edit was created to give couples in Lafayette and the surrounding Acadiana region a better way to discover exceptional wedding vendors.</p>
+        <p style="font-family:var(--tve-sans);font-size:15px;color:var(--tve-ink-soft);line-height:1.75;margin:0 0 24px;">We believe your wedding vendors should be as curated as your aesthetic — which is why every listing is hand-selected to meet our standard of quality, professionalism, and local expertise.</p>
+        <p style="font-family:var(--tve-sans);font-size:15px;color:var(--tve-ink-soft);line-height:1.75;margin:0 0 32px;">Whether you're searching for a photographer who captures authentic emotion, a florist with a sophisticated eye, or a DJ who knows how to keep a Louisiana crowd dancing, you'll find them here.</p>
+        <a href="{{ '/locations/' | relative_url }}" class="tve-link">Serving Lafayette &amp; Acadiana, Louisiana →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Real Weddings preview -->
+{% assign weddings = site.categories["real-weddings"] | limit: 6 %}
+{% if weddings.size > 0 %}
+<section style="padding:80px 0;background:var(--tve-bg);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;border-top:1px solid var(--tve-ink);padding-top:24px;">
+      <div>
+        <div class="tve-eyebrow mb-1" style="color:var(--tve-accent);">Inspiration</div>
+        <h2 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(32px,3vw,48px);margin:0;">Real <em style="font-style:italic;">Weddings.</em></h2>
+      </div>
+      <a href="{{ '/weddings/' | relative_url }}" class="tve-link" style="white-space:nowrap;">See all →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      {% for wedding in weddings %}
+      <a href="{{ wedding.url | relative_url }}" style="display:block;text-decoration:none;">
+        <div style="aspect-ratio:4/5;background:var(--tve-ink) center/cover;background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');margin-bottom:14px;overflow:hidden;"></div>
+        <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--tve-muted);margin-bottom:4px;">{{ wedding.date | date: "%B %Y" }}</div>
+        <div style="font-family:var(--tve-serif);font-size:22px;line-height:1.1;color:var(--tve-ink);margin-bottom:4px;">{{ wedding.title }}</div>
+        {% if wedding.venue %}<div style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-ink-soft);">{{ wedding.venue }}</div>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section style="padding:100px 0;background:var(--tve-ink);">
+  <div class="container-fluid px-4 px-lg-5" style="text-align:center;">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Vendors</div>
+    <h2 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(40px,5vw,72px);line-height:1;color:#fff;margin:0 0 24px;">Want to be <em style="font-style:italic;">featured?</em></h2>
+    <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:18px;color:rgba(255,255,255,.7);margin:0 0 40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;">We'd love to add you to the directory. Get your business in front of every couple planning an Acadiana wedding.</p>
+    <a href="{{ '/list-your-business/' | relative_url }}" class="act-btn primary" style="background:var(--tve-accent);border-color:var(--tve-accent);">List Your Business</a>
+  </div>
+</section>
