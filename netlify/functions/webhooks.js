@@ -242,8 +242,8 @@ async function handlePaperform(body) {
   const fields = {};
   (submission.data || []).forEach(({ key, value }) => { fields[key] = value; });
 
-  const vendorSlug = fields['vendor-slug'];
-  if (!vendorSlug) throw new Error('Missing vendor-slug field in Paperform submission');
+  let vendorSlug = fields['vendor-slug'] || slugify(fields['business-name'] || '');
+  if (!vendorSlug) throw new Error('Missing vendor-slug or business-name in Paperform submission');
 
   const filePath = `_vendors/${vendorSlug}.md`;
 
