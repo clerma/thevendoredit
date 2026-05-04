@@ -333,9 +333,9 @@
           <li><i class="ti-check"></i> Listed in category & city search results</li>
           
         </ul>
-        <a id="stripe-listed-btn" href="https://buy.stripe.com/your_listed_link" class="act-btn primary w-100" style="justify-content:center;">
+        <button type="button" data-ms-price:add="prc_the-edit-ad450a4x" class="act-btn primary w-100">
           Get Listed — $29/month
-        </a>
+        </button>
         <p class="pc-note">Billed monthly. Cancel anytime.</p>
       </div>
 
@@ -358,9 +358,9 @@
           <li><i class="ti-check"></i> Monthly social media feature</li>
           
         </ul>
-        <a id="stripe-featured-btn" href="https://buy.stripe.com/your_featured_link" class="act-btn primary w-100" style="justify-content:center;background:var(--tve-accent);border-color:var(--tve-accent);">
+        <button type="button" data-ms-price:add="prc_the-lead-fk7q0eu3" class="act-btn primary w-100">
           Get Featured — $59/month
-        </a>
+        </button>
         <p class="pc-note">Billed monthly. Cancel anytime.</p>
       </div>
 
@@ -443,8 +443,8 @@
     <h2>Ready to get found?</h2>
     <p>Join the vendors already in front of engaged couples across Acadiana.</p>
     <div class="d-flex gap-3 justify-content-center flex-wrap">
-      <a href="https://buy.stripe.com/your_listed_link" class="act-btn primary">Get Listed — $29/month</a>
-      <a href="https://buy.stripe.com/your_featured_link" class="act-btn" style="border-color:#fff;color:#fff;">Get Featured — $59/month</a>
+      <button type="button" data-ms-price:add="prc_the-edit-ad450a4x" class="act-btn primary">Get Listed — $29/month</button>
+      <button type="button" data-ms-price:add="prc_the-lead-fk7q0eu3" class="act-btn" style="border-color:#fff;color:#fff;">Get Featured — $59/month</button>
     </div>
   </div>
 </section>
@@ -460,25 +460,10 @@
   var msg = document.getElementById('claim-banner-msg');
   if (banner) banner.style.display = 'block';
   if (msg) msg.textContent = 'You\'re claiming the listing for: ' + claimSlug.replace(/-/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
-
-  // Append vendor slug + success redirect to Stripe Payment Links as client_reference_id
-  // Stripe Payment Links support ?client_reference_id= and ?prefilled_email= params
-  function appendStripeParams(btn, baseUrl) {
-    if (!btn) return;
-    var url = new URL(baseUrl, window.location.href);
-    url.searchParams.set('client_reference_id', claimSlug);
-    // Success URL: redirect to account page after payment
-    btn.href = url.toString();
+  // Memberstack modal handles checkout via data-ms-price:add attributes on the buttons.
+  if (claimSlug) {
+    try { sessionStorage.setItem('tve_claim_slug', claimSlug); } catch(e) {}
   }
-
-  appendStripeParams(
-    document.getElementById('stripe-listed-btn'),
-    'https://buy.stripe.com/your_listed_link'
-  );
-  appendStripeParams(
-    document.getElementById('stripe-featured-btn'),
-    'https://buy.stripe.com/your_featured_link'
-  );
 })();
 </script>
 
