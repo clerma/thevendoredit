@@ -240,7 +240,7 @@ async function handlePaperform(body) {
 
   // Paperform sends answers as an array: [{ key, value }, ...]
   const fields = {};
-  (submission.data || []).forEach(({ key, value }) => { fields[key] = value; });
+  (submission.data || []).forEach((item) => { const k = item.custom_key || item.key; fields[k] = item.value; });
 
   console.log('[paperform fields]', JSON.stringify(fields)); let vendorSlug = fields['vendor-slug'] || slugify(fields['business-name'] || '');
   if (!vendorSlug) throw new Error('Missing vendor-slug or business-name in Paperform submission');
