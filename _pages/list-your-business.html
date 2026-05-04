@@ -1,0 +1,78 @@
+---
+layout: default
+title: List Your Business
+description: Get your wedding business listed on The Event Edit — Acadiana's curated vendor directory.
+permalink: /list-your-business/
+---
+
+<!-- Hero -->
+<section style="background:var(--tve-bg);padding:90px 0 60px;">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Join the Directory</div>
+    <h1 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(52px,7vw,100px);line-height:.95;letter-spacing:-.015em;margin:0 0 24px;">Get in front of every couple<br>planning an <em style="font-style:italic;">Acadiana wedding.</em></h1>
+    <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:20px;color:var(--tve-ink-soft);max-width:600px;line-height:1.55;margin:0 0 40px;">Connect with engaged couples searching for vendors in Lafayette and the surrounding region.</p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <a href="{{ '/pricing/' | relative_url }}" class="act-btn primary">See plans &amp; pricing</a>
+      <a href="#application" class="act-btn">Apply now</a>
+    </div>
+  </div>
+</section>
+
+<!-- Why list -->
+<section style="padding:80px 0;background:#fff;border-bottom:1px solid var(--tve-rule);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;">
+      <div style="border-top:1px solid var(--tve-ink);padding-top:24px;">
+        <i class="ti-eye" style="font-size:22px;color:var(--tve-accent);display:block;margin-bottom:16px;"></i>
+        <h4 style="font-family:var(--tve-serif);font-weight:400;font-size:26px;margin:0 0 10px;">Curated exposure</h4>
+        <p style="font-family:var(--tve-sans);font-size:14px;line-height:1.65;color:var(--tve-ink-soft);margin:0;">Your business presented alongside top-tier Acadiana vendors in a beautifully designed directory.</p>
+      </div>
+      <div style="border-top:1px solid var(--tve-ink);padding-top:24px;">
+        <i class="ti-location-pin" style="font-size:22px;color:var(--tve-accent);display:block;margin-bottom:16px;"></i>
+        <h4 style="font-family:var(--tve-serif);font-weight:400;font-size:26px;margin:0 0 10px;">Local discovery</h4>
+        <p style="font-family:var(--tve-sans);font-size:14px;line-height:1.65;color:var(--tve-ink-soft);margin:0;">Reach couples searching specifically for vendors in your city and service area.</p>
+      </div>
+      <div style="border-top:1px solid var(--tve-ink);padding-top:24px;">
+        <i class="ti-heart" style="font-size:22px;color:var(--tve-accent);display:block;margin-bottom:16px;"></i>
+        <h4 style="font-family:var(--tve-serif);font-weight:400;font-size:26px;margin:0 0 10px;">Real Wedding features</h4>
+        <p style="font-family:var(--tve-sans);font-size:14px;line-height:1.65;color:var(--tve-ink-soft);margin:0;">Get credited in real wedding galleries to showcase your work in context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Application form -->
+<section id="application" style="padding:80px 0;background:var(--tve-bg);">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="max-width:760px;">
+      <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Application</div>
+      <h2 style="font-family:var(--tve-serif);font-weight:400;font-size:clamp(36px,4vw,52px);line-height:1;margin:0 0 12px;">Apply to be listed</h2>
+      <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:17px;color:var(--tve-ink-soft);margin:0 0 40px;line-height:1.55;">
+        Fill out the form below and we'll be in touch. Already have an account?
+        <a href="{{ '/login/' | relative_url }}" style="color:var(--tve-ink);">Sign in →</a>
+      </p>
+      <div data-paperform-id="{{ site.data.site.paperform_listing_id }}"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing teaser -->
+<section style="padding:80px 0;background:#fff;">
+  <div class="container-fluid px-4 px-lg-5">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px;">
+      <div style="border:1px solid var(--tve-rule);padding:36px;">
+        <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--tve-accent);font-weight:600;margin-bottom:8px;">Listed</div>
+        <div style="font-family:var(--tve-serif);font-size:44px;line-height:1;margin-bottom:16px;">{{ site.data.site.listed_price }}</div>
+        <button type="button" data-ms-price:add="prc_the-edit-ad450a4x" class="act-btn primary w-100" style="justify-content:center;text-align:center;display:block;">Subscribe</button>
+      </div>
+      <div style="border:1px solid var(--tve-ink);padding:36px;background:var(--tve-ink);color:#fff;">
+        <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--tve-accent);font-weight:600;margin-bottom:8px;">Featured</div>
+        <div style="font-family:var(--tve-serif);font-size:44px;line-height:1;color:#fff;margin-bottom:16px;">{{ site.data.site.featured_price }}</div>
+        <button type="button" data-ms-price:add="prc_the-lead-fk7q0eu3" class="act-btn primary w-100" style="justify-content:center;text-align:center;display:block;background:var(--tve-accent);border-color:var(--tve-accent);">Subscribe</button>
+      </div>
+    </div>
+    <p style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-muted);margin-top:16px;">
+      Month-to-month. Cancel anytime. <a href="{{ '/pricing/' | relative_url }}" style="color:var(--tve-ink);">Compare plans →</a>
+    </p>
+  </div>
+</section>

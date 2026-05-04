@@ -1,0 +1,26 @@
+{% assign wedding = include.wedding %}
+<div style="position:relative;">
+  <a href="{{ wedding.url | relative_url }}" style="display:block;text-decoration:none;">
+    <div class="w-card-img" style="background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+    <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--tve-muted);margin-bottom:4px;padding-top:14px;">{{ wedding.date | date: "%B %Y" }}</div>
+    <div style="font-family:var(--tve-serif);font-size:22px;line-height:1.1;color:var(--tve-ink);margin-bottom:4px;">{{ wedding.title }}</div>
+    {% if wedding.venue %}<div style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-ink-soft);">{{ wedding.venue }}{% if wedding.location %} &middot; {{ wedding.location }}{% endif %}</div>{% endif %}
+    {% if wedding.style_tags and wedding.style_tags.size > 0 %}
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+      {% for tag in wedding.style_tags limit: 2 %}
+      <span style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tve-muted);border:1px solid var(--tve-rule);padding:3px 8px;">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </a>
+  <button class="save-btn" data-type="wedding"
+    data-url="{{ wedding.url | relative_url }}"
+    data-title="{{ wedding.title }}"
+    data-image="{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}"
+    data-meta="{{ wedding.venue }}{% if wedding.location %} · {{ wedding.location }}{% endif %}"
+    aria-label="Save {{ wedding.title }}"
+    style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.9);border:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tve-ink);"
+    onclick="event.preventDefault();">
+    <i class="ti-heart" style="font-size:13px;"></i>
+  </button>
+</div>
