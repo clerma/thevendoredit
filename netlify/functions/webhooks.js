@@ -285,8 +285,8 @@ async function handlePaperform(body) {
 
 async function handleMemberstack(body) {
   const event = typeof body === 'string' ? JSON.parse(body) : body;
-  const type = event.type; // e.g. "member.plan.added", "member.plan.removed"
-  const member = event.data && event.data.member;
+  const type = event.event; // e.g. "member.plan.added", "member.plan.removed"
+  const member = event.payload;
 
   if (!member) throw new Error('No member data in Memberstack event');
 
