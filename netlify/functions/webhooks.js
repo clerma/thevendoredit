@@ -185,11 +185,7 @@ function buildVendorMarkdown(fields, existingFrontmatter = {}) {
   set('email',         fields['email']);
   set('instagram',     fields['instagram']);
   set('facebook',      fields['facebook']);
-<<<<<<< HEAD
-  set('hero_image',    fields['hero-image']);
-=======
   set('hero_image',    fields['heroimage']);
->>>>>>> main
   set('is_subscribed', true);   // always true when coming through webhook
   set('is_featured',   fm.is_featured || false);
 
