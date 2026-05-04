@@ -1,9 +1,3 @@
----
-layout: default
-title: The Event Edit â Curated Wedding Vendors in Acadiana
-description: Find the best wedding vendors in Lafayette and the Acadiana region of Louisiana. Venues, photographers, florists, DJs, photo booths, and more.
-permalink: /
----
 <style>
 .tve-feed-item img { aspect-ratio: 4/5; }
 </style>
@@ -28,8 +22,8 @@ permalink: /
       </div>
       <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
         <div class="d-flex gap-4 justify-content-lg-end align-items-center flex-wrap">
-          <a href="{{ '/vendors/' | relative_url }}" class="tve-link">Browse Vendors</a>
-          <a href="{{ '/weddings/' | relative_url }}" class="tve-link">View Real Weddings</a>
+          <a href="/vendors/" class="tve-link">Browse Vendors</a>
+          <a href="/weddings/" class="tve-link">View Real Weddings</a>
         </div>
       </div>
     </div>
@@ -40,20 +34,52 @@ permalink: /
         <div class="tve-search">
           <i class="ti-search" style="color:var(--tve-muted)"></i>
           <input placeholder="Search photographers, venues, floristsâ¦" id="hero-search"
-            onkeydown="if(event.key==='Enter'){window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(this.value)}">
+            onkeydown="if(event.key==='Enter'){window.location='/vendors/?q='+encodeURIComponent(this.value)}">
           <span style="width:1px;height:20px;background:var(--tve-rule);flex-shrink:0;"></span>
           <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);white-space:nowrap;">Lafayette, LA</span>
-          <button class="tve-search-btn" onclick="window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(document.getElementById('hero-search').value)">Find</button>
+          <button class="tve-search-btn" onclick="window.location='/vendors/?q='+encodeURIComponent(document.getElementById('hero-search').value)">Find</button>
         </div>
       </div>
       <div class="col-lg-5 d-flex align-items-center gap-2 flex-wrap mt-3 mt-lg-0">
         <span style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Popular</span>
-        {% assign popular_cats = site.listing_categories | where: "phase", 1 | sort: "order" | limit: 3 %}
-        {% for cat in popular_cats %}
-        <a class="tve-city-chip" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">
-          <span class="dot"></span>{{ cat.name }}
+        
+        
+        <a class="tve-city-chip" href="/wedding-venues/">
+          <span class="dot"></span>Wedding Venues
         </a>
-        {% endfor %}
+        
+        <a class="tve-city-chip" href="/photographers/">
+          <span class="dot"></span>Photographers
+        </a>
+        
+        <a class="tve-city-chip" href="/videographers/">
+          <span class="dot"></span>Videographers
+        </a>
+        
+        <a class="tve-city-chip" href="/florists/">
+          <span class="dot"></span>Florists
+        </a>
+        
+        <a class="tve-city-chip" href="/djs/">
+          <span class="dot"></span>DJs
+        </a>
+        
+        <a class="tve-city-chip" href="/event-rentals/">
+          <span class="dot"></span>Event Rentals
+        </a>
+        
+        <a class="tve-city-chip" href="/planners/">
+          <span class="dot"></span>Planners
+        </a>
+        
+        <a class="tve-city-chip" href="/photo-booths/">
+          <span class="dot"></span>Photo Booths
+        </a>
+        
+        <a class="tve-city-chip" href="/transportation/">
+          <span class="dot"></span>Transportation
+        </a>
+        
       </div>
     </div>
 
@@ -65,18 +91,118 @@ permalink: /
   <div class="container-fluid px-4 px-lg-5">
     <div class="tve-rule-label mb-5">The Feed Â· Fresh This Week</div>
     <div class="tve-masonry">
-      {% assign feed_vendors = site.vendors | limit: 12 %}
-      {% for vendor in feed_vendors %}
-      <a href="{{ vendor.url | relative_url }}" class="d-block tve-feed-item" style="text-decoration:none;">
-        <img src="{{ vendor.hero_image | default: '/assets/img/Unknown.avif' }}"
+      
+      
+      <a href="/vendors/bubbli-balloons/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown-7.avif"
           style="width:100%;object-fit:cover;display:block;" loading="lazy"
-          alt="{{ vendor.title }}">
+          alt="Bubbli Balloons">
         <div style="padding:10px 2px 2px;">
-          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">{{ vendor.category }}</div>
-          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">{{ vendor.title }}</div>
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Entertainment</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Bubbli Balloons</div>
         </div>
       </a>
-      {% endfor %}
+      
+      <a href="/vendors/cajun-beats-dj/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Cajun Beats DJ">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">DJs</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Cajun Beats DJ</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/carlos-and-ashley-photo/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown-2.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Carlos & Ashley Photo">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Photographers</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Carlos & Ashley Photo</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/get-lit-with-marquee/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/fireworks.jpg"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Get Lit With Marquee">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Event Rentals</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Get Lit With Marquee</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/hannah-trahan-weddings/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/entrance.jpg"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Hannah Trahan Weddings">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Planners</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Hannah Trahan Weddings</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/luxury-limo-of-lafayette/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown-6.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Luxury Limo of Lafayette">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Transportation</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Luxury Limo of Lafayette</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/my-laffy-house-events/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown-4.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="My Laffy House Events">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Planners</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">My Laffy House Events</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/ohh-snap-booth/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown-5.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Ohh Snap Booth">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Photo Booths</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Ohh Snap Booth</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/petal-and-stem/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Petal & Stem">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Florists</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Petal & Stem</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/southern-lens-photography/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/Unknown.avif"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Southern Lens Photography">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Photographers</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Southern Lens Photography</div>
+        </div>
+      </a>
+      
+      <a href="/vendors/texture-rental-collection/" class="d-block tve-feed-item" style="text-decoration:none;">
+        <img src="/assets/img/sc-1.jpg"
+          style="width:100%;object-fit:cover;display:block;" loading="lazy"
+          alt="Texture Rental Collection">
+        <div style="padding:10px 2px 2px;">
+          <div style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);">Event Rentals</div>
+          <div style="font-family:var(--tve-serif);font-size:16px;color:var(--tve-ink);line-height:1.2;">Texture Rental Collection</div>
+        </div>
+      </a>
+      
     </div>
 
     <!-- Search bar -->
@@ -263,26 +389,56 @@ permalink: /
   <div class="container-fluid px-4 px-lg-5">
     <div class="row align-items-end mb-5">
       <div class="col-lg-6">
-        <div class="tve-eyebrow mb-2">Editor's Picks Â· {{ 'now' | date: "%B %Y" }}</div>
+        <div class="tve-eyebrow mb-2">Editor's Picks Â· May 2026</div>
         <h2 class="tve-display tve-display--lg">Three vendors we're<br>recommending <em>this month.</em></h2>
       </div>
       <div class="col-lg-6 text-lg-end">
-        <a href="{{ '/vendors/' | relative_url }}" class="tve-link">See All Featured</a>
+        <a href="/vendors/" class="tve-link">See All Featured</a>
       </div>
     </div>
     <div class="row g-4">
-      {% assign featured_vendors = site.vendors | where: "is_featured", true | where: "is_subscribed", true | limit: 3 %}
-      {% if featured_vendors.size > 0 %}
-        {% for vendor in featured_vendors %}
+      
+      
+        
         <div class="col-lg-4 col-md-6">
-          {% include vendor-card.html vendor=vendor %}
+          
+<div class="tve-card">
+  <a href="/vendors/southern-lens-photography/" style="text-decoration:none;">
+    <div class="tve-card-media">
+      <img src="/assets/img/Unknown.avif"
+           alt="Southern Lens Photography" loading="lazy">
+      
+        <span class="tve-badge-featured"><i class="ti-star"></i> Featured</span>
+      
+      
+      
+        <span class="tve-badge-rw">In 1 Real Wedding</span>
+      
+    </div>
+  </a>
+  <button class="tve-save save-btn"
+    data-type="vendor"
+    data-url="/vendors/southern-lens-photography/"
+    data-title="Southern Lens Photography"
+    data-image="/assets/img/Unknown.avif"
+    data-meta="Photographers &middot; Lafayette"
+    aria-label="Save Southern Lens Photography">
+    <i class="ti-heart"></i>
+  </button>
+  <div class="tve-card-body">
+    <div class="tve-card-cat">Photographers &middot; Lafayette</div>
+    <h5 class="tve-card-title">
+      <a href="/vendors/southern-lens-photography/">Southern Lens Photography</a>
+    </h5>
+    
+    <div class="tve-card-meta" style="font-family:var(--tve-serif-alt);font-size:14px;font-style:italic;color:var(--tve-ink-soft);margin-top:4px;">Authentic, timeless wedding photography in Acadiana.</div>
+    
+  </div>
+</div>
+
         </div>
-        {% endfor %}
-      {% else %}
-      <div class="col-12 text-center py-5">
-        <p style="color:var(--tve-muted);">Featured vendor listings coming soon.</p>
-      </div>
-      {% endif %}
+        
+      
     </div>
   </div>
 </section>
@@ -297,30 +453,26 @@ permalink: /
       </div>
     </div>
     <div class="row g-4">
-      {% assign recent_weddings = site.categories["real-weddings"] %}
-      {% if recent_weddings.size > 0 %}
-        {% for wedding in recent_weddings limit: 3 %}
+      
+      
+        
         <div class="col-lg-4 col-md-6">
-          <a href="{{ wedding.url | relative_url }}" style="text-decoration:none;">
+          <a href="/weddings/emma-and-james/" style="text-decoration:none;">
             <div style="aspect-ratio:4/5;overflow:hidden;">
-              <img src="{{ wedding.hero_image | default: '/assets/img/Unknown.avif' }}"
+              <img src="/assets/img/floral.jpg"
                 style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"
-                alt="{{ wedding.title }}">
+                alt="Emma & James">
             </div>
             <div style="padding-top:18px;">
               <div class="tve-eyebrow mb-2">
-                {{ wedding.season | capitalize }}{% if wedding.colors %} Â· {{ wedding.colors | first | capitalize }}{% endif %}
+                Fall Â· Blush
               </div>
-              <div style="font-family:var(--tve-serif);font-size:24px;line-height:1.15;color:var(--tve-ink);">{{ wedding.title }}</div>
+              <div style="font-family:var(--tve-serif);font-size:24px;line-height:1.15;color:var(--tve-ink);">Emma & James</div>
             </div>
           </a>
         </div>
-        {% endfor %}
-      {% else %}
-      <div class="col-12 text-center py-5">
-        <p style="color:var(--tve-muted);">Real weddings coming soon.</p>
-      </div>
-      {% endif %}
+        
+      
     </div>
   </div>
 </section>
@@ -330,17 +482,53 @@ permalink: /
   <div class="container-fluid px-4 px-lg-5">
     <div class="tve-rule-label mb-5">Browse by City</div>
     <div class="row">
-      {% assign sorted_locations = site.locations | sort: "order" %}
-      {% for location in sorted_locations %}
-      {% assign loc_count = site.vendors | where_exp: "v", "v.cities contains location.slug" | size %}
+      
+      
+      
       <div class="col-lg col-md-4 col-6 mb-3">
-        <a href="{{ '/locations/' | append: location.slug | append: '/' | relative_url }}"
+        <a href="/locations/lafayette/"
           style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
-          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">{{ location.name }}</div>
-          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">{{ loc_count }} vendors</div>
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Lafayette</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">11 vendors</div>
         </a>
       </div>
-      {% endfor %}
+      
+      
+      <div class="col-lg col-md-4 col-6 mb-3">
+        <a href="/locations/youngsville/"
+          style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Youngsville</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">7 vendors</div>
+        </a>
+      </div>
+      
+      
+      <div class="col-lg col-md-4 col-6 mb-3">
+        <a href="/locations/broussard/"
+          style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Broussard</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">8 vendors</div>
+        </a>
+      </div>
+      
+      
+      <div class="col-lg col-md-4 col-6 mb-3">
+        <a href="/locations/carencro/"
+          style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Carencro</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">6 vendors</div>
+        </a>
+      </div>
+      
+      
+      <div class="col-lg col-md-4 col-6 mb-3">
+        <a href="/locations/opelousas/"
+          style="text-decoration:none;display:block;padding:26px 0;border-top:1px solid var(--tve-rule);">
+          <div style="font-family:var(--tve-serif);font-size:28px;color:var(--tve-ink);line-height:1;">Opelousas</div>
+          <div style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--tve-muted);margin-top:8px;">6 vendors</div>
+        </a>
+      </div>
+      
     </div>
   </div>
 </section>
@@ -353,7 +541,7 @@ permalink: /
     <p style="font-family:var(--tve-serif-alt);font-size:19px;color:rgba(255,255,255,.75);max-width:560px;margin:22px auto 36px;">
       A curated directory, not a crowded one. Listed vendors start at $29/month.
     </p>
-    <a href="{{ '/list-your-business/' | relative_url }}" class="tve-link tve-link--light">Apply for a Listing</a>
+    <a href="/list-your-business/" class="tve-link tve-link--light">Apply for a Listing</a>
   </div>
 </footer>
 
