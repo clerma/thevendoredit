@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Event Edit â Curated Wedding Vendors in Acadiana
+title: The Event Edit — Curated Wedding Vendors in Acadiana
 description: Find the best wedding vendors in Lafayette and the Acadiana region of Louisiana. Venues, photographers, florists, DJs, photo booths, and more.
 permalink: /
 ---
@@ -39,7 +39,7 @@ permalink: /
       <div class="col-lg-7">
         <div class="tve-search">
           <i class="ti-search" style="color:var(--tve-muted)"></i>
-          <input placeholder="Search photographers, venues, floristsâ¦" id="hero-search"
+          <input placeholder="Search photographers, venues, florists…" id="hero-search"
             onkeydown="if(event.key==='Enter'){window.location='{{ '/vendors/' | relative_url }}?q='+encodeURIComponent(this.value)}">
           <span style="width:1px;height:20px;background:var(--tve-rule);flex-shrink:0;"></span>
           <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);white-space:nowrap;">Lafayette, LA</span>
@@ -63,7 +63,7 @@ permalink: /
 <!-- THE FEED -->
 <section style="padding:88px 0 60px;">
   <div class="container-fluid px-4 px-lg-5">
-    <div class="tve-rule-label mb-5">The Feed Â· Fresh This Week</div>
+    <div class="tve-rule-label mb-5">The Feed · Fresh This Week</div>
     <div class="tve-masonry">
       {% assign feed_vendors = site.vendors | limit: 12 %}
       {% for vendor in feed_vendors %}
@@ -84,7 +84,7 @@ permalink: /
       <div class="col-lg-7">
         <div class="tve-search">
           <i class="ti-search" style="color:var(--tve-muted)"></i>
-          <input placeholder="Search photographers, venues, floristsâ¦" id="hero-search"
+          <input placeholder="Search photographers, venues, florists…" id="hero-search"
             onkeydown="if(event.key==='Enter'){window.location='/vendors/?q='+encodeURIComponent(this.value)}">
           <span style="width:1px;height:20px;background:var(--tve-rule);flex-shrink:0;"></span>
           <span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink-soft);white-space:nowrap;">Lafayette, LA</span>
@@ -140,7 +140,7 @@ permalink: /
 <!-- THE FEED -->
 <section style="padding:88px 0 60px;">
   <div class="container-fluid px-4 px-lg-5">
-    <div class="tve-rule-label mb-5">The Feed Â· Fresh This Week</div>
+    <div class="tve-rule-label mb-5">The Feed · Fresh This Week</div>
     <div class="tve-masonry">
       
       
@@ -263,7 +263,7 @@ permalink: /
   <div class="container-fluid px-4 px-lg-5">
     <div class="row align-items-end mb-5">
       <div class="col-lg-6">
-        <div class="tve-eyebrow mb-2">Editor's Picks Â· {{ 'now' | date: "%B %Y" }}</div>
+        <div class="tve-eyebrow mb-2">Editor's Picks · {{ 'now' | date: "%B %Y" }}</div>
         <h2 class="tve-display tve-display--lg">Three vendors we're<br>recommending <em>this month.</em></h2>
       </div>
       <div class="col-lg-6 text-lg-end">
@@ -309,7 +309,7 @@ permalink: /
             </div>
             <div style="padding-top:18px;">
               <div class="tve-eyebrow mb-2">
-                {{ wedding.season | capitalize }}{% if wedding.colors %} Â· {{ wedding.colors | first | capitalize }}{% endif %}
+                {{ wedding.season | capitalize }}{% if wedding.colors %} · {{ wedding.colors | first | capitalize }}{% endif %}
               </div>
               <div style="font-family:var(--tve-serif);font-size:24px;line-height:1.15;color:var(--tve-ink);">{{ wedding.title }}</div>
             </div>
