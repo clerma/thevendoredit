@@ -15,15 +15,8 @@ memberstack_app_id: "app_cmo6jyo3a00980sz39npn4phy"
 
 # Plan IDs from Memberstack dashboard → Plans
 # Create two plans in Memberstack, each connected to the corresponding Stripe price
-memberstack_listed_plan_id:   "pln_YOUR_LISTED_PLAN_ID"
-memberstack_featured_plan_id: "pln_YOUR_FEATURED_PLAN_ID"
-
-# ─── Stripe ──────────────────────────────────────────────────────────────────
-# Replace with your live Payment Link URLs from Stripe Dashboard → Payment Links
-# NOTE: append ?prefilled_email=EMAIL to pre-fill the form when coming from a
-# claim flow (e.g. https://buy.stripe.com/xxx?prefilled_email=...)
-stripe_listed_link:   "https://buy.stripe.com/your_listed_link"
-stripe_featured_link: "https://buy.stripe.com/your_featured_link"
+memberstack_listed_price_id:   "prc_the-edit-ad450a4x"
+memberstack_featured_price_id: "prc_the-lead-fk7q0eu3"
 
 # ─── Pricing display ─────────────────────────────────────────────────────────
 listed_price:   "$29/month"
