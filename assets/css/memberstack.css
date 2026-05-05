@@ -18,7 +18,9 @@
   background: #fdfcf9 !important;
   border: 1px solid #e9e4dc;
   padding: 40px 36px !important;
-  max-width: 440px;
+  width: 50vw !important;
+  max-width: 720px !important;
+  min-width: 440px;
 }
 
 /* Logo figure — show the Vendor Edit logo */
