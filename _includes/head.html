@@ -58,8 +58,16 @@
     ready(function () {
       waitForMs(function (ms) {
         document.addEventListener('click', function (e) {
-          var el = e.target.closest('[data-ms-price\:add],[data-ms-plan\:add],[data-ms-modal],[data-ms-action]');
-          if (!el) return;
+          var el = e.target;
+          while (el && el.nodeType === 1) {
+            if (el.hasAttribute && (
+                el.hasAttribute('data-ms-price:add') ||
+                el.hasAttribute('data-ms-plan:add') ||
+                el.hasAttribute('data-ms-modal') ||
+                el.hasAttribute('data-ms-action'))) break;
+            el = el.parentNode;
+          }
+          if (!el || el.nodeType !== 1) return;
           var priceId = el.getAttribute('data-ms-price:add');
           var planId  = el.getAttribute('data-ms-plan:add');
           var modal   = el.getAttribute('data-ms-modal');
