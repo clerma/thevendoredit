@@ -14,6 +14,7 @@ pinterest: ""
 memberstack_app_id: "app_cmo6jyo3a00980sz39npn4phy"
 
 # Plan IDs from Memberstack dashboard → Plans (used by webhooks / server-side logic)
+memberstack_entry_plan_id: "pln_the-entry-lpig03nv"
 memberstack_listed_plan_id: "pln_the-edit-267l0eoe"
 memberstack_featured_plan_id: "pln_the-lead-rk7m0e13"
 
