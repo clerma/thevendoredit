@@ -1,0 +1,165 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Memberstack 2.0 modal — editorial overrides for The Vendor Edit
+   Targets the prebuilt SignupModal / LoginModal injected by the Memberstack
+   2.0 script. The modal is rendered in light DOM, so these page-level rules
+   reach inside <memberstack-prebuilt-ui>.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Overlay — soften to match the editorial palette */
+#msOverlay {
+  background: rgba(29, 26, 22, 0.55) !important;
+  backdrop-filter: blur(2px);
+}
+
+/* Modal card — square corners, no shadow halo, generous spacing */
+#msOverlay .ms-modal {
+  border-radius: 0 !important;
+  box-shadow: 0 30px 80px rgba(29, 26, 22, 0.18) !important;
+  background: #fdfcf9 !important;
+  border: 1px solid #e9e4dc;
+  padding: 40px 36px !important;
+  max-width: 440px;
+}
+
+/* Logo figure — show the Vendor Edit logo */
+#msOverlay .ms-modal__figure {
+  margin: 0 auto 22px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#msOverlay .ms-modal__figure img,
+#msOverlay .ms-modal__figure svg {
+  max-height: 38px !important;
+  width: auto !important;
+}
+
+/* Heading — Bodoni Moda display, generous tracking */
+#msOverlay .ms-modal__title {
+  font-family: "Bodoni Moda", "Gilda Display", serif !important;
+  font-weight: 400 !important;
+  font-size: 30px !important;
+  letter-spacing: 0.5px;
+  color: #1d1a16 !important;
+  text-align: center;
+  margin: 0 0 28px !important;
+  line-height: 1.15;
+}
+
+/* Field labels — Barlow uppercase micro-caps */
+#msOverlay .ms-form__label {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.6px !important;
+  text-transform: uppercase !important;
+  color: #5a5650 !important;
+  margin-bottom: 6px !important;
+}
+
+/* Inputs — square corners, hairline border, focus ring */
+#msOverlay .ms-form__input {
+  font-family: "Barlow", sans-serif !important;
+  font-size: 15px !important;
+  border-radius: 0 !important;
+  border: 1px solid #d5cfc4 !important;
+  background: #ffffff !important;
+  color: #1d1a16 !important;
+  padding: 14px 16px !important;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+#msOverlay .ms-form__input:focus {
+  outline: none !important;
+  border-color: #1d1a16 !important;
+  box-shadow: 0 0 0 1px #1d1a16 inset;
+}
+#msOverlay .ms-form__input::placeholder {
+  color: #a09b91;
+}
+
+/* Form spacing */
+#msOverlay .ms-form__group {
+  margin-bottom: 16px;
+}
+
+/* Primary submit button — match the .tve-pill nav CTA exactly */
+#msOverlay .ms-form__button {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.98px !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  background: #1d1a16 !important;
+  color: #ffffff !important;
+  border: 1px solid #1d1a16 !important;
+  padding: 14px 22px !important;
+  height: auto !important;
+  transition: background .2s ease, color .2s ease;
+}
+#msOverlay .ms-form__button:hover {
+  background: #ffffff !important;
+  color: #1d1a16 !important;
+}
+
+/* Tertiary text button ("Already have an account?") */
+#msOverlay .ms-form__button--text {
+  background: transparent !important;
+  color: #5a5650 !important;
+  border: none !important;
+  letter-spacing: 1.4px !important;
+  font-size: 10px !important;
+  padding: 12px 0 !important;
+}
+#msOverlay .ms-form__button--text:hover {
+  color: #1d1a16 !important;
+  background: transparent !important;
+}
+
+/* "or" divider */
+#msOverlay .ms-modal__social-divider {
+  margin: 22px 0 !important;
+}
+#msOverlay .ms-modal__divider-line {
+  background: #e9e4dc !important;
+}
+#msOverlay .ms-modal__divider-text {
+  font-family: "Barlow", sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: #a09b91 !important;
+}
+
+/* Continue with Google button — square, hairline, neutral */
+#msOverlay .ms-modal__social-button {
+  font-family: "Barlow", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  letter-spacing: 1.4px !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  border: 1px solid #d5cfc4 !important;
+  background: #ffffff !important;
+  color: #1d1a16 !important;
+  padding: 12px 16px !important;
+  transition: background .2s ease;
+}
+#msOverlay .ms-modal__social-button:hover {
+  background: #f6f2eb !important;
+}
+
+/* Custom-field container ("vendor-slug") spacing parity */
+#msOverlay .ms-modal__custom-field-container {
+  margin-bottom: 4px;
+}
+
+/* Close (X) button */
+#msOverlay .ms-modal__close {
+  color: #5a5650 !important;
+  opacity: 0.8;
+  transition: opacity .15s ease;
+}
+#msOverlay .ms-modal__close:hover {
+  opacity: 1;
+}
