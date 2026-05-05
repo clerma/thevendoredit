@@ -3,6 +3,30 @@ layout: default
 ---
 
 {% assign rw_count = site.categories["real-weddings"] | where_exp: "w", "w.vendors contains page.title" | size %}
+{%- assign vendor_plan = page.plan | default: "entry" -%}
+
+{% if vendor_plan == "entry" and page.memberstack_id == blank %}
+<div class="claim-banner">
+  <div class="l">
+    <i class="ti-info-alt banner-icon"></i>
+    <div>
+      <div class="t">This listing is <em>unclaimed.</em></div>
+      <div class="d">Are you {{ page.title }}? Claim this page to publish your gallery, packages, and inquiry form.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <button class="claim-btn"
+      data-ms-modal="signup"
+      data-ms-price:add="prc_the-edit-ad450a4x"
+      data-ms-custom-field:vendorSlug="{{ page.slug }}">Claim this listing →</button>
+    <a href="#"
+      data-ms-modal="signup"
+      data-ms-price:add="prc_the-lead-fk7q0eu3"
+      data-ms-custom-field:vendorSlug="{{ page.slug }}"
+      style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tve-muted);text-decoration:underline;white-space:nowrap;">or go Featured</a>
+  </div>
+</div>
+{% endif %}
 
 {% if page.is_subscribed %}
 
