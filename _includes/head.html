@@ -83,6 +83,15 @@
           var planId  = el.getAttribute('data-ms-plan:add');
           var modal   = el.getAttribute('data-ms-modal');
           var action  = el.getAttribute('data-ms-action');
+
+          /* Persist vendor slug across the post-signup page reload so
+             account.html can build the listing link immediately. */
+          var vendorSlug = el.getAttribute('data-ms-custom-field:vendorSlug')
+                        || el.getAttribute('data-ms-custom-field:vendor-slug');
+          if (vendorSlug) {
+            try { sessionStorage.setItem('tve_pending_vendor_slug', vendorSlug); } catch (_) {}
+          }
+
           if (priceId) {
             e.preventDefault();
             ms.openModal('SIGNUP', { priceId: priceId });
@@ -102,6 +111,11 @@
               ms.openModal(name);
               if (name === 'SIGNUP' || name === 'LOGIN') watchForMember();
             }
+            return;
+          }
+          if (action === 'manage-subscription') {
+            e.preventDefault();
+            ms.openModal('PROFILE');
             return;
           }
           if (action === 'logout') {

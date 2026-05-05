@@ -172,8 +172,16 @@ permalink: /account/
         planEl.textContent = member.planConnections[0].planName || 'Active';
       }
 
-      // Build listing link from vendor slug stored in Memberstack custom field
+      // Build listing link — prefer Memberstack custom field, fall back to
+      // sessionStorage slug saved when the user clicked a claim button.
       var slug = cf['vendor-slug'];
+      if (!slug) {
+        try { slug = sessionStorage.getItem('tve_pending_vendor_slug') || ''; } catch (_) {}
+        if (slug) {
+          // Clear it — the webhook will persist it properly on the next load
+          try { sessionStorage.removeItem('tve_pending_vendor_slug'); } catch (_) {}
+        }
+      }
       if (slug) {
         var listingUrl = '{{ "/vendors/" | relative_url }}' + slug + '/';
         var viewLink = document.getElementById('acct-view-listing');
