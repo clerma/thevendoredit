@@ -30,7 +30,6 @@
 {% include seo.html %}
 {% include seo-schema.html %}
 
-<!-- Memberstack — member auth, gated content, and Stripe billing -->
-<script src="https://static.memberstack.com/scripts/v1/memberstack.js"
-  data-memberstack-app="{{ site.data.site.memberstack_app_id }}"
-  async></script>
+<!-- Memberstack 2.0 DOM Package — auto-binds data-ms-* attributes (modals, price:add, member:*) -->
+<script src="https://static.memberstack.com/scripts/v1/main.js"
+        data-memberstack-app="{{ site.data.site.memberstack_app_id }}"></script>
