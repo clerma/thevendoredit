@@ -22,8 +22,9 @@ phone: "(337) 322-9216"
 email: info@bubbliballoons.com
 instagram: https://www.instagram.com/bubbliballoons/
 service_area: "Lafayette and Acadiana"
-featured: false
-is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Bubbli Balloons is a custom balloon decoration company born in the heart of Cajun Country — Lafayette, Louisiana. Founded in 2018 and operated by four southern women with a shared love of parties and creative design, Bubbli brings energy, craftsmanship, and a deeply personal touch to every installation they create. Delivery and travel services are available throughout the Lafayette area and beyond.
