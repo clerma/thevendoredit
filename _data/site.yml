@@ -5,7 +5,7 @@ description: "The Event Edit is a curated wedding vendor directory serving Lafay
 email: hello@thevendoredit.com
 phone: ""
 address: "Lafayette, Louisiana"
-facebook: ""
+facebook: "https://www.facebook.com/thevendoredit/"
 instagram: ""
 pinterest: ""
 
@@ -53,4 +53,4 @@ paperform_claim_id: "your-claim-form-id"
 # URL of your deployed Netlify Function that handles incoming webhooks.
 # Set this after deploying the function (netlify/functions/webhooks.js).
 # Format: https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/webhooks
-webhook_base_url: "https://your-netlify-site.netlify.app/.netlify/functions/webhooks"
+webhook_base_url: "https://vendoredit.netlify.app/.netlify/functions/webhooks"
