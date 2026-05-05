@@ -27,31 +27,30 @@ featured_price: "$59/month"
 
 listed_features:
   - Full profile with photo gallery
-    - Website, phone & email links
-      - Packages & pricing section
-        - Direct inquiry form from your listing
-          - Appear in Real Weddings vendor credits
-            - Listed in category & city search results
+  - Website, phone & email links
+  - Packages & pricing section
+  - Direct inquiry form from your listing
+  - Appear in Real Weddings vendor credits
+  - Listed in category & city search results
 
-            featured_features:
-              - Everything in Listed
-                - Priority placement at top of category
-                  - Homepage spotlight rotation
-                    - Real wedding submission priority
-                      - Monthly social media feature
+featured_features:
+  - Everything in Listed
+  - Priority placement at top of category
+  - Homepage spotlight rotation
+  - Real wedding submission priority
+  - Monthly social media feature
 
-                      # ─── Paperform ────────────────────────────────────────────────────────────────────
-                      # Replace with your actual Paperform form slugs (the part after paperform.co/)
-                      paperform_inquiry_id: "your-inquiry-form-id"   # Vendor contact form (on listed pages)
-                      paperform_contact_id: "your-contact-form-id"   # General site contact page
-                      paperform_listing_id: "your-listing-form-id"   # "List your business" intake
-                      paperform_wedding_id: "your-wedding-form-id"   # Wedding submission
-                      paperform_profile_id: "your-profile-form-id"   # Vendor profile update (feeds Jekyll via webhook)
-                      paperform_claim_id:   "your-claim-form-id"     # Unclaimed listing claim request
+# ─── Paperform ────────────────────────────────────────────────────────────────────
+# Replace with your actual Paperform form slugs (the part after paperform.co/)
+paperform_inquiry_id: "your-inquiry-form-id"
+paperform_contact_id: "your-contact-form-id"
+paperform_listing_id: "your-listing-form-id"
+paperform_wedding_id: "your-wedding-form-id"
+paperform_profile_id: "your-profile-form-id"
+paperform_claim_id: "your-claim-form-id"
 
-                      # ─── Webhook / automation ─────────────────────────────────────────────────────────────
-                      # URL of your deployed Netlify Function that handles incoming webhooks.
-                      # Set this after deploying the function (netlify/functions/webhooks.js).
-                      # Format: https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/webhooks
-                      webhook_base_url: "https://your-netlify-site.netlify.app/.netlify/functions/webhooks"
-                      
+# ─── Webhook / automation ─────────────────────────────────────────────────────────────
+# URL of your deployed Netlify Function that handles incoming webhooks.
+# Set this after deploying the function (netlify/functions/webhooks.js).
+# Format: https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/webhooks
+webhook_base_url: "https://your-netlify-site.netlify.app/.netlify/functions/webhooks"
