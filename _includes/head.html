@@ -31,9 +31,66 @@
 {% include seo.html %}
 {% include seo-schema.html %}
 
-<!-- Memberstack 2.0 — auto-binds data-ms-* attributes (modals, price:add, member:*) -->
+<!-- Memberstack 2.0 — DOM package. We bind data-ms-* clicks ourselves below
+     because v2 does not auto-wire data-ms-price:add / data-ms-plan:add the way v1 did. -->
 <script src="https://static.memberstack.com/scripts/v2/memberstack.js"
-        data-memberstack-app="{{ site.data.site.memberstack_app_id }}"></script>
+  data-memberstack-app="{{ site.data.site.memberstack_app_id }}"></script>
+
+<!-- Wire data-ms-* triggers to the Memberstack signup/login modals.
+     Supported attributes on any <a>/<button>:
+       data-ms-price:add="prc_xxx"   -> opens SIGNUP modal pre-attaching that price
+       data-ms-plan:add="pln_xxx"    -> opens SIGNUP modal pre-attaching that free plan
+       data-ms-modal="signup"        -> opens SIGNUP modal
+       data-ms-modal="login"         -> opens LOGIN modal
+       data-ms-action="logout"       -> logs the member out -->
+<script>
+  (function () {
+    function ready(fn) {
+      if (document.readyState !== 'loading') fn();
+      else document.addEventListener('DOMContentLoaded', fn);
+    }
+    function waitForMs(cb, tries) {
+      tries = tries || 0;
+      if (window.$memberstackDom) return cb(window.$memberstackDom);
+      if (tries > 50) return; /* ~5s */
+      setTimeout(function () { waitForMs(cb, tries + 1); }, 100);
+    }
+    ready(function () {
+      waitForMs(function (ms) {
+        document.addEventListener('click', function (e) {
+          var el = e.target.closest('[data-ms-price\:add],[data-ms-plan\:add],[data-ms-modal],[data-ms-action]');
+          if (!el) return;
+          var priceId = el.getAttribute('data-ms-price:add');
+          var planId  = el.getAttribute('data-ms-plan:add');
+          var modal   = el.getAttribute('data-ms-modal');
+          var action  = el.getAttribute('data-ms-action');
+          if (priceId) {
+            e.preventDefault();
+            ms.openModal('SIGNUP', { priceId: priceId });
+            return;
+          }
+          if (planId) {
+            e.preventDefault();
+            ms.openModal('SIGNUP', { planId: planId });
+            return;
+          }
+          if (modal) {
+            e.preventDefault();
+            var name = String(modal).toUpperCase();
+            if (name === 'SIGNUP' || name === 'LOGIN' || name === 'PROFILE' || name === 'FORGOT_PASSWORD' || name === 'RESET_PASSWORD') {
+              ms.openModal(name);
+            }
+            return;
+          }
+          if (action === 'logout') {
+            e.preventDefault();
+            ms.logout().then(function () { window.location.reload(); });
+          }
+        }, false);
+      });
+    });
+  })();
+</script>
 
 <!-- Live-slugify the vendor-slug field inside Memberstack signup modals.
      As the user types, lowercase + strip every char that isn't a-z 0-9 or hyphen. -->
