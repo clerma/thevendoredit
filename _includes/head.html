@@ -124,3 +124,40 @@
     }, true);
   })();
 </script>
+
+<!-- Rewrite the vendor-slug field's label/placeholder inside Memberstack modals.
+     Label says "Vendor"; placeholder hints at typing the business name (slugify
+     above cleans it as the user types). -->
+<script>
+  (function () {
+    var SLUG_LABEL = 'Vendor';
+    var SLUG_PLACEHOLDER = 'vendor name';
+    function relabel(root) {
+      if (!root || !root.querySelectorAll) return;
+      var inputs = root.querySelectorAll('input[name="vendor-slug"]');
+      inputs.forEach(function (inp) {
+        if (inp.placeholder !== SLUG_PLACEHOLDER) inp.placeholder = SLUG_PLACEHOLDER;
+      });
+      var labels = root.querySelectorAll('label[for="vendor-slug"], label.ms-form__label');
+      labels.forEach(function (lbl) {
+        var txt = (lbl.textContent || '').trim().toLowerCase();
+        if (txt === 'vendor-slug' || txt === 'vendor slug') lbl.textContent = SLUG_LABEL;
+      });
+    }
+    function init() {
+      relabel(document);
+      var mo = new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var m = muts[i];
+          for (var j = 0; j < m.addedNodes.length; j++) {
+            relabel(m.addedNodes[j]);
+          }
+        }
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.readyState !== 'loading') init();
+    else document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>
+
