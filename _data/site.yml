@@ -1,0 +1,60 @@
+name: The Event Edit
+logo_image: /assets/img/logo.svg
+tagline: "Curated wedding vendors for Acadiana."
+description: "The Event Edit is a curated wedding vendor directory serving Lafayette and the surrounding Acadiana region of Louisiana."
+email: hello@thevendoredit.com
+phone: ""
+address: "Lafayette, Louisiana"
+facebook: ""
+instagram: ""
+pinterest: ""
+
+# ─── Memberstack ─────────────────────────────────────────────────────────────
+# Get your App ID from Memberstack dashboard → Settings → API & Webhooks
+memberstack_app_id: "app_cmo6jyo3a00980sz39npn4phy"
+
+# Plan IDs from Memberstack dashboard → Plans
+# Create two plans in Memberstack, each connected to the corresponding Stripe price
+memberstack_listed_plan_id:   "pln_YOUR_LISTED_PLAN_ID"
+memberstack_featured_plan_id: "pln_YOUR_FEATURED_PLAN_ID"
+
+# ─── Stripe ──────────────────────────────────────────────────────────────────
+# Replace with your live Payment Link URLs from Stripe Dashboard → Payment Links
+# NOTE: append ?prefilled_email=EMAIL to pre-fill the form when coming from a
+# claim flow (e.g. https://buy.stripe.com/xxx?prefilled_email=...)
+stripe_listed_link:   "https://buy.stripe.com/your_listed_link"
+stripe_featured_link: "https://buy.stripe.com/your_featured_link"
+
+# ─── Pricing display ─────────────────────────────────────────────────────────
+listed_price:   "$29/month"
+featured_price: "$59/month"
+
+listed_features:
+  - Full profile with photo gallery
+  - Website, phone & email links
+  - Packages & pricing section
+  - Direct inquiry form from your listing
+  - Appear in Real Weddings vendor credits
+  - Listed in category & city search results
+
+featured_features:
+  - Everything in Listed
+  - Priority placement at top of category
+  - Homepage spotlight rotation
+  - Real wedding submission priority
+  - Monthly social media feature
+
+# ─── Paperform ───────────────────────────────────────────────────────────────
+# Replace with your actual Paperform form slugs (the part after paperform.co/)
+paperform_inquiry_id:  "your-inquiry-form-id"    # Vendor contact form (on listed pages)
+paperform_contact_id:  "your-contact-form-id"    # General site contact page
+paperform_listing_id:  "your-listing-form-id"    # "List your business" intake
+paperform_wedding_id:  "your-wedding-form-id"    # Wedding submission
+paperform_profile_id:  "your-profile-form-id"    # Vendor profile update (feeds Jekyll via webhook)
+paperform_claim_id:    "your-claim-form-id"      # Unclaimed listing claim request
+
+# ─── Webhook / automation ────────────────────────────────────────────────────
+# URL of your deployed Netlify Function that handles incoming webhooks.
+# Set this after deploying the function (netlify/functions/webhooks.js).
+# Format: https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/webhooks
+webhook_base_url: "https://your-netlify-site.netlify.app/.netlify/functions/webhooks"

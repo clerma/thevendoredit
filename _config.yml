@@ -1,0 +1,79 @@
+title: The Event Edit
+description: A curated wedding vendor directory for Lafayette and Acadiana, Louisiana.
+url: "https://thevendoredit.com"
+baseurl: ""
+lang: en_us
+timezone: America/Chicago
+
+# jekyll-seo-tag settings
+author:
+  name: The Event Edit
+  url: https://thevendoredit.com
+twitter:
+  username: thevendoredit
+  card: summary_large_image
+logo: /assets/img/logo.svg
+social:
+  name: The Event Edit
+  links: []
+
+# Collections
+collections:
+  vendors:
+    output: true
+    permalink: /vendors/:slug/
+  listing_categories:
+    output: true
+    permalink: /:slug/
+  locations:
+    output: true
+    permalink: /locations/:slug/
+
+# Include _pages directory
+include:
+  - _pages
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "vendors"
+    values:
+      layout: "vendor"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "listing_categories"
+    values:
+      layout: "category"
+  - scope:
+      path: ""
+      type: "locations"
+    values:
+      layout: "location"
+  - scope:
+      path: "_pages"
+    values:
+      layout: "page"
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Build settings
+markdown: kramdown
+permalink: /blog/:slug/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/
+  - .bundle
+  - cappa
+  - README.md

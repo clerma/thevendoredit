@@ -1,0 +1,172 @@
+---
+layout: default
+---
+
+
+{% assign loc_vendors = site.vendors | where_exp: "v", "v.cities contains page.slug" %}
+{% assign loc_rw = site.categories["real-weddings"] | where_exp: "w", "w.location contains page.name" %}
+{% assign venue_vendors = loc_vendors | where: "category_slug", "venues" %}
+
+<!-- Hero -->
+<section class="loc-hero">
+  <div class="bg" style="background-image:url('{{ page.image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+  <div class="grad"></div>
+  <div class="loc-hero-content">
+    <div class="loc-eyebrow">Acadiana · {{ page.state }}</div>
+    <h1 class="loc-title">{{ page.name }}<br><em>weddings.</em></h1>
+    {% if page.description %}
+    <p class="loc-deck">{{ page.description }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Nearby cities -->
+{% assign all_locations = site.locations | sort: "order" %}
+<div class="loc-nearby">
+  {% for loc in all_locations %}
+  <a href="{{ loc.url | relative_url }}"{% if loc.slug == page.slug %} class="active"{% endif %}>{{ loc.name }}</a>
+  {% endfor %}
+</div>
+
+<!-- Intro + stats -->
+<section class="loc-intro">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="loc-intro-grid">
+      <div>
+        <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Local Edit</div>
+        <h2>A wedding market that<br>still feels <em>hand-made.</em></h2>
+        {% if content != "" %}
+        {{ content }}
+        {% else %}
+        <p>{{ page.name }} is big enough to have a proper wedding industry and small enough that everyone who works in it knows each other. Book a photographer here and she'll already know the florist, who'll already know the caterer — every weekend, in front of each other's families.</p>
+        <p>That's the quiet magic of hiring in Acadiana — the vendors aren't performing for Instagram. They're performing for each other.</p>
+        {% endif %}
+      </div>
+      <div class="loc-stats">
+        <div class="loc-stat">
+          <span class="k">Vendors listed</span>
+          <span class="v"><em>{{ loc_vendors | size }}</em></span>
+        </div>
+        {% if venue_vendors.size > 0 %}
+        <div class="loc-stat">
+          <span class="k">Venues</span>
+          <span class="v"><em>{{ venue_vendors | size }}</em></span>
+        </div>
+        {% endif %}
+        {% if loc_rw.size > 0 %}
+        <div class="loc-stat">
+          <span class="k">Real Weddings featured</span>
+          <span class="v"><em>{{ loc_rw | size }}</em></span>
+        </div>
+        {% endif %}
+        <div class="loc-stat">
+          <span class="k">Peak season</span>
+          <span class="v">Oct–Nov</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories in this city -->
+{% assign sorted_cats = site.listing_categories | sort: "order" %}
+{% assign phase1_cats = sorted_cats | where: "phase", 1 %}
+{% if loc_vendors.size > 0 %}
+<section class="cats-sec">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Browse by Category</div>
+    <h3><em>Every</em> vendor<br>in one directory.</h3>
+    <div class="cats-grid">
+      {% for cat in phase1_cats limit: 8 %}
+        {% assign cat_vendors = loc_vendors | where: "category_slug", cat.slug %}
+        {% if cat_vendors.size > 0 %}
+        {% assign sample_vendor = cat_vendors | first %}
+        <a class="cat-tile" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}"
+          style="background-image:url('{{ sample_vendor.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');">
+          <div class="inner">
+            {% assign cv_size = cat_vendors | size %}<div class="ct">{{ cv_size }} {% if cv_size == 1 %}Vendor{% else %}Vendors{% endif %}</div>
+            <div class="nm"><em>{{ cat.name }}</em></div>
+          </div>
+        </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Venue showcase -->
+{% if venue_vendors.size > 0 %}
+<section class="venues-sec">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Places</div>
+    <h3><em>{{ venue_vendors | size }}</em> {{ page.name }} venue{% if venue_vendors.size != 1 %}s{% endif %}<br>worth a look.</h3>
+    <div class="venues-grid">
+      {% for v in venue_vendors limit: 4 %}
+      <a class="venue-card" href="{{ v.url | relative_url }}">
+        <div class="img" style="background-image:url('{{ v.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+        <div>
+          <div class="cap">{{ v.title }}</div>
+          {% if v.tagline %}<div class="info">{{ v.tagline }}</div>{% endif %}
+          {% if v.service_area %}<div class="meta">{{ v.service_area }}</div>{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% if venue_vendors.size > 4 %}
+    <div style="margin-top:40px;text-align:center;">
+      <a href="{{ '/venues/' | relative_url }}" class="tve-link">Browse all {{ venue_vendors | size }} venues →</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Local real weddings -->
+{% assign all_rw = site.categories["real-weddings"] %}
+{% if all_rw.size > 0 %}
+<section class="rw-local">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">Real Weddings · {{ page.name }}</div>
+    <h3>Here's what a {{ page.name }}<br>wedding actually <em>looks like.</em></h3>
+    <p class="deck">Real couples, real venues, real vendors — documented in full.</p>
+    <div class="rw-local-grid">
+      {% for wedding in all_rw limit: 3 %}
+      <a class="rwl" href="{{ wedding.url | relative_url }}">
+        <div class="img" style="background-image:url('{{ wedding.hero_image | default: '/assets/img/Unknown.avif' | relative_url }}');"></div>
+        <div class="couple">{{ wedding.title }}</div>
+        <div class="venue-name">{{ wedding.venue }}{% if wedding.date %} · {{ wedding.date | date: "%b %Y" }}{% endif %}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Season calendar -->
+<section class="seasons">
+  <div class="container-fluid px-4 px-lg-5">
+    <div class="tve-eyebrow mb-3" style="color:var(--tve-accent);">The Calendar</div>
+    <h3>When to marry<br>in <em>Acadiana.</em></h3>
+    <div class="season-row">
+      <div class="season-name">Spring</div>
+      <div class="season-desc">March–May. Camellias, magnolia bloom, mid-70s. Best for garden ceremonies and farm venues before humidity arrives.</div>
+      <div class="season-popularity">Popularity · High<div class="season-bar p-high"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Summer</div>
+      <div class="season-desc">June–August. Hot and humid. Book indoor venues, or lean into it with evening ceremonies and plantation homes with porches.</div>
+      <div class="season-popularity">Popularity · Low<div class="season-bar p-low"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Fall</div>
+      <div class="season-desc">September–November. The peak season. Pecan harvest, golden light, 70s-and-falling weather. Book 12 months out.</div>
+      <div class="season-popularity">Popularity · Peak<div class="season-bar p-peak"></div></div>
+    </div>
+    <div class="season-row">
+      <div class="season-name">Winter</div>
+      <div class="season-desc">December–February. Mild by national standards (50s–60s). Romantic for candlelit indoor receptions; great vendor availability.</div>
+      <div class="season-popularity">Popularity · Med<div class="season-bar p-med"></div></div>
+    </div>
+  </div>
+</section>

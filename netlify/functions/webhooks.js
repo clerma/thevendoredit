@@ -185,8 +185,7 @@ function buildVendorMarkdown(fields, existingFrontmatter = {}) {
   set('email',         fields['email']);
   set('instagram',     fields['instagram']);
   set('facebook',      fields['facebook']);
-  set('hero_image',    fields['heroimage']);
-
+  set('hero_image',    fields['hero-image']);
   set('is_subscribed', true);   // always true when coming through webhook
   set('is_featured',   fm.is_featured || false);
 
@@ -241,11 +240,10 @@ async function handlePaperform(body) {
 
   // Paperform sends answers as an array: [{ key, value }, ...]
   const fields = {};
-  (submission.data || []).forEach((item) => { const k = item.custom_key || item.key; fields[k] = item.value; });
+  (submission.data || []).forEach(({ key, value }) => { fields[key] = value; });
 
-  let vendorSlug = fields['vendor-slug'] || slugify(fields['business-name'] || '');
-  if (!vendorSlug) throw new Error('Missing vendor-slug or business-name in Paperform submission');
-
+  const vendorSlug = fields['vendor-slug'];
+  if (!vendorSlug) throw new Error('Missing vendor-slug field in Paperform submission');
 
   const filePath = `_vendors/${vendorSlug}.md`;
 
@@ -287,9 +285,8 @@ async function handlePaperform(body) {
 
 async function handleMemberstack(body) {
   const event = typeof body === 'string' ? JSON.parse(body) : body;
-  const type = event.event; // e.g. "member.plan.added", "member.plan.removed"
-  const member = event.payload;
-
+  const type = event.type; // e.g. "member.plan.added", "member.plan.removed"
+  const member = event.data && event.data.member;
 
   if (!member) throw new Error('No member data in Memberstack event');
 
