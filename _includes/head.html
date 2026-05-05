@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/editorial.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/memberstack.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/plugins/themify-icons.css' | relative_url }}" />
 {% include seo.html %}
 {% include seo-schema.html %}
@@ -33,3 +34,28 @@
 <!-- Memberstack 2.0 — auto-binds data-ms-* attributes (modals, price:add, member:*) -->
 <script src="https://static.memberstack.com/scripts/v2/memberstack.js"
         data-memberstack-app="{{ site.data.site.memberstack_app_id }}"></script>
+
+<!-- Live-slugify the vendor-slug field inside Memberstack signup modals.
+     As the user types, lowercase + strip every char that isn't a-z 0-9 or hyphen. -->
+<script>
+  (function () {
+    function slugify(v) {
+      return (v || '')
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') /* strip diacritics */
+        .replace(/[^a-z0-9-]+/g, '');
+    }
+    document.addEventListener('input', function (e) {
+      var t = e.target;
+      if (!t || t.tagName !== 'INPUT') return;
+      if (t.name !== 'vendor-slug') return;
+      var clean = slugify(t.value);
+      if (clean !== t.value) {
+        var pos = t.selectionStart;
+        t.value = clean;
+        try { t.setSelectionRange(clean.length, clean.length); } catch (_) {}
+        t.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }, true);
+  })();
+</script>
