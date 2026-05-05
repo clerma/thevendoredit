@@ -58,6 +58,28 @@ _inputs:
     label: Featured
     comment: Show this vendor in featured sections on the homepage
 
+  # --- Plan & membership (set by webhook — editors should not change these) ---
+  plan:
+    type: select
+    label: Plan Tier
+    options:
+      values:
+        - entry
+        - listed
+        - featured
+    comment: "Set automatically by Memberstack webhook. Edit only to override."
+    hidden: true
+  editorial_pick:
+    type: boolean
+    label: Editorial Pick
+    comment: "Manual editorial curation flag. Independent of plan."
+    hidden: true
+  memberstack_id:
+    type: text
+    label: Memberstack Member ID
+    comment: "Populated by signup/claim webhook. Do not edit manually."
+    hidden: true
+
   # --- Subscription ---
   is_subscribed:
     type: switch
