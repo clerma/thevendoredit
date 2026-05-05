@@ -45,9 +45,9 @@ featured_features:
 # Replace with your actual Paperform form slugs (the part after paperform.co/)
 paperform_inquiry_id: "your-inquiry-form-id"
 paperform_contact_id: "your-contact-form-id"
-paperform_listing_id: "your-listing-form-id"
+paperform_listing_id: "0jdeggca"
 paperform_wedding_id: "your-wedding-form-id"
-paperform_profile_id: "your-profile-form-id"
+paperform_profile_id: "wfy4ismz"
 paperform_claim_id: "your-claim-form-id"
 
 # ─── Webhook / automation ─────────────────────────────────────────────────────────────
