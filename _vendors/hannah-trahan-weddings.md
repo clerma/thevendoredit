@@ -23,8 +23,11 @@ email: hannah@southerncoutureweddings.com
 instagram: https://www.instagram.com/southerncouturewed/
 service_area: "Lafayette and South Louisiana"
 years_experience: 20
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Hannah Trahan Weddings, operating as Southern Couture Weddings, Events & Honeymoons, is a full-service wedding and event planning firm with over 20 years of experience creating luxury celebrations in Lafayette, Louisiana. Owner Hannah Trahan and her team of five coordinators are specialists in private residence and tent weddings — the kind of events that require vision, precision, and a planner who has seen everything and can handle anything.

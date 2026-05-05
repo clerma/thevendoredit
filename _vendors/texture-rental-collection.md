@@ -24,8 +24,11 @@ phone: "(337) 858-7344"
 email: office@texturerentals.com
 instagram: https://www.instagram.com/texturerentalcollection/
 service_area: "Lafayette, Baton Rouge, Lake Charles, and South Louisiana"
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Texture Rental Collection is a boutique event rental company headquartered in Lafayette, Louisiana, offering a comprehensive inventory of furniture, structures, décor, and infrastructure for weddings, corporate events, social gatherings, and fundraisers across South Louisiana. From the grandest tent to the smallest finishing touch, Texture brings cohesion and polish to every event they touch — both delivery and pickup options are available.

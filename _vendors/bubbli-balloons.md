@@ -22,6 +22,8 @@ phone: "(337) 322-9216"
 email: info@bubbliballoons.com
 instagram: https://www.instagram.com/bubbliballoons/
 service_area: "Lafayette and Acadiana"
+is_featured: false
+is_subscribed: false
 plan: entry
 editorial_pick: false
 memberstack_id: ""

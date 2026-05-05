@@ -17,8 +17,11 @@ gallery:
 website: https://www.mylaffyhouseevents.com/
 instagram: https://www.instagram.com/mylaffyhouse/
 service_area: "Lafayette, Louisiana"
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 My Laffy House Events is a boutique event planning and design studio based in Lafayette, Louisiana, founded and operated by Suellen Orellana. Originally from Honduras and now more than 20 years rooted in Lafayette, Suellen holds a Bachelor's degree in Interior Design with a minor in Architecture — and it shows. Her background gives My Laffy House Events a distinctive edge: every event she designs is treated as a space, with attention to proportion, palette, and atmosphere that most planners simply don't bring to the table.

@@ -18,8 +18,11 @@ gallery:
   - /assets/img/Unknown-1.avif
 website: https://www.carlosandashleyphoto.com/
 service_area: "Lafayette and South Louisiana"
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Carlos and Ashley Lerma are a husband-and-wife photography team based in Opelousas, Louisiana, specializing in weddings, engagements, portraits, and lifestyle photography throughout Lafayette and the surrounding Acadiana region. Originally from Texas — Houston and Austin respectively — they met in Lafayette, married here, and fell in love with the warmth and culture of Cajun country, which shapes everything about the way they work and the images they create.
