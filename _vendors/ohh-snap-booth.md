@@ -25,8 +25,11 @@ email: chat@ohhsnapbooth.com
 instagram: https://www.instagram.com/ohhsnapbooth/
 price_range: "$500 – $900"
 service_area: "Lafayette and South Louisiana"
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Ohh Snap Booth is a modern photo booth and 360 experience company based in Lafayette, Louisiana, bringing studio-quality photography to weddings and celebrations across South Louisiana. With five distinct booth options and a team that handles every detail from setup to takedown, they make it easy for guests to walk away with a keepsake that lasts long after the reception ends.

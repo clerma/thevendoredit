@@ -25,6 +25,9 @@ price_range: "$2,000 – $5,000"
 service_area: "Lafayette and surrounding Acadiana"
 is_featured: true
 is_subscribed: true
+plan: featured
+editorial_pick: false
+memberstack_id: ""
 paperform_id: "your-inquiry-form-id"
 packages:
   - name: "Essential"

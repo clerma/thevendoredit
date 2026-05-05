@@ -20,8 +20,11 @@ categories_tags:
 website: https://example.com
 price_range: "$800 – $2,500"
 service_area: "Acadiana Region"
-featured: true
+is_featured: true
 is_subscribed: false
+plan: featured
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Cajun Beats DJ brings the energy, the music, and the good times to every wedding reception. From Zydeco to Top 40, we read the room and keep your guests on the dance floor all night long.

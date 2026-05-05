@@ -25,6 +25,9 @@ instagram: https://www.instagram.com/luxurylimooflafayette/
 service_area: "Lafayette and South Louisiana"
 is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Luxury Limo of Lafayette is a premium ground transportation company serving Lafayette and the surrounding South Louisiana region with a fleet built for special occasions. Whether you need a sleek executive vehicle for a small wedding party or a full-capacity party bus for the whole crew, they have the right vehicle and a professional driver to get you there in style.

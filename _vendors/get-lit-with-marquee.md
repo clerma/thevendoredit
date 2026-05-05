@@ -21,8 +21,11 @@ email: courtney@getlitwithmarquee.com
 instagram: https://www.instagram.com/getlitwithmarquee/
 price_range: "Letters from $65 · Numbers from $50 · Garlands from $200"
 service_area: "Acadiana, Lafayette, Baton Rouge, and beyond"
-featured: false
+is_featured: false
 is_subscribed: false
+plan: entry
+editorial_pick: false
+memberstack_id: ""
 ---
 
 Get Lit With Marquee is an event rental and balloon décor company serving Acadiana, Lafayette, and Baton Rouge with one of the largest illuminated marquee inventories in the region. Their collection spans nearly 80 letters (A through Z) and approximately 40 numbers (0 through 9), each standing 4 feet tall and constructed from 3/4" MDF with precision CNC craftsmanship. Whether you need a couple's initials glowing at the reception entrance or full word displays throughout the venue, they can make it happen.
