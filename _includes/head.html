@@ -57,6 +57,17 @@
     }
     ready(function () {
       waitForMs(function (ms) {
+        /* After any modal opens, poll until a member is detected then reload.
+           Covers signup, login, and checkout flows. */
+        function watchForMember() {
+          var poll = setInterval(function () {
+            ms.getCurrentMember().then(function (r) {
+              if (r && r.data) { clearInterval(poll); window.location.reload(); }
+            }).catch(function () {});
+          }, 800);
+          setTimeout(function () { clearInterval(poll); }, 300000); /* 5 min cap */
+        }
+
         document.addEventListener('click', function (e) {
           var el = e.target;
           while (el && el.nodeType === 1) {
@@ -75,11 +86,13 @@
           if (priceId) {
             e.preventDefault();
             ms.openModal('SIGNUP', { priceId: priceId });
+            watchForMember();
             return;
           }
           if (planId) {
             e.preventDefault();
             ms.openModal('SIGNUP', { planId: planId });
+            watchForMember();
             return;
           }
           if (modal) {
@@ -87,6 +100,7 @@
             var name = String(modal).toUpperCase();
             if (name === 'SIGNUP' || name === 'LOGIN' || name === 'PROFILE' || name === 'FORGOT_PASSWORD' || name === 'RESET_PASSWORD') {
               ms.openModal(name);
+              if (name === 'SIGNUP' || name === 'LOGIN') watchForMember();
             }
             return;
           }
