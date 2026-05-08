@@ -15,10 +15,13 @@
 #   MEMBERSTACK_FEATURED_PLAN_ID  Memberstack plan ID for the Featured tier
 
 [build]
-  # No build command needed — we're only here for the functions.
-  # If you ever want Netlify to host the site too, set command to:
-  # command = "bundle exec jekyll build"
-  # publish = "_site"
+  # Netlify is used ONLY for the serverless functions endpoint.
+  # The Jekyll site is built and hosted by CloudCannon — not here.
+  # Explicitly suppress auto-detected build so Netlify doesn't try to run
+  # `bundle exec jekyll build` (detected from Gemfile) and output resolved
+  # config that includes sensitive env-var values in the build log.
+  command   = ""
+  publish   = "netlify/static"
   functions = "netlify/functions"
 
 [functions]
