@@ -172,51 +172,78 @@ permalink: /account/
         planEl.textContent = member.planConnections[0].planName || 'Active';
       }
 
+      // Always populate the listing preview card from Memberstack custom fields
+      var namePreview = document.getElementById('acct-listing-name');
+      var catPreview  = document.getElementById('acct-listing-cat');
+      var locPreview  = document.getElementById('acct-listing-loc');
+      var imgPreview  = document.getElementById('acct-listing-img');
+      if (namePreview) namePreview.textContent = cf['business-name'] || 'Your Business';
+      if (catPreview)  catPreview.textContent  = cf['category']      || '';
+      if (locPreview)  locPreview.textContent  = cf['city']          || 'Acadiana, LA';
+      if (imgPreview && cf['hero-image']) {
+        imgPreview.style.backgroundImage = 'url(' + cf['hero-image'] + ')';
+      }
+
       // Build listing link — prefer Memberstack custom field, fall back to
       // sessionStorage slug saved when the user clicked a claim button.
       var slug = cf['vendor-slug'];
       if (!slug) {
         try { slug = sessionStorage.getItem('tve_pending_vendor_slug') || ''; } catch (_) {}
         if (slug) {
-          // Clear it — the webhook will persist it properly on the next load
           try { sessionStorage.removeItem('tve_pending_vendor_slug'); } catch (_) {}
         }
       }
+
+      var viewLink    = document.getElementById('acct-view-listing');
+      var listingLink = document.getElementById('acct-listing-link');
+      var editBtn     = document.getElementById('acct-edit-btn');
+
       if (slug) {
         var listingUrl = '{{ "/vendors/" | relative_url }}' + slug + '/';
-        var viewLink = document.getElementById('acct-view-listing');
-        var listingLink = document.getElementById('acct-listing-link');
-        var editBtn = document.getElementById('acct-edit-btn');
-        if (viewLink) viewLink.href = listingUrl;
+        if (viewLink)    viewLink.href    = listingUrl;
         if (listingLink) listingLink.href = listingUrl;
+        if (editBtn) { editBtn.href = '#acct-profile-form-wrap'; editBtn.textContent = 'Update Profile'; }
 
-        // Pre-fill Paperform with vendor slug so webhook knows who to update
+        // Pre-fill Paperform with all available fields so vendors see their current data
         var pfContainer = document.getElementById('acct-paperform-container');
         if (pfContainer) {
           var embedDiv = pfContainer.querySelector('[data-paperform-id]');
           if (embedDiv) {
-            embedDiv.setAttribute('data-prefill', 'vendor-slug=' + encodeURIComponent(slug)
-              + '&business-name=' + encodeURIComponent(cf['business-name'] || '')
-              + '&email=' + encodeURIComponent(member.auth.email));
+            var prefillParts = [
+              'vendor-slug='   + encodeURIComponent(slug),
+              'email='         + encodeURIComponent(member.auth.email),
+              'business-name=' + encodeURIComponent(cf['business-name'] || ''),
+              'tagline='       + encodeURIComponent(cf['tagline']       || ''),
+              'category='      + encodeURIComponent(cf['category']      || ''),
+              'city='          + encodeURIComponent(cf['city']          || ''),
+              'phone='         + encodeURIComponent(cf['phone']         || ''),
+              'website='       + encodeURIComponent(cf['website']       || ''),
+              'instagram='     + encodeURIComponent(cf['instagram']     || ''),
+              'facebook='      + encodeURIComponent(cf['facebook']      || ''),
+            ];
+            embedDiv.setAttribute('data-prefill', prefillParts.join('&'));
           }
         }
-
-        // Update profile edit button
-        if (editBtn) {
-          editBtn.href = '#acct-profile-form-wrap';
-          editBtn.textContent = 'Update Profile';
+      } else {
+        // Slug not yet linked — disable the listing links gracefully
+        if (viewLink) {
+          viewLink.style.opacity = '.4';
+          viewLink.style.pointerEvents = 'none';
+          viewLink.title = 'Submit your profile form below to link your listing';
         }
-
-        // Populate listing preview card
-        var namePreview = document.getElementById('acct-listing-name');
-        var catPreview = document.getElementById('acct-listing-cat');
-        var locPreview = document.getElementById('acct-listing-loc');
-        var imgPreview = document.getElementById('acct-listing-img');
-        if (namePreview) namePreview.textContent = cf['business-name'] || 'Your Business';
-        if (catPreview) catPreview.textContent = cf['category'] || '';
-        if (locPreview) locPreview.textContent = cf['city'] || 'Acadiana, LA';
-        if (imgPreview && cf['hero-image']) {
-          imgPreview.style.backgroundImage = 'url(' + cf['hero-image'] + ')';
+        if (listingLink) {
+          listingLink.textContent = 'Submit profile to link listing →';
+          listingLink.removeAttribute('href');
+          listingLink.style.cssText = 'font-size:11px;color:var(--tve-muted);pointer-events:none;';
+        }
+        if (editBtn) { editBtn.href = '#acct-profile-form-wrap'; editBtn.textContent = 'Set Up Profile'; }
+        // Pre-fill email only so vendor doesn't have to re-enter it
+        var pfContainer = document.getElementById('acct-paperform-container');
+        if (pfContainer) {
+          var embedDiv = pfContainer.querySelector('[data-paperform-id]');
+          if (embedDiv) {
+            embedDiv.setAttribute('data-prefill', 'email=' + encodeURIComponent(member.auth.email));
+          }
         }
       }
     });

@@ -186,7 +186,7 @@ function buildVendorMarkdown(fields, existingFrontmatter = {}) {
   set('instagram',     fields['instagram']);
   set('facebook',      fields['facebook']);
   set('hero_image',    fields['hero-image']);
-  set('is_subscribed', true);   // always true when coming through webhook
+  // is_subscribed is managed exclusively by the Memberstack webhook — never override it here
   set('is_featured',   fm.is_featured || false);
 
   // Gallery: comma-separated image URLs
@@ -247,7 +247,7 @@ async function handlePaperform(body) {
 
   const filePath = `_vendors/${vendorSlug}.md`;
 
-  // Try to read existing front matter from GitHub to preserve fields not in this submission
+  // Read existing front matter to preserve fields not in this submission
   const existing = await githubRequest('GET',
     `/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/${filePath}?ref=${process.env.GITHUB_BRANCH || 'main'}`
   );
@@ -256,6 +256,15 @@ async function handlePaperform(body) {
   if (existing.status === 200) {
     const decoded = Buffer.from(existing.data.content, 'base64').toString('utf8');
     existingFm = parseFrontmatter(decoded);
+  }
+
+  // Look up the Memberstack member BEFORE building the markdown so we can
+  // stamp memberstack_id into the file — this removes the claim banner.
+  const email = fields['email'];
+  let member = null;
+  if (email) {
+    member = await findMemberByEmail(email);
+    if (member) existingFm.memberstack_id = member.id;
   }
 
   const markdown = buildVendorMarkdown(fields, existingFm);
@@ -268,14 +277,24 @@ async function handlePaperform(body) {
 
   await triggerRebuild();
 
-  // Stamp vendor-slug onto the Memberstack member so subscription webhooks can find this file.
-  // Best-effort: if the member doesn't exist yet (hasn't paid), this is a no-op.
-  const email = fields['email'];
-  if (email) {
-    const member = await findMemberByEmail(email);
-    if (member && !member.customFields?.['vendor-slug']) {
-      await setMemberVendorSlug(member.id, vendorSlug);
-    }
+  // Sync key fields to Memberstack custom fields so the account page can
+  // pre-fill the profile form and display the correct listing link.
+  if (member) {
+    const syncFields = {
+      'vendor-slug':   vendorSlug,
+      'business-name': fields['business-name'] || '',
+      'tagline':       fields['tagline']        || '',
+      'category':      fields['category']       || '',
+      'city':          fields['city']           || '',
+      'phone':         fields['phone']          || '',
+      'website':       fields['website']        || '',
+      'instagram':     fields['instagram']      || '',
+      'facebook':      fields['facebook']       || '',
+    };
+    // Remove empty strings so we don't blank out existing values
+    Object.keys(syncFields).forEach(k => { if (!syncFields[k]) delete syncFields[k]; });
+    syncFields['vendor-slug'] = vendorSlug; // always write slug
+    await memberstackRequest('PATCH', `/members/${member.id}`, { customFields: syncFields });
   }
 
   return { message: 'Profile updated', vendor: vendorSlug };
