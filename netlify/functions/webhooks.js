@@ -304,10 +304,15 @@ async function handlePaperform(body) {
 
 async function handleMemberstack(body) {
   const event = typeof body === 'string' ? JSON.parse(body) : body;
-  const type = event.type; // e.g. "member.plan.added", "member.plan.removed"
-  const member = event.data && event.data.member;
+  const type = event.type;
 
-  if (!member) throw new Error('No member data in Memberstack event');
+  // Memberstack sends test/ping events with no member payload — return 200 so
+  // the dashboard doesn't mark the webhook as failed.
+  const member = (event.data && event.data.member) || event.member || null;
+  if (!member) {
+    console.log('[memberstack] no member payload — event type:', type);
+    return { message: 'No member data; skipping', type };
+  }
 
   const cf = member.customFields || {};
   let vendorSlug = cf['vendor-slug'];
