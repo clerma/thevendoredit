@@ -33,18 +33,8 @@ $(document).ready(function () {
 </script>
 {% endif %}
 
-<!-- Paperform widget (handles all embeds and popups) -->
-<script>
-  (function() {
-    var d = document, id = "paperform-js";
-    if (!d.getElementById(id)) {
-      var js = d.createElement("script");
-      js.id = id;
-      js.src = "https://tarforms.paperform.co/widget.js";
-      d.body.appendChild(js);
-    }
-  })();
-</script>
+<!-- Paperform embed widget -->
+<script src="https://paperform.co/__embed.min.js"></script>
 
 <!-- Nav shadow: add nav-scrolled class immediately on any scroll -->
 <script>
