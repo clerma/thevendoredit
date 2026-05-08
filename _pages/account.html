@@ -73,6 +73,21 @@ permalink: /account/
       <!-- Main: dashboard content -->
       <div class="acct-main">
 
+        <!-- Link listing banner — shown only when vendor-slug not yet set -->
+        <div class="acct-card mb-4" id="acct-link-banner" style="display:none;border-left:3px solid var(--tve-accent);">
+          <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Action required</div>
+          <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:15px;color:var(--tve-ink-soft);margin:0 0 16px;">
+            Your account isn't linked to a vendor listing yet. Find your business below to connect them.
+          </p>
+          <div id="acct-link-search" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <input id="acct-slug-input" type="text" placeholder="Search your business name…"
+              style="flex:1;min-width:200px;padding:10px 14px;font-family:var(--tve-sans);font-size:13px;border:1px solid var(--tve-rule);background:#fff;outline:none;">
+            <button id="acct-link-btn" class="act-btn primary" style="font-size:11px;padding:10px 18px;">Link Listing</button>
+          </div>
+          <div id="acct-link-results" style="display:flex;flex-direction:column;gap:6px;"></div>
+          <div id="acct-link-status" style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-muted);margin-top:8px;"></div>
+        </div>
+
         <!-- Profile status banner -->
         <div class="acct-card acct-profile-banner mb-4" id="acct-profile-banner">
           <div class="apb-icon"><i class="ti-pencil-alt"></i></div>
@@ -229,21 +244,95 @@ permalink: /account/
         if (viewLink) {
           viewLink.style.opacity = '.4';
           viewLink.style.pointerEvents = 'none';
-          viewLink.title = 'Submit your profile form below to link your listing';
+          viewLink.title = 'Link your listing first';
         }
         if (listingLink) {
-          listingLink.textContent = 'Submit profile to link listing →';
+          listingLink.textContent = 'Link your listing first →';
           listingLink.removeAttribute('href');
           listingLink.style.cssText = 'font-size:11px;color:var(--tve-muted);pointer-events:none;';
         }
-        if (editBtn) { editBtn.href = '#acct-profile-form-wrap'; editBtn.textContent = 'Set Up Profile'; }
+        if (editBtn) { editBtn.href = '#acct-link-banner'; editBtn.textContent = 'Link Your Listing'; }
+
         // Pre-fill email only so vendor doesn't have to re-enter it
-        var pfContainer = document.getElementById('acct-paperform-container');
-        if (pfContainer) {
-          var embedDiv = pfContainer.querySelector('[data-paperform-id]');
-          if (embedDiv) {
-            embedDiv.setAttribute('data-prefill', 'email=' + encodeURIComponent(member.auth.email));
+        var pfContainerNoSlug = document.getElementById('acct-paperform-container');
+        if (pfContainerNoSlug) {
+          var embedDivNoSlug = pfContainerNoSlug.querySelector('[data-paperform-id]');
+          if (embedDivNoSlug) {
+            embedDivNoSlug.setAttribute('data-prefill', 'email=' + encodeURIComponent(member.auth.email));
           }
+        }
+
+        // Show the link-listing banner and wire up the search
+        var linkBanner = document.getElementById('acct-link-banner');
+        if (linkBanner) linkBanner.style.display = '';
+
+        var allVendors = [];
+        fetch('{{ "/api/vendors.json" | relative_url }}')
+          .then(function (r) { return r.json(); })
+          .then(function (vendors) {
+            allVendors = vendors;
+            // Auto-suggest based on Memberstack business-name if available
+            var biz = (cf['business-name'] || '').toLowerCase();
+            if (biz) renderLinkResults(vendors.filter(function (v) {
+              return v.title.toLowerCase().indexOf(biz) !== -1;
+            }));
+          })
+          .catch(function () {});
+
+        var slugInput  = document.getElementById('acct-slug-input');
+        var linkStatus = document.getElementById('acct-link-status');
+
+        if (slugInput) {
+          slugInput.addEventListener('input', function () {
+            var q = this.value.toLowerCase().trim();
+            if (!q) { renderLinkResults([]); return; }
+            renderLinkResults(allVendors.filter(function (v) {
+              return v.title.toLowerCase().indexOf(q) !== -1 ||
+                     v.slug.indexOf(q) !== -1;
+            }));
+          });
+        }
+
+        document.getElementById('acct-link-btn') && document.getElementById('acct-link-btn').addEventListener('click', function () {
+          var val = slugInput ? slugInput.value.trim() : '';
+          if (!val) return;
+          // Accept raw slug or pick first match by title
+          var match = allVendors.find(function (v) { return v.slug === val || v.title.toLowerCase() === val.toLowerCase(); });
+          if (match) {
+            linkVendorSlug(match.slug, member, linkStatus);
+          } else {
+            if (linkStatus) linkStatus.textContent = 'No listing found — try typing your business name.';
+          }
+        });
+
+        function renderLinkResults(list) {
+          var el = document.getElementById('acct-link-results');
+          if (!el) return;
+          if (!list.length) { el.innerHTML = ''; return; }
+          el.innerHTML = list.slice(0, 6).map(function (v) {
+            return '<button class="acct-link-result" data-slug="' + v.slug + '" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:#fff;border:1px solid var(--tve-rule);cursor:pointer;text-align:left;width:100%;">' +
+              '<span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink);">' + v.title + '</span>' +
+              '<span style="font-family:var(--tve-sans);font-size:11px;color:var(--tve-muted);">' + (v.category || '') + ' · ' + (v.city || '') + '</span>' +
+              '</button>';
+          }).join('');
+          el.querySelectorAll('.acct-link-result').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              linkVendorSlug(this.getAttribute('data-slug'), member, linkStatus);
+            });
+          });
+        }
+
+        function linkVendorSlug(chosenSlug, mem, statusEl) {
+          if (statusEl) statusEl.textContent = 'Linking…';
+          window.$memberstackDom.updateMember({ customFields: { 'vendor-slug': chosenSlug } })
+            .then(function () {
+              if (statusEl) statusEl.textContent = 'Linked! Refreshing…';
+              setTimeout(function () { window.location.reload(); }, 800);
+            })
+            .catch(function (err) {
+              if (statusEl) statusEl.textContent = 'Could not link — please contact support.';
+              console.error('Memberstack updateMember failed:', err);
+            });
         }
       }
     });
