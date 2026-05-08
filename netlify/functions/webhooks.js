@@ -14,6 +14,7 @@
  *   PAPERFORM_SECRET          Paperform webhook secret (for signature verification)
  *   MEMBERSTACK_SECRET        Memberstack webhook secret
  *   MEMBERSTACK_API_KEY       Memberstack Admin API key (for writing vendor-slug to member)
+ *   MEMBERSTACK_LISTED_PLAN_ID    Plan ID for the Listed (paid) tier
  *   MEMBERSTACK_FEATURED_PLAN_ID  Plan ID for the Featured tier
  */
 
@@ -348,18 +349,31 @@ async function handleMemberstack(body) {
     existingBody = extractBody(decoded);
   }
 
-  // Determine is_subscribed based on plan status
-  const activeTypes = ['member.plan.added', 'member.created', 'member.updated'];
+  // Plan IDs that represent a paid subscription
+  const PAID_PLAN_IDS = [
+    process.env.MEMBERSTACK_LISTED_PLAN_ID,
+    process.env.MEMBERSTACK_FEATURED_PLAN_ID,
+  ].filter(Boolean);
+
   const cancelTypes = ['member.plan.removed', 'member.deleted'];
 
-  if (activeTypes.includes(type)) {
-    existingFm.is_subscribed = true;
-    // Detect featured plan
-    const planConnections = member.planConnections || [];
-    existingFm.is_featured = planConnections.some(p =>
-      p.planId === process.env.MEMBERSTACK_FEATURED_PLAN_ID
-    );
+  if (type === 'member.created') {
+    // Just stamp the memberstack_id so the claim banner goes away.
+    // Do NOT set is_subscribed — this is a new account, potentially free tier.
     existingFm.memberstack_id = member.id;
+    // If they somehow already have a paid plan on creation (unlikely), honour it.
+    const planConnections = member.planConnections || [];
+    const hasPaid = PAID_PLAN_IDS.length > 0 && planConnections.some(p => PAID_PLAN_IDS.includes(p.planId));
+    if (hasPaid) {
+      existingFm.is_subscribed = true;
+      existingFm.is_featured = planConnections.some(p => p.planId === process.env.MEMBERSTACK_FEATURED_PLAN_ID);
+    }
+  } else if (type === 'member.plan.added' || type === 'member.updated') {
+    existingFm.memberstack_id = member.id;
+    const planConnections = member.planConnections || [];
+    const hasPaid = PAID_PLAN_IDS.length > 0 && planConnections.some(p => PAID_PLAN_IDS.includes(p.planId));
+    existingFm.is_subscribed = hasPaid;
+    existingFm.is_featured = planConnections.some(p => p.planId === process.env.MEMBERSTACK_FEATURED_PLAN_ID);
   } else if (cancelTypes.includes(type)) {
     existingFm.is_subscribed = false;
     existingFm.is_featured = false;
