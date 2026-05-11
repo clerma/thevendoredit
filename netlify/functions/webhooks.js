@@ -160,18 +160,59 @@ async function setMemberVendorSlug(memberId, vendorSlug) {
 }
 
 /**
- * Fallback: search GitHub repo content for a vendor file containing the email.
- * Used when Memberstack fires before handlePaperform has stamped vendor-slug.
+ * Find a vendor slug by searching each file in _vendors/ for the email string.
+ * More reliable than GitHub code search (no rate limits, no indexing delay).
  */
 async function findVendorSlugByEmail(email) {
   if (!email) return null;
   const owner  = process.env.GITHUB_OWNER;
   const repo   = process.env.GITHUB_REPO;
-  const q = encodeURIComponent(`${email} in:file repo:${owner}/${repo} path:_vendors`);
-  const res = await githubRequest('GET', `/search/code?q=${q}`);
-  if (res.status === 200 && res.data.items && res.data.items.length > 0) {
-    return res.data.items[0].name.replace(/\.md$/, '');
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  // List all files in _vendors/
+  const listRes = await githubRequest('GET',
+    `/repos/${owner}/${repo}/contents/_vendors?ref=${branch}`
+  );
+  if (listRes.status !== 200 || !Array.isArray(listRes.data)) {
+    console.error('[github] Could not list _vendors/:', listRes.status);
+    return null;
   }
+
+  const mdFiles = listRes.data.filter(f => f.name.endsWith('.md'));
+  console.log('[github] Searching', mdFiles.length, 'vendor files for email:', email);
+
+  for (const file of mdFiles) {
+    const fileRes = await githubRequest('GET',
+      `/repos/${owner}/${repo}/contents/${file.path}?ref=${branch}`
+    );
+    if (fileRes.status !== 200) continue;
+    const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
+    if (content.includes(email)) {
+      const slug = file.name.replace(/\.md$/, '');
+      console.log('[github] Found vendor slug by exact email:', slug);
+      return slug;
+    }
+  }
+
+  // Fallback: match by email domain (e.g. carlos@ and chat@ share ohhsnapbooth.com)
+  const domain = email.split('@')[1];
+  if (domain) {
+    console.log('[github] No exact email match — trying domain fallback:', domain);
+    for (const file of mdFiles) {
+      const fileRes = await githubRequest('GET',
+        `/repos/${owner}/${repo}/contents/${file.path}?ref=${branch}`
+      );
+      if (fileRes.status !== 200) continue;
+      const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
+      if (content.includes('@' + domain)) {
+        const slug = file.name.replace(/\.md$/, '');
+        console.log('[github] Found vendor slug by domain fallback:', slug);
+        return slug;
+      }
+    }
+  }
+
+  console.warn('[github] No vendor file found for email or domain:', email);
   return null;
 }
 
