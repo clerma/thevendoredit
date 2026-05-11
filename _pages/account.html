@@ -28,7 +28,7 @@ permalink: /account/
       <aside class="acct-sidebar">
 
         <!-- Member card -->
-        <div class="acct-card mb-4" id="acct-member-card">
+        <div class="acct-card mb-4">
           <div class="tve-eyebrow mb-3" style="color:var(--tve-muted);">Your Account</div>
           <div class="acct-member-name" id="acct-name">Loading…</div>
           <div class="acct-member-email" id="acct-email"></div>
@@ -38,10 +38,6 @@ permalink: /account/
         <!-- Subscription actions -->
         <div class="acct-card mb-4">
           <div class="tve-eyebrow mb-3" style="color:var(--tve-muted);">Subscription</div>
-          <div class="acct-sub-status" id="acct-sub-status">
-            <span class="status-dot status-dot--active"></span> Active
-          </div>
-          <div class="acct-sub-meta" id="acct-sub-meta"></div>
           <div class="d-flex flex-column gap-2 mt-3">
             <a href="#" data-ms-action="manage-subscription" class="act-btn" style="font-size:10px;padding:10px 16px;justify-content:center;text-align:center;">
               Manage Billing
@@ -56,7 +52,7 @@ permalink: /account/
         <div class="acct-card">
           <div class="tve-eyebrow mb-3" style="color:var(--tve-muted);">Quick Links</div>
           <div class="acct-quick-links">
-            <a id="acct-view-listing" href="#" class="acct-ql" style="opacity:.4;pointer-events:none;" title="Link your listing first">
+            <a id="acct-view-listing" href="{{ '/vendors/' | relative_url }}" class="acct-ql" style="opacity:.4;pointer-events:none;">
               <i class="ti-eye"></i> View my listing
             </a>
             <a href="{{ '/submit-your-wedding/' | relative_url }}" class="acct-ql">
@@ -70,79 +66,30 @@ permalink: /account/
 
       </aside>
 
-      <!-- Main: dashboard content -->
+      <!-- Main -->
       <div class="acct-main">
 
-        <!-- Link listing banner — shown only when vendor-slug not yet set -->
-        <div class="acct-card mb-4" id="acct-link-banner" style="display:none;border-left:3px solid var(--tve-accent);">
-          <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Action required</div>
-          <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:15px;color:var(--tve-ink-soft);margin:0 0 16px;">
-            Your account isn't linked to a vendor listing yet. Find your business below to connect them.
+        <!-- Link / verify listing -->
+        <div class="acct-card mb-4" id="acct-link-banner" style="border-left:3px solid var(--tve-accent);">
+          <div class="tve-eyebrow mb-2" style="color:var(--tve-accent);">Your Listing</div>
+          <p id="acct-link-intro" style="font-family:var(--tve-serif-alt);font-style:italic;font-size:15px;color:var(--tve-ink-soft);margin:0 0 16px;">
+            Search for your business to link it to this account.
           </p>
-          <div id="acct-link-search" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
             <input id="acct-slug-input" type="text" placeholder="Search your business name…"
               style="flex:1;min-width:200px;padding:10px 14px;font-family:var(--tve-sans);font-size:13px;border:1px solid var(--tve-rule);background:#fff;outline:none;">
-            <button id="acct-link-btn" class="act-btn primary" style="font-size:11px;padding:10px 18px;">Link Listing</button>
+            <button id="acct-link-btn" class="act-btn primary" style="font-size:11px;padding:10px 18px;">Link</button>
           </div>
           <div id="acct-link-results" style="display:flex;flex-direction:column;gap:6px;"></div>
           <div id="acct-link-status" style="font-family:var(--tve-sans);font-size:12px;color:var(--tve-muted);margin-top:8px;"></div>
         </div>
 
-        <!-- Profile status banner -->
-        <div class="acct-card acct-profile-banner mb-4" id="acct-profile-banner">
-          <div class="apb-icon"><i class="ti-pencil-alt"></i></div>
-          <div class="apb-body">
-            <div class="apb-title">Keep your profile up to date</div>
-            <div class="apb-sub">Update your bio, photos, pricing, and packages anytime. Changes go live within one business day.</div>
-          </div>
-          <a id="acct-edit-btn" href="#" class="act-btn primary" style="flex-shrink:0;">Update Profile</a>
-        </div>
-
-        <!-- Stats row -->
-        <div class="acct-stats-row mb-4">
-          <div class="acct-stat-card">
-            <div class="as-label">Profile views</div>
-            <div class="as-value">—</div>
-            <div class="as-period">This month</div>
-          </div>
-          <div class="acct-stat-card">
-            <div class="as-label">Inquiries received</div>
-            <div class="as-value">—</div>
-            <div class="as-period">All time</div>
-          </div>
-          <div class="acct-stat-card">
-            <div class="as-label">Real Weddings featured</div>
-            <div class="as-value" id="acct-rw-count">—</div>
-            <div class="as-period">On your profile</div>
-          </div>
-        </div>
-
-        <!-- Profile preview / listing card -->
-        <div class="acct-card mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="tve-eyebrow" style="color:var(--tve-accent);">Your Listing</div>
-            <div style="display:flex;gap:12px;align-items:center;">
-              <a id="acct-listing-link" href="#" class="tve-link" style="font-size:11px;opacity:.4;pointer-events:none;">View live listing →</a>
-              <button id="acct-relink-btn" onclick="document.getElementById('acct-link-banner').style.display='';this.style.display='none';" style="font-family:var(--tve-sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:none;color:var(--tve-muted);cursor:pointer;padding:0;text-decoration:underline;">Re-link</button>
-            </div>
-          </div>
-          <div class="acct-listing-preview" id="acct-listing-preview">
-            <div class="alp-img" id="acct-listing-img"></div>
-            <div class="alp-body">
-              <div class="tve-eyebrow mb-1" id="acct-listing-cat" style="color:var(--tve-muted);"></div>
-              <div class="alp-name" id="acct-listing-name">Your Business Name</div>
-              <div class="alp-loc" id="acct-listing-loc"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Profile update form (Paperform embed) — hidden until listing is linked -->
-        <div class="acct-card" id="acct-profile-form-wrap" style="display:none;">
+        <!-- Profile update form — always visible -->
+        <div class="acct-card" id="acct-profile-form-wrap">
           <div class="tve-eyebrow mb-1" style="color:var(--tve-accent);">Update Your Profile</div>
           <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:16px;color:var(--tve-ink-soft);margin:8px 0 24px;">
             Fill in the fields you want to change. Leave anything blank to keep it as-is.
           </p>
-          <!-- Paperform embed — pre-filled with member's vendor slug via URL param -->
           <div id="acct-paperform-container">
             <div data-paperform-id="{{ site.data.site.paperform_profile_id }}"
                  data-prefill-inherit="1"
@@ -174,173 +121,113 @@ permalink: /account/
 
 <script>
 (function () {
-  window.$memberstackDom && window.$memberstackDom.onReady.then(function () {
-    window.$memberstackDom.getCurrentMember().then(function (result) {
+  var ms = window.$memberstackDom;
+  if (!ms) return;
+
+  ms.onReady.then(function () {
+    ms.getCurrentMember().then(function (result) {
       if (!result || !result.data) return;
       var member = result.data;
-      var cf = member.customFields || {};
+      var cf     = member.customFields || {};
+      var email  = member.auth.email;
 
-      // Populate member card
+      // Member card
       var nameEl = document.getElementById('acct-name');
       var emailEl = document.getElementById('acct-email');
-      var planEl = document.getElementById('acct-plan');
-      if (nameEl) nameEl.textContent = cf['business-name'] || member.auth.email.split('@')[0];
-      if (emailEl) emailEl.textContent = member.auth.email;
+      var planEl  = document.getElementById('acct-plan');
+      if (nameEl)  nameEl.textContent  = cf['business-name'] || email.split('@')[0];
+      if (emailEl) emailEl.textContent = email;
       if (planEl && member.planConnections && member.planConnections.length) {
         planEl.textContent = member.planConnections[0].planName || 'Active';
       }
 
-      // Always populate the listing preview card from Memberstack custom fields
-      var namePreview = document.getElementById('acct-listing-name');
-      var catPreview  = document.getElementById('acct-listing-cat');
-      var locPreview  = document.getElementById('acct-listing-loc');
-      var imgPreview  = document.getElementById('acct-listing-img');
-      if (namePreview) namePreview.textContent = cf['business-name'] || 'Your Business';
-      if (catPreview)  catPreview.textContent  = cf['category']      || '';
-      if (locPreview)  locPreview.textContent  = cf['city']          || 'Acadiana, LA';
-      if (imgPreview && cf['hero-image']) {
-        imgPreview.style.backgroundImage = 'url(' + cf['hero-image'] + ')';
+      var slug = cf['vendor-slug'] || '';
+
+      // Pre-fill Paperform with whatever we know
+      var embedDiv = document.querySelector('#acct-paperform-container [data-paperform-id]');
+      if (embedDiv) {
+        var parts = ['email=' + encodeURIComponent(email)];
+        if (slug)              parts.push('vendor-slug='   + encodeURIComponent(slug));
+        if (cf['business-name']) parts.push('business-name=' + encodeURIComponent(cf['business-name']));
+        if (cf['tagline'])     parts.push('tagline='       + encodeURIComponent(cf['tagline']));
+        if (cf['category'])    parts.push('category='      + encodeURIComponent(cf['category']));
+        if (cf['city'])        parts.push('city='          + encodeURIComponent(cf['city']));
+        if (cf['phone'])       parts.push('phone='         + encodeURIComponent(cf['phone']));
+        if (cf['website'])     parts.push('website='       + encodeURIComponent(cf['website']));
+        if (cf['instagram'])   parts.push('instagram='     + encodeURIComponent(cf['instagram']));
+        if (cf['facebook'])    parts.push('facebook='      + encodeURIComponent(cf['facebook']));
+        embedDiv.setAttribute('data-prefill', parts.join('&'));
       }
 
-      // Build listing link — prefer Memberstack custom field, fall back to
-      // sessionStorage slug saved when the user clicked a claim button.
-      var slug = cf['vendor-slug'];
-      if (!slug) {
-        try { slug = sessionStorage.getItem('tve_pending_vendor_slug') || ''; } catch (_) {}
-        if (slug) {
-          try { sessionStorage.removeItem('tve_pending_vendor_slug'); } catch (_) {}
-        }
+      // View listing link
+      var viewLink = document.getElementById('acct-view-listing');
+      if (slug && viewLink) {
+        viewLink.href = '{{ "/vendors/" | relative_url }}' + slug + '/';
+        viewLink.style.opacity = '';
+        viewLink.style.pointerEvents = '';
       }
 
-      var viewLink    = document.getElementById('acct-view-listing');
-      var listingLink = document.getElementById('acct-listing-link');
-      var editBtn     = document.getElementById('acct-edit-btn');
-
+      // Link banner: update intro text if already linked
       if (slug) {
-        var listingUrl = '{{ "/vendors/" | relative_url }}' + slug + '/';
-        if (viewLink)    { viewLink.href = listingUrl; viewLink.style.opacity = ''; viewLink.style.pointerEvents = ''; }
-        if (listingLink) listingLink.href = listingUrl;
-        if (editBtn) { editBtn.href = '#acct-profile-form-wrap'; editBtn.textContent = 'Update Profile'; }
+        var intro = document.getElementById('acct-link-intro');
+        if (intro) intro.textContent = 'Your listing is linked to ' + slug + '. Search below to re-link if it looks wrong.';
+        var input = document.getElementById('acct-slug-input');
+        if (input) input.placeholder = 'Search to re-link…';
+      }
 
-        // Show the profile form now that we have a slug
-        var formWrap = document.getElementById('acct-profile-form-wrap');
-        if (formWrap) formWrap.style.display = '';
+      // Wire up listing search
+      var allVendors = [];
+      fetch('{{ "/api/vendors.json" | relative_url }}')
+        .then(function (r) { return r.json(); })
+        .then(function (v) { allVendors = v; })
+        .catch(function () {});
 
-        // Pre-fill Paperform with all available fields so vendors see their current data
-        var pfContainer = document.getElementById('acct-paperform-container');
-        if (pfContainer) {
-          var embedDiv = pfContainer.querySelector('[data-paperform-id]');
-          if (embedDiv) {
-            var prefillParts = [
-              'vendor-slug='   + encodeURIComponent(slug),
-              'email='         + encodeURIComponent(member.auth.email),
-              'business-name=' + encodeURIComponent(cf['business-name'] || ''),
-              'tagline='       + encodeURIComponent(cf['tagline']       || ''),
-              'category='      + encodeURIComponent(cf['category']      || ''),
-              'city='          + encodeURIComponent(cf['city']          || ''),
-              'phone='         + encodeURIComponent(cf['phone']         || ''),
-              'website='       + encodeURIComponent(cf['website']       || ''),
-              'instagram='     + encodeURIComponent(cf['instagram']     || ''),
-              'facebook='      + encodeURIComponent(cf['facebook']      || ''),
-            ];
-            embedDiv.setAttribute('data-prefill', prefillParts.join('&'));
-          }
-        }
-      } else {
-        // Slug not yet linked — disable the listing links gracefully
-        if (viewLink) {
-          viewLink.style.opacity = '.4';
-          viewLink.style.pointerEvents = 'none';
-          viewLink.title = 'Link your listing first';
-        }
-        if (listingLink) {
-          listingLink.textContent = 'Link your listing first →';
-          listingLink.removeAttribute('href');
-          listingLink.style.cssText = 'font-size:11px;color:var(--tve-muted);pointer-events:none;';
-        }
-        if (editBtn) { editBtn.href = '#acct-link-banner'; editBtn.textContent = 'Link Your Listing'; }
+      var slugInput  = document.getElementById('acct-slug-input');
+      var linkStatus = document.getElementById('acct-link-status');
+      var linkResults = document.getElementById('acct-link-results');
 
-        // Pre-fill email only so vendor doesn't have to re-enter it
-        var pfContainerNoSlug = document.getElementById('acct-paperform-container');
-        if (pfContainerNoSlug) {
-          var embedDivNoSlug = pfContainerNoSlug.querySelector('[data-paperform-id]');
-          if (embedDivNoSlug) {
-            embedDivNoSlug.setAttribute('data-prefill', 'email=' + encodeURIComponent(member.auth.email));
-          }
-        }
-
-        // Show the link-listing banner and wire up the search
-        var linkBanner = document.getElementById('acct-link-banner');
-        if (linkBanner) linkBanner.style.display = '';
-
-        var allVendors = [];
-        fetch('{{ "/api/vendors.json" | relative_url }}')
-          .then(function (r) { return r.json(); })
-          .then(function (vendors) {
-            allVendors = vendors;
-            // Auto-suggest based on Memberstack business-name if available
-            var biz = (cf['business-name'] || '').toLowerCase();
-            if (biz) renderLinkResults(vendors.filter(function (v) {
-              return v.title.toLowerCase().indexOf(biz) !== -1;
-            }));
-          })
-          .catch(function () {});
-
-        var slugInput  = document.getElementById('acct-slug-input');
-        var linkStatus = document.getElementById('acct-link-status');
-
-        if (slugInput) {
-          slugInput.addEventListener('input', function () {
-            var q = this.value.toLowerCase().trim();
-            if (!q) { renderLinkResults([]); return; }
-            renderLinkResults(allVendors.filter(function (v) {
-              return v.title.toLowerCase().indexOf(q) !== -1 ||
-                     v.slug.indexOf(q) !== -1;
-            }));
-          });
-        }
-
-        document.getElementById('acct-link-btn') && document.getElementById('acct-link-btn').addEventListener('click', function () {
-          var val = slugInput ? slugInput.value.trim() : '';
-          if (!val) return;
-          // Accept raw slug or pick first match by title
-          var match = allVendors.find(function (v) { return v.slug === val || v.title.toLowerCase() === val.toLowerCase(); });
-          if (match) {
-            linkVendorSlug(match.slug, member, linkStatus);
-          } else {
-            if (linkStatus) linkStatus.textContent = 'No listing found — try typing your business name.';
-          }
-        });
-
-        function renderLinkResults(list) {
-          var el = document.getElementById('acct-link-results');
-          if (!el) return;
-          if (!list.length) { el.innerHTML = ''; return; }
-          el.innerHTML = list.slice(0, 6).map(function (v) {
-            return '<button class="acct-link-result" data-slug="' + v.slug + '" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:#fff;border:1px solid var(--tve-rule);cursor:pointer;text-align:left;width:100%;">' +
+      if (slugInput) {
+        slugInput.addEventListener('input', function () {
+          var q = this.value.toLowerCase().trim();
+          if (!q || !allVendors.length) { linkResults.innerHTML = ''; return; }
+          var matches = allVendors.filter(function (v) {
+            return v.title.toLowerCase().indexOf(q) !== -1 || v.slug.indexOf(q) !== -1;
+          }).slice(0, 6);
+          linkResults.innerHTML = matches.map(function (v) {
+            return '<button class="acct-link-result" data-slug="' + v.slug + '" ' +
+              'style="display:flex;align-items:center;justify-content:space-between;gap:12px;' +
+              'padding:10px 14px;background:#fff;border:1px solid var(--tve-rule);cursor:pointer;text-align:left;width:100%;">' +
               '<span style="font-family:var(--tve-sans);font-size:13px;color:var(--tve-ink);">' + v.title + '</span>' +
-              '<span style="font-family:var(--tve-sans);font-size:11px;color:var(--tve-muted);">' + (v.category || '') + ' · ' + (v.city || '') + '</span>' +
+              '<span style="font-family:var(--tve-sans);font-size:11px;color:var(--tve-muted);">' + (v.category||'') + ' · ' + (v.city||'') + '</span>' +
               '</button>';
           }).join('');
-          el.querySelectorAll('.acct-link-result').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-              linkVendorSlug(this.getAttribute('data-slug'), member, linkStatus);
-            });
+          linkResults.querySelectorAll('.acct-link-result').forEach(function (btn) {
+            btn.addEventListener('click', function () { doLink(this.getAttribute('data-slug')); });
           });
-        }
+        });
+      }
 
-        function linkVendorSlug(chosenSlug, mem, statusEl) {
-          if (statusEl) statusEl.textContent = 'Linking…';
-          window.$memberstackDom.updateMember({ customFields: { 'vendor-slug': chosenSlug } })
-            .then(function () {
-              if (statusEl) statusEl.textContent = 'Linked! Refreshing…';
-              setTimeout(function () { window.location.reload(); }, 800);
-            })
-            .catch(function (err) {
-              if (statusEl) statusEl.textContent = 'Could not link — please contact support.';
-              console.error('Memberstack updateMember failed:', err);
-            });
-        }
+      document.getElementById('acct-link-btn') && document.getElementById('acct-link-btn').addEventListener('click', function () {
+        var val = slugInput ? slugInput.value.trim() : '';
+        if (!val) return;
+        var match = allVendors.find(function (v) {
+          return v.slug === val || v.title.toLowerCase() === val.toLowerCase();
+        });
+        if (match) { doLink(match.slug); }
+        else if (linkStatus) { linkStatus.textContent = 'No listing found — try searching by business name.'; }
+      });
+
+      function doLink(chosenSlug) {
+        if (linkStatus) linkStatus.textContent = 'Linking…';
+        ms.updateMember({ customFields: { 'vendor-slug': chosenSlug } })
+          .then(function () {
+            if (linkStatus) linkStatus.textContent = 'Linked! Reloading…';
+            setTimeout(function () { window.location.reload(); }, 600);
+          })
+          .catch(function (err) {
+            if (linkStatus) linkStatus.textContent = 'Error: ' + (err.message || 'could not update. Try again.');
+            console.error('[link-listing]', err);
+          });
       }
     });
   });
