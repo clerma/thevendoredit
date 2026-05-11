@@ -243,8 +243,28 @@ async function handlePaperform(body) {
   const fields = {};
   (submission.data || []).forEach(({ key, value }) => { fields[key] = value; });
 
-  const vendorSlug = fields['vendor-slug'];
-  if (!vendorSlug) throw new Error('Missing vendor-slug field in Paperform submission');
+  const email = fields['email'];
+
+  // Look up the Memberstack member by email first — we need the member before
+  // building the markdown (to stamp memberstack_id) and to sync custom fields.
+  let member = null;
+  if (email) {
+    member = await findMemberByEmail(email);
+  }
+
+  // Resolve the vendor slug: prefer the form field, then the member's stored
+  // custom field, then search GitHub by email as a last resort.
+  let vendorSlug = fields['vendor-slug'];
+  if (!vendorSlug && member) {
+    vendorSlug = (member.customFields || {})['vendor-slug'] || '';
+  }
+  if (!vendorSlug && email) {
+    vendorSlug = await findVendorSlugByEmail(email) || '';
+  }
+  if (!vendorSlug) {
+    console.error('[paperform] No vendor-slug resolved for email:', email);
+    throw new Error('Cannot identify vendor — ensure the vendor-slug field is filled in the form.');
+  }
 
   const filePath = `_vendors/${vendorSlug}.md`;
 
@@ -259,14 +279,8 @@ async function handlePaperform(body) {
     existingFm = parseFrontmatter(decoded);
   }
 
-  // Look up the Memberstack member BEFORE building the markdown so we can
-  // stamp memberstack_id into the file — this removes the claim banner.
-  const email = fields['email'];
-  let member = null;
-  if (email) {
-    member = await findMemberByEmail(email);
-    if (member) existingFm.memberstack_id = member.id;
-  }
+  // Stamp the memberstack_id so the claim banner disappears after the next rebuild.
+  if (member) existingFm.memberstack_id = member.id;
 
   const markdown = buildVendorMarkdown(fields, existingFm);
   const commitMsg = `Update vendor profile: ${fields['business-name'] || vendorSlug}`;
@@ -278,8 +292,8 @@ async function handlePaperform(body) {
 
   await triggerRebuild();
 
-  // Sync key fields to Memberstack custom fields so the account page can
-  // pre-fill the profile form and display the correct listing link.
+  // Sync all key fields to Memberstack custom fields so the account page
+  // displays current data and the profile form pre-fills correctly.
   if (member) {
     const syncFields = {
       'vendor-slug':   vendorSlug,
@@ -291,11 +305,19 @@ async function handlePaperform(body) {
       'website':       fields['website']        || '',
       'instagram':     fields['instagram']      || '',
       'facebook':      fields['facebook']       || '',
+      'hero-image':    fields['hero-image']     || '',
     };
     // Remove empty strings so we don't blank out existing values
     Object.keys(syncFields).forEach(k => { if (!syncFields[k]) delete syncFields[k]; });
     syncFields['vendor-slug'] = vendorSlug; // always write slug
-    await memberstackRequest('PATCH', `/members/${member.id}`, { customFields: syncFields });
+    const msResult = await memberstackRequest('PATCH', `/members/${member.id}`, { customFields: syncFields });
+    if (msResult.status >= 400) {
+      console.error('[paperform] Memberstack PATCH failed:', msResult.status, JSON.stringify(msResult.data));
+    } else {
+      console.log('[paperform] Memberstack custom fields synced for member:', member.id);
+    }
+  } else {
+    console.warn('[paperform] No Memberstack member found for email:', email, '— skipping custom field sync');
   }
 
   return { message: 'Profile updated', vendor: vendorSlug };
