@@ -133,8 +133,8 @@ permalink: /account/
           </div>
         </div>
 
-        <!-- Profile update form (Paperform embed) -->
-        <div class="acct-card" id="acct-profile-form-wrap">
+        <!-- Profile update form (Paperform embed) — hidden until listing is linked -->
+        <div class="acct-card" id="acct-profile-form-wrap" style="display:none;">
           <div class="tve-eyebrow mb-1" style="color:var(--tve-accent);">Update Your Profile</div>
           <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:16px;color:var(--tve-ink-soft);margin:8px 0 24px;">
             Fill in the fields you want to change. Leave anything blank to keep it as-is.
@@ -215,9 +215,13 @@ permalink: /account/
 
       if (slug) {
         var listingUrl = '{{ "/vendors/" | relative_url }}' + slug + '/';
-        if (viewLink)    viewLink.href    = listingUrl;
+        if (viewLink)    { viewLink.href = listingUrl; viewLink.style.opacity = ''; viewLink.style.pointerEvents = ''; }
         if (listingLink) listingLink.href = listingUrl;
         if (editBtn) { editBtn.href = '#acct-profile-form-wrap'; editBtn.textContent = 'Update Profile'; }
+
+        // Show the profile form now that we have a slug
+        var formWrap = document.getElementById('acct-profile-form-wrap');
+        if (formWrap) formWrap.style.display = '';
 
         // Pre-fill Paperform with all available fields so vendors see their current data
         var pfContainer = document.getElementById('acct-paperform-container');
