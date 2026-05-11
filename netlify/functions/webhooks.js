@@ -160,8 +160,8 @@ async function setMemberVendorSlug(memberId, vendorSlug) {
 }
 
 /**
- * Find a vendor slug by searching each file in _vendors/ for the email string.
- * More reliable than GitHub code search (no rate limits, no indexing delay).
+ * Find a vendor slug by scanning _vendors/ files for the email or its domain.
+ * Reads each file once and checks both exact email and domain in a single pass.
  */
 async function findVendorSlugByEmail(email) {
   if (!email) return null;
@@ -169,7 +169,6 @@ async function findVendorSlugByEmail(email) {
   const repo   = process.env.GITHUB_REPO;
   const branch = process.env.GITHUB_BRANCH || 'main';
 
-  // List all files in _vendors/
   const listRes = await githubRequest('GET',
     `/repos/${owner}/${repo}/contents/_vendors?ref=${branch}`
   );
@@ -179,7 +178,10 @@ async function findVendorSlugByEmail(email) {
   }
 
   const mdFiles = listRes.data.filter(f => f.name.endsWith('.md'));
-  console.log('[github] Searching', mdFiles.length, 'vendor files for email:', email);
+  const domain  = email.split('@')[1] || '';
+  console.log('[github] Scanning', mdFiles.length, 'vendor files for', email, '/ domain', domain);
+
+  let domainMatch = null;
 
   for (const file of mdFiles) {
     const fileRes = await githubRequest('GET',
@@ -187,33 +189,20 @@ async function findVendorSlugByEmail(email) {
     );
     if (fileRes.status !== 200) continue;
     const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
+    const slug = file.name.replace(/\.md$/, '');
+
     if (content.includes(email)) {
-      const slug = file.name.replace(/\.md$/, '');
-      console.log('[github] Found vendor slug by exact email:', slug);
-      return slug;
+      console.log('[github] Exact email match:', slug);
+      return slug;                     // exact match wins immediately
+    }
+    if (!domainMatch && domain && content.includes('@' + domain)) {
+      domainMatch = slug;              // keep as fallback, keep scanning for exact
     }
   }
 
-  // Fallback: match by email domain (e.g. carlos@ and chat@ share ohhsnapbooth.com)
-  const domain = email.split('@')[1];
-  if (domain) {
-    console.log('[github] No exact email match — trying domain fallback:', domain);
-    for (const file of mdFiles) {
-      const fileRes = await githubRequest('GET',
-        `/repos/${owner}/${repo}/contents/${file.path}?ref=${branch}`
-      );
-      if (fileRes.status !== 200) continue;
-      const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
-      if (content.includes('@' + domain)) {
-        const slug = file.name.replace(/\.md$/, '');
-        console.log('[github] Found vendor slug by domain fallback:', slug);
-        return slug;
-      }
-    }
-  }
-
-  console.warn('[github] No vendor file found for email or domain:', email);
-  return null;
+  if (domainMatch) console.log('[github] Domain fallback match:', domainMatch);
+  else console.warn('[github] No match found for', email);
+  return domainMatch;
 }
 
 // ─── Vendor front-matter builder ─────────────────────────────────────────────
@@ -310,25 +299,46 @@ async function handlePaperform(body) {
     member = await findMemberByEmail(email);
   }
 
-  // Resolve the vendor slug: prefer the form field, then the member's stored
-  // custom field, then search GitHub by email as a last resort.
-  let vendorSlug = fields['vendor-slug'];
+  const owner  = process.env.GITHUB_OWNER;
+  const repo   = process.env.GITHUB_REPO;
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  // Resolve vendor slug — form field is most trusted, then validate the
+  // member's stored slug by checking the file actually exists, then fall
+  // back to scanning vendor files by email/domain.
+  let vendorSlug = (fields['vendor-slug'] || '').trim();
+
   if (!vendorSlug && member) {
-    vendorSlug = (member.customFields || {})['vendor-slug'] || '';
+    const stored = ((member.customFields || {})['vendor-slug'] || '').trim();
+    if (stored) {
+      // Confirm the file exists before trusting the stored slug
+      const check = await githubRequest('GET',
+        `/repos/${owner}/${repo}/contents/_vendors/${stored}.md?ref=${branch}`
+      );
+      if (check.status === 200) {
+        vendorSlug = stored;
+        console.log('[paperform] Using validated stored slug:', vendorSlug);
+      } else {
+        console.warn('[paperform] Stored slug', stored, 'has no matching file — falling back to email scan');
+      }
+    }
   }
+
   if (!vendorSlug && email) {
     vendorSlug = await findVendorSlugByEmail(email) || '';
   }
+
   if (!vendorSlug) {
     console.error('[paperform] No vendor-slug resolved for email:', email);
-    throw new Error('Cannot identify vendor — ensure the vendor-slug field is filled in the form.');
+    throw new Error('Cannot identify vendor — use the Link Your Listing feature on /account/ first.');
   }
 
+  console.log('[paperform] Resolved vendor slug:', vendorSlug);
   const filePath = `_vendors/${vendorSlug}.md`;
 
   // Read existing front matter to preserve fields not in this submission
   const existing = await githubRequest('GET',
-    `/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/${filePath}?ref=${process.env.GITHUB_BRANCH || 'main'}`
+    `/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`
   );
 
   let existingFm = {};
