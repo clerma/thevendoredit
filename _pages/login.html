@@ -33,8 +33,8 @@ permalink: /login/
         <h1 class="auth-form-title">Sign in</h1>
         <p class="auth-form-sub">Don't have an account? <a href="{{ '/list-your-business/' | relative_url }}">List your business →</a></p>
 
-        <!-- Memberstack renders the form into this div -->
-        <div data-ms-form="login">
+        <!-- Memberstack renders the form into this element -->
+        <form data-ms-form="login">
           <div class="ms-field">
             <label class="ms-label">Email</label>
             <input type="email" data-ms-member="email" placeholder="you@yourbusiness.com" class="ms-input">
@@ -49,7 +49,7 @@ permalink: /login/
           <div class="ms-field-row mt-3" style="text-align:center;">
             <a href="#" data-ms-action="forgot-password" class="tve-eyebrow" style="font-size:11px;color:var(--tve-muted);text-decoration:none;letter-spacing:.18em;">Forgot password?</a>
           </div>
-        </div>
+        </form>
 
         <div class="auth-divider"><span>or</span></div>
 
