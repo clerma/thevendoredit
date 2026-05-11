@@ -131,11 +131,24 @@ async function memberstackRequest(method, path, body) {
 
 /** Find a Memberstack member by email. Returns member object or null. */
 async function findMemberByEmail(email) {
-  if (!process.env.MEMBERSTACK_API_KEY || !email) return null;
-  const res = await memberstackRequest('GET', `/members?email=${encodeURIComponent(email)}`);
-  if (res.status !== 200) return null;
-  const members = Array.isArray(res.data.data) ? res.data.data : (res.data.data ? [res.data.data] : []);
-  return members.length > 0 ? members[0] : null;
+  if (!process.env.MEMBERSTACK_API_KEY) {
+    console.error('[memberstack] MEMBERSTACK_API_KEY is not set');
+    return null;
+  }
+  if (!email) return null;
+
+  // Memberstack Admin API v2 uses filterBy[auth.email] for email search
+  const res = await memberstackRequest('GET', `/members?filterBy[auth.email]=${encodeURIComponent(email)}`);
+  console.log('[memberstack] findMemberByEmail status:', res.status, 'email:', email);
+  if (res.status !== 200) {
+    console.error('[memberstack] findMemberByEmail failed:', JSON.stringify(res.data));
+    return null;
+  }
+  // Response shape: { data: [ ...members ] } or { data: { ... } }
+  const list = Array.isArray(res.data.data) ? res.data.data
+             : (res.data.data ? [res.data.data] : []);
+  console.log('[memberstack] findMemberByEmail results count:', list.length);
+  return list.length > 0 ? list[0] : null;
 }
 
 /** Write vendor-slug into a Memberstack member's custom fields. */
@@ -241,7 +254,11 @@ async function handlePaperform(body) {
 
   // Paperform sends answers as an array: [{ key, value }, ...]
   const fields = {};
-  (submission.data || []).forEach(({ key, value }) => { fields[key] = value; });
+  const rawData = submission.data || submission.answers || [];
+  console.log('[paperform] raw body keys:', Object.keys(submission));
+  console.log('[paperform] data array length:', rawData.length);
+  rawData.forEach(({ key, value }) => { fields[key] = value; });
+  console.log('[paperform] parsed fields:', JSON.stringify(fields));
 
   const email = fields['email'];
 
