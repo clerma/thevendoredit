@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /api/vendors.json
+---
+[{% for vendor in site.vendors %}{"slug":"{{ vendor.slug }}","title":{{ vendor.title | jsonify }},"category":{{ vendor.category | default: "" | jsonify }},"city":{{ vendor.city | default: "" | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]

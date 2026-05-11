@@ -17,13 +17,13 @@ layout: default
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
     <button class="claim-btn"
       data-ms-plan:add="{{ site.data.site.memberstack_entry_plan_id }}"
-      data-ms-custom-field:vendorSlug="{{ page.slug }}">Claim for free</button>
+      data-ms-custom-field:vendor-slug="{{ page.slug }}">Claim for free</button>
     <button class="claim-btn claim-btn--listed"
       data-ms-price:add="{{ site.data.site.memberstack_listed_price_id }}"
-      data-ms-custom-field:vendorSlug="{{ page.slug }}">Get Listed — {{ site.data.site.listed_price }}</button>
+      data-ms-custom-field:vendor-slug="{{ page.slug }}">Get Listed — {{ site.data.site.listed_price }}</button>
     <a href="#"
       data-ms-price:add="{{ site.data.site.memberstack_featured_price_id }}"
-      data-ms-custom-field:vendorSlug="{{ page.slug }}"
+      data-ms-custom-field:vendor-slug="{{ page.slug }}"
       style="font-family:var(--tve-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tve-muted);text-decoration:underline;white-space:nowrap;">or go Featured — {{ site.data.site.featured_price }}</a>
   </div>
 </div>
