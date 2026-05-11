@@ -469,6 +469,30 @@ function extractBody(markdown) {
 // ─── Lambda handler ───────────────────────────────────────────────────────────
 
 exports.handler = async function (event) {
+  const source = (event.queryStringParameters || {}).source;
+
+  // GET ?source=debug&email=x@y.com — verify API key + member lookup without side effects
+  if (event.httpMethod === 'GET' && source === 'debug') {
+    const email = (event.queryStringParameters || {}).email || '';
+    const apiKeySet = !!process.env.MEMBERSTACK_API_KEY;
+    const apiKeyPrefix = apiKeySet ? process.env.MEMBERSTACK_API_KEY.slice(0, 8) + '…' : 'NOT SET';
+    let memberResult = null;
+    if (email && apiKeySet) {
+      memberResult = await findMemberByEmail(email);
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        apiKeySet,
+        apiKeyPrefix,
+        email,
+        memberFound: !!memberResult,
+        memberId: memberResult ? memberResult.id : null,
+        customFields: memberResult ? (memberResult.customFields || {}) : null,
+      }),
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -479,8 +503,6 @@ exports.handler = async function (event) {
     console.error('[webhook] Missing env vars:', missing.join(', '));
     return { statusCode: 500, body: JSON.stringify({ error: `Missing environment variables: ${missing.join(', ')}` }) };
   }
-
-  const source = (event.queryStringParameters || {}).source;
 
   try {
     let result;
@@ -493,7 +515,7 @@ exports.handler = async function (event) {
     }
     return { statusCode: 200, body: JSON.stringify(result) };
   } catch (err) {
-    console.error('[webhook error]', err.message);
+    console.error('[webhook error]', err.message, err.stack);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 };
