@@ -136,7 +136,10 @@
       return (v || '')
         .toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '') /* strip diacritics */
-        .replace(/[^a-z0-9-]+/g, '');
+        .replace(/\s+/g, '-')            /* spaces \u2192 hyphens */
+        .replace(/[^a-z0-9-]+/g, '')    /* remove remaining invalid chars */
+        .replace(/-+/g, '-')            /* collapse consecutive hyphens */
+        .replace(/^-|-$/g, '');         /* trim leading/trailing hyphens */
     }
     document.addEventListener('input', function (e) {
       var t = e.target;
