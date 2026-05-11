@@ -189,12 +189,30 @@ async function findVendorSlugByEmail(email) {
     const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
     if (content.includes(email)) {
       const slug = file.name.replace(/\.md$/, '');
-      console.log('[github] Found vendor slug by email:', slug);
+      console.log('[github] Found vendor slug by exact email:', slug);
       return slug;
     }
   }
 
-  console.warn('[github] No vendor file found containing email:', email);
+  // Fallback: match by email domain (e.g. carlos@ and chat@ share ohhsnapbooth.com)
+  const domain = email.split('@')[1];
+  if (domain) {
+    console.log('[github] No exact email match — trying domain fallback:', domain);
+    for (const file of mdFiles) {
+      const fileRes = await githubRequest('GET',
+        `/repos/${owner}/${repo}/contents/${file.path}?ref=${branch}`
+      );
+      if (fileRes.status !== 200) continue;
+      const content = Buffer.from(fileRes.data.content, 'base64').toString('utf8');
+      if (content.includes('@' + domain)) {
+        const slug = file.name.replace(/\.md$/, '');
+        console.log('[github] Found vendor slug by domain fallback:', slug);
+        return slug;
+      }
+    }
+  }
+
+  console.warn('[github] No vendor file found for email or domain:', email);
   return null;
 }
 
