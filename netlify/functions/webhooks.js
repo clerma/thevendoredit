@@ -247,6 +247,7 @@ function buildVendorMarkdown(fields, existingFrontmatter = {}) {
   // Build YAML front matter manually (avoid dependencies)
   const lines = ['---'];
   for (const [k, v] of Object.entries(fm)) {
+    if (k === '_body') continue; // internal scratch key, written as body after ---
     if (Array.isArray(v)) {
       lines.push(`${k}:`);
       v.forEach(item => {
@@ -345,6 +346,8 @@ async function handlePaperform(body) {
   if (existing.status === 200) {
     const decoded = Buffer.from(existing.data.content, 'base64').toString('utf8');
     existingFm = parseFrontmatter(decoded);
+    // Preserve existing body so bio isn't wiped when the vendor leaves it blank.
+    existingFm._body = extractBody(decoded);
   }
 
   // Stamp the memberstack_id so the claim banner disappears after the next rebuild.

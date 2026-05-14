@@ -90,11 +90,7 @@ permalink: /account/
           <p style="font-family:var(--tve-serif-alt);font-style:italic;font-size:16px;color:var(--tve-ink-soft);margin:8px 0 24px;">
             Fill in the fields you want to change. Leave anything blank to keep it as-is.
           </p>
-          <div id="acct-paperform-container">
-            <div data-paperform-id="{{ site.data.site.paperform_profile_id }}"
-                 data-prefill-inherit="1"
-                 style="min-height:400px;"></div>
-          </div>
+          <div id="acct-paperform-container" style="min-height:400px;"></div>
         </div>
 
       </div>
@@ -143,20 +139,27 @@ permalink: /account/
 
       var slug = cf['vendor-slug'] || '';
 
-      // Pre-fill Paperform with whatever we know
-      var embedDiv = document.querySelector('#acct-paperform-container [data-paperform-id]');
-      if (embedDiv) {
+      // Build Paperform div dynamically so data-prefill is already set when
+      // Paperform's MutationObserver picks up the element — avoids the race
+      // condition where the form renders before prefill values are applied.
+      var container = document.getElementById('acct-paperform-container');
+      if (container) {
         var parts = ['email=' + encodeURIComponent(email)];
-        if (slug)              parts.push('vendor-slug='   + encodeURIComponent(slug));
+        if (slug)                parts.push('vendor-slug='   + encodeURIComponent(slug));
         if (cf['business-name']) parts.push('business-name=' + encodeURIComponent(cf['business-name']));
-        if (cf['tagline'])     parts.push('tagline='       + encodeURIComponent(cf['tagline']));
-        if (cf['category'])    parts.push('category='      + encodeURIComponent(cf['category']));
-        if (cf['city'])        parts.push('city='          + encodeURIComponent(cf['city']));
-        if (cf['phone'])       parts.push('phone='         + encodeURIComponent(cf['phone']));
-        if (cf['website'])     parts.push('website='       + encodeURIComponent(cf['website']));
-        if (cf['instagram'])   parts.push('instagram='     + encodeURIComponent(cf['instagram']));
-        if (cf['facebook'])    parts.push('facebook='      + encodeURIComponent(cf['facebook']));
+        if (cf['tagline'])       parts.push('tagline='       + encodeURIComponent(cf['tagline']));
+        if (cf['category'])      parts.push('category='      + encodeURIComponent(cf['category']));
+        if (cf['city'])          parts.push('city='          + encodeURIComponent(cf['city']));
+        if (cf['phone'])         parts.push('phone='         + encodeURIComponent(cf['phone']));
+        if (cf['website'])       parts.push('website='       + encodeURIComponent(cf['website']));
+        if (cf['instagram'])     parts.push('instagram='     + encodeURIComponent(cf['instagram']));
+        if (cf['facebook'])      parts.push('facebook='      + encodeURIComponent(cf['facebook']));
+        container.innerHTML = '';
+        var embedDiv = document.createElement('div');
+        embedDiv.setAttribute('data-paperform-id', '{{ site.data.site.paperform_profile_id }}');
         embedDiv.setAttribute('data-prefill', parts.join('&'));
+        embedDiv.style.minHeight = '400px';
+        container.appendChild(embedDiv);
       }
 
       // View listing link
