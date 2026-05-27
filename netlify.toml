@@ -1,36 +1,25 @@
 # netlify.toml
-# This file configures the Netlify deployment used ONLY for serverless functions.
-# The Jekyll site itself is hosted/built on CloudCannon.
-# Deploy this repo to Netlify just to get the /.netlify/functions/ endpoint.
+# Next.js app with Clerk auth — deployed via @netlify/plugin-nextjs.
+# CloudCannon still edits _vendors/ and _data/ content files in this repo.
 #
 # Required environment variables in Netlify dashboard:
-#   GITHUB_TOKEN              GitHub Personal Access Token (repo scope)
-#   GITHUB_OWNER              GitHub username or org (e.g. clerma)
-#   GITHUB_REPO               Repository name (e.g. thevendoredit)
-#   GITHUB_BRANCH             Branch to commit to (e.g. main or claude/...)
+#   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+#   CLERK_SECRET_KEY
+#   GITHUB_TOKEN              GitHub PAT (repo scope) — webhook writes vendor .md files
+#   GITHUB_OWNER              clerma
+#   GITHUB_REPO               thevendoredit
+#   GITHUB_BRANCH             main
 #   CLOUDCANNON_WEBHOOK       CloudCannon build trigger URL
-#   PAPERFORM_SECRET          Paperform webhook secret (optional, for verification)
-#   MEMBERSTACK_SECRET        Memberstack webhook secret (optional, for verification)
-#   MEMBERSTACK_API_KEY       Memberstack Admin API key (Dashboard → API → Secret key)
-#   MEMBERSTACK_FEATURED_PLAN_ID  Memberstack plan ID for the Featured tier
 
 [build]
-  # Netlify is used ONLY for the serverless functions endpoint.
-  # The Jekyll site is built and hosted by CloudCannon — not here.
-  # Explicitly suppress auto-detected build so Netlify doesn't try to run
-  # `bundle exec jekyll build` (detected from Gemfile) and output resolved
-  # config that includes sensitive env-var values in the build log.
-  command   = ""
-  publish   = "netlify/static"
-  functions = "netlify/functions"
+  command = "npm run build"
+  publish = ".next"
 
-[functions]
-  node_bundler = "esbuild"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
-# CORS headers for the webhook endpoint
 [[headers]]
-  for = "/.netlify/functions/*"
+  for = "/*"
   [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "POST, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, X-Paperform-Signature, X-Memberstack-Signature"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
